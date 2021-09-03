@@ -1,5 +1,18 @@
 import ply.yacc as yacc
-from analizadores.lexico import *
+from lexico import *
+
+from ..interprete.comandos.expressions.access import *
+from ..interprete.comandos.expressions.access_expression import *
+from ..interprete.comandos.expressions.arithmetic import *
+from ..interprete.comandos.expressions.call_func import *
+from ..interprete.comandos.expressions.literal import *
+from ..interprete.comandos.expressions.relational import *
+
+from ..interprete.comandos.statement import *
+from ..interprete.comandos.nativas.print import *
+from ..interprete.comandos.variables.asignacion import *
+from ..interprete.comandos.variables.declaracion import *
+
 
 precedence = (
     ('left', 'CONCAT'),
@@ -39,6 +52,42 @@ def p_instruccion(t):
                         | if_else_instr'''
     t[0] = t[1]
 
+
+def p_expression(t):
+    '''expression       : MENOS expression %prec UMENOS
+                        | NOT expression %prec UMENOS
+                        | expression MAS expression
+                        | expression MENOS expression
+                        | expression POR expression
+                        | expression DIVIDIDO expression
+                        | expression MAYQUE expression
+                        | expression MENQUE expression
+                        | expression MENIGUALQUE expression
+                        | expression MAYIGUALQUE expression
+                        | expression IGUALQUE expression
+                        | expression NIGUALQUE expression
+                        | expression OR expression
+                        | expression AND expression
+                        | final_expression'''
+
+#todo falta potencia y modulo
+def p_final_expression(t):
+    '''final_expression     : PARIZQ expression PARDER
+                            | DECIMAL
+                            | ENTERO
+                            | CADENA
+                            | ID
+                            | TRUE
+                            | FALSE
+                            | call_func'''
+
+def p_call_func(t):
+    '''call_func        : ID PARIZQ PARDER
+                        | ID PARIZQ exp_list PARDER'''
+
+def p_exp_list(t):
+    '''exp_list         : exp_list COMA expression
+                        | expression'''
 
 def p_print_instr(t):
     'print_instr     : PRINT PARIZQ expression PARDER PTCOMA'

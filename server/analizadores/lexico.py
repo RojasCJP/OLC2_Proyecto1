@@ -29,6 +29,8 @@ reservadas = {
 tokens = [
     'PTCOMA',
     'DOSP',
+    'PUNTO',
+    'COMA',
     'LLAVIZQ',
     'LLAVDER',
     'CORCHETEIZQ',
@@ -61,6 +63,8 @@ tokens = [
 # Tokens
 t_PTCOMA = r';'
 t_DOSP = r':'
+t_PUNTO = r'.'
+t_COMA = r','
 t_LLAVIZQ = r'{'
 t_LLAVDER = r'}'
 t_CORCHETEIZQ = r'['
