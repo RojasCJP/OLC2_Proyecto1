@@ -1,4 +1,4 @@
-from sym import *
+from .sym import *
 from ..comandos.abstracts.returns import *
 
 
