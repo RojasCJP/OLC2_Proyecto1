@@ -8,6 +8,8 @@ class ArithmeticEnum(Enum):
     MINUS = 1
     TIMES = 2
     DIV = 3
+    RAISED = 4
+    MODULE = 5
 
 
 class Arithmetic(Expression):
@@ -35,5 +37,8 @@ class Arithmetic(Expression):
         elif self.type == ArithmeticEnum.DIV:
             result.value = leftValue.value / rightValue.value
             result.type = Type.FLOAT
-
+        elif self.type == ArithmeticEnum.RAISED:
+            result.value = leftValue.value ** rightValue.value
+        elif self.type == ArithmeticEnum.MODULE:
+            result.value = leftValue.value % rightValue.value
         return result

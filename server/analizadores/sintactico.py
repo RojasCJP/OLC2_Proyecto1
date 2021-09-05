@@ -1,6 +1,9 @@
+import ply.yacc as yacc
+import ply.lex as lex
 from ..interprete.comandos.expressions.access import *
 from ..interprete.comandos.expressions.access_expression import *
 from ..interprete.comandos.expressions.arithmetic import *
+from ..interprete.comandos.expressions.logic import *
 from ..interprete.comandos.expressions.call_func import *
 from ..interprete.comandos.expressions.literal import *
 from ..interprete.comandos.expressions.relational import *
@@ -74,7 +77,7 @@ tokens = [
 # Tokens
 t_PTCOMA = r';'
 t_DOSP = r':'
-t_PUNTO = r'.'
+t_PUNTO = r'\.'
 t_COMA = r','
 t_LLAVIZQ = r'{'
 t_LLAVDER = r'}'
@@ -82,7 +85,6 @@ t_CORCHETEIZQ = r'\['
 t_CORCHETEDER = r']'
 t_PARIZQ = r'\('
 t_PARDER = r'\)'
-t_IGUAL = r'='
 t_MAS = r'\+'
 t_MENOS = r'-'
 t_POR = r'\*'
@@ -99,6 +101,7 @@ t_AND = r'&&'
 t_NOT = r'!'
 t_IGUALQUE = r'=='
 t_NIGUALQUE = r'!='
+t_IGUAL = r'='
 
 
 def t_DECIMAL(t):
@@ -165,16 +168,18 @@ def t_error(t):
 
 
 # Construyendo el analizador léxico
-import ply.lex as lex
 
 lexer = lex.lex()
 
 precedence = (
-    ('left', 'CONCAT'),
+    ('left', 'OR'),
+    ('left', 'AND'),
+    ('left', 'IGUALQUE', 'NIGUALQUE'),
+    ('left', 'MAYQUE', 'MENQUE', 'MAYIGUALQUE', 'MENIGUALQUE'),
     ('left', 'MAS', 'MENOS'),
-    ('left', 'POR', 'DIVIDIDO'),
-    ('left', 'POTENCIA', 'MODULO'),
-    ('right', 'UMENOS'),
+    ('left', 'POR', 'DIVIDIDO', 'MODULO'),
+    ('left', 'POTENCIA'),
+    ('right', 'UMENOS')
 )
 
 
@@ -229,19 +234,52 @@ def p_expression(t):
         if t[1] == "-":
             # todo esto tiene que cambiar dependiendo del tipo del que me manden
             value = Literal(0, Type.INT, t.lineno(1), t.lexpos(0))
-            t[0] = Arithmetic(value, t[2], ArithmeticEnum.MINUS, value.line, value.column)
+            t[0] = Arithmetic(value, t[2], ArithmeticEnum.MINUS,
+                              value.line, value.column)
         else:
-            # todo tengo que hacer las logicas
+            t[0] = Logic(t[2], t[2], LogicEnum.NOT, t.lineno(1), t.lexpos(0))
             pass
     else:
         if t[2] == "+":
-            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.PLUS, t.lineno(1), t.lexpos(0))
+            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.PLUS,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == "-":
-            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.MINUS, t.lineno(1), t.lexpos(0))
+            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.MINUS,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == "*":
-            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.TIMES, t.lineno(1), t.lexpos(0))
+            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.TIMES,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == "/":
-            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.DIV, t.lineno(1), t.lexpos(0))
+            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.DIV,
+                              t.lineno(1), t.lexpos(0))
+        elif t[2] == "^":
+            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.RAISED,
+                              t.lineno(1), t.lexpos(0))
+        elif t[2] == "%":
+            t[0] = Arithmetic(t[1], t[3], ArithmeticEnum.MODULE,
+                              t.lineno(1), t.lexpos(0))
+        elif t[2] == "||":
+            t[0] = Logic(t[1], t[3], LogicEnum.OR, t.lineno(1), t.lexpos(0))
+        elif t[2] == "&&":
+            t[0] = Logic(t[1], t[3], LogicEnum.AND, t.lineno(1), t.lexpos(0))
+        elif t[2] == "<":
+            t[0] = Relational(t[1], t[3], RelationalEnum.MINOR,
+                              t.lineno(1), t.lexpos(0))
+        elif t[2] == ">":
+            t[0] = Relational(t[1], t[3], RelationalEnum.GREATER,
+                              t.lineno(1), t.lexpos(0))
+        elif t[2] == "<=":
+            t[0] = Relational(
+                t[1], t[3], RelationalEnum.MINOR_EQUAL, t.lineno(1), t.lexpos(0))
+        elif t[2] == ">=":
+            t[0] = Relational(
+                t[1], t[3], RelationalEnum.GREATER_EQUAL, t.lineno(1), t.lexpos(0))
+        elif t[2] == "==":
+            t[0] = Relational(
+                t[1], t[3], RelationalEnum.EQUAL_EQUAL, t.lineno(1), t.lexpos(0))
+        elif t[2] == "!=":
+            t[0] = Relational(
+                t[1], t[3], RelationalEnum.DIFFERENT, t.lineno(1), t.lexpos(0))
 
 
 # todo falta potencia y modulo
@@ -258,6 +296,14 @@ def p_final_expression(t):
         # todo si no jala poner types
         if t.slice[1].type == "ENTERO":
             t[0] = Literal(int(t[1]), Type.INT, t.lineno(1), t.lexpos(0))
+        if t.slice[1].type == "DECIMAL":
+            t[0] = Literal(float(t[1]), Type.FLOAT, t.lineno(1), t.lexpos(0))
+        elif t.slice[1].type == "FALSE":
+            t[0] = Literal(False, Type.BOOL, t.lineno(1), t.lexpos(0))
+        elif t.slice[1].type == "TRUE":
+            t[0] = Literal(True, Type.BOOL, t.lineno(1), t.lexpos(0))
+        elif t.slice[1].type == "CADENA":
+            t[0] = Literal(str(t[1]),Type.STRING,t.lineno(1),t.lexpos(0))
     else:
         t[0] = t[2]
 
@@ -312,15 +358,12 @@ def p_error(t):
     print("Error sintáctico en '%s'" % t.value)
 
 
-import ply.yacc as yacc
-
 parser = yacc.yacc()
 
 
 def parse():
     f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
     input = f.read()
-    print(input)
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     parserrr = parser.parse(input)
     return parser.parse(input)
