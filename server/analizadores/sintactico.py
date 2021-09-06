@@ -293,7 +293,6 @@ def p_final_expression(t):
                             | FALSE
                             | call_func'''
     if len(t) == 2:
-        # todo si no jala poner types
         if t.slice[1].type == "ENTERO":
             t[0] = Literal(int(t[1]), Type.INT, t.lineno(1), t.lexpos(0))
         if t.slice[1].type == "DECIMAL":
@@ -303,7 +302,9 @@ def p_final_expression(t):
         elif t.slice[1].type == "TRUE":
             t[0] = Literal(True, Type.BOOL, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "CADENA":
-            t[0] = Literal(str(t[1]),Type.STRING,t.lineno(1),t.lexpos(0))
+            t[0] = Literal(str(t[1]), Type.STRING, t.lineno(1), t.lexpos(0))
+        elif t.slice[1].type == "ID":
+            t[0] = Access(t[1], t.lineno(1), t.lexpos(1))
     else:
         t[0] = t[2]
 
@@ -334,23 +335,51 @@ def p_tipo(t):
                 | BOOL
                 | CHAR
                 | STRING'''
+    if t.slice[1].type == "INT":
+        t[0] = Type.INT
+    elif t.slice[1].type == "FLOAT":
+        t[0] = Type.FLOAT
+    elif t.slice[1].type == "BOOL":
+        t[0] = Type.BOOL
+    elif t.slice[1].type == "CHAR":
+        t[0] = Type.CHAR
+    elif t.slice[1].type == "STRING":
+        t[0] = Type.STRING
 
 
 def p_definicion_instr(t):
     '''definicion_instr   :  LOCAL ID PTCOMA
                             | GLOBAL ID PTCOMA'''
+    if t.slice[1].type == "LOCAL":
+        t[0] = Declaration(t[2], None, t.lineno(1), t.lexpos(0), False)
+    elif t.slice[1].type == "GLOBAL":
+        t[0] = Declaration(t[2], None, t.lineno(1), t.lexpos(0), True)
 
 
 def p_asignacion_instr(t):
     '''asignacion_instr   : ID IGUAL expression PTCOMA
                             | LOCAL ID IGUAL expression PTCOMA
                             | GLOBAL ID IGUAL expression PTCOMA'''
+    if len(t) == 5:
+        t[0] = Asignation(t[1], t[3], t.lineno(1), t.lexpos(0), False)
+    else:
+        if t.slice[1].type == "LOCAL":
+            t[0] = Asignation(t[2], t[4], t.lineno(1), t.lexpos(0), False)
+        else:
+            t[0] = Asignation(t[2], t[4], t.lineno(1), t.lexpos(0), True)
 
 
 def p_definicion_asignacion_instr(t):
     '''definicion_asignacion_instr  : ID IGUAL expression DOSP DOSP tipo PTCOMA
                                     | LOCAL ID IGUAL expression DOSP DOSP tipo PTCOMA
                                     | GLOBAL ID IGUAL expression DOSP DOSP tipo PTCOMA'''
+    if len(t) == 8:
+        t[0] = Declaration(t[2], t[3], t.lineno(1), t.lexpos(0), False)
+    else:
+        if t.slice[1].type == "LOCAL":
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), False)
+        elif t.slice[1].type == "GLOBAL":
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), True)
 
 
 def p_error(t):

@@ -3,20 +3,26 @@ from ..comandos.abstracts.returns import *
 
 
 class Environment:
-    def __init__(self, previous_env):
+    def __init__(self, prev_env):
         self.variables = {}
         self.functions = {}
         self.structs = {}
-        self.previous = previous_env
+        self.prev = prev_env
 
     def save_var(self, id_var, value, types):
+        # todo tengo que cambiar el tipo de variable si es que cambia y verificar si es estricto, en ese caso no cambiarla
         env = self
-        new_sym = Sym(value, id_var, types)
+        if isinstance(value, int) or isinstance(value, bool) or isinstance(value, str) or isinstance(value, float):
+            new_sym = Sym(value, id_var, types)
+        else:
+            value_value = value.execute(env)
+            new_sym = Sym(value_value.value, id_var, value_value.type)
+
         while env is not None:
             if id_var in env.variables.keys():
                 env.variables[id_var] = new_sym
                 return
-            env = env.previous
+            env = env.prev
         self.variables[id_var] = new_sym
 
     def save_var_struct(self, id_var, attributes, types):
@@ -27,7 +33,7 @@ class Environment:
             if id_var in env.variables.keys():
                 env.variables[id_var] = new_sym
                 return
-            env = env.previous
+            env = env.prev
         self.variables[id_var] = new_sym
 
     def save_func(self, id_func, function):
