@@ -2,8 +2,12 @@ global hola = false;
 local hola1 = 3;
 local hola2 = 3.1;
 local hola3 = "adios";
-
+pruebaTrigonometricas = 25;
 println(hola);
 println(hola1);
 println(hola2);
 println(hola3);
+println(cos(pruebaTrigonometricas));
+println(sin(pruebaTrigonometricas));
+println(tan(pruebaTrigonometricas));
+println(sqrt(pruebaTrigonometricas));

@@ -1,23 +1,19 @@
+import flask
 from flask import Flask
+from flask import request
 from flask_cors import CORS
 from server.analizadores.sintactico import parse
 from server.interprete.enviroment.environment import *
+import re
 
 app = Flask("__server__")
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)
 
 
-# @app.route("/")
-# def hello_world():
-#     return {"text": "hola que tal como estas"}
-#
-#
-# app.run(host='0.0.0.0', port=3000)
-
-def main():
+def entrada(input):
     env = Environment(None)
-    ast = parse()
+    ast = parse(input)
 
     try:
         for i in ast:
@@ -26,4 +22,19 @@ def main():
         print(e)
 
 
-main()
+@app.route("/")
+def hello_world():
+    return {"text": "hola que tal como estas"}
+
+
+@app.route("/entrada", methods=['GET', 'POST'])
+def entrada_codigo():
+    if request.method == "POST":
+        data = request.get_json(force=True)
+        entrada(data["code"])
+        return {"text": "se realizo exitosamente el parse"}
+    elif request.method == "GET":
+        return {"text": "hola que tal como estas"}
+
+
+app.run(host='0.0.0.0', port=3000)

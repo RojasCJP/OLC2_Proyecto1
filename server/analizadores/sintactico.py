@@ -10,6 +10,11 @@ from ..interprete.comandos.expressions.relational import *
 
 from ..interprete.comandos.statement import *
 from ..interprete.comandos.nativas.print import *
+from ..interprete.comandos.nativas.log import *
+from ..interprete.comandos.nativas.cos import *
+from ..interprete.comandos.nativas.sin import *
+from ..interprete.comandos.nativas.tan import *
+from ..interprete.comandos.nativas.sqrt import *
 from ..interprete.comandos.variables.asignacion import *
 from ..interprete.comandos.variables.declaracion import *
 
@@ -291,7 +296,8 @@ def p_final_expression(t):
                             | ID
                             | TRUE
                             | FALSE
-                            | call_func'''
+                            | call_func
+                            | nativas'''
     if len(t) == 2:
         if t.slice[1].type == "ENTERO":
             t[0] = Literal(int(t[1]), Type.INT, t.lineno(1), t.lexpos(0))
@@ -304,7 +310,10 @@ def p_final_expression(t):
         elif t.slice[1].type == "CADENA":
             t[0] = Literal(str(t[1]), Type.STRING, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "ID":
-            t[0] = Access(t[1], t.lineno(1), t.lexpos(1))
+            t[0] = Access(t[1], t.lineno(1), t.lexpos(0))
+        elif t.slice[1].type == "nativas":
+            t[0] = t[1]
+
     else:
         t[0] = t[2]
 
@@ -312,6 +321,31 @@ def p_final_expression(t):
 def p_call_func(t):
     '''call_func        : ID PARIZQ PARDER
                         | ID PARIZQ exp_list PARDER'''
+    if t.slice[1].type == "LOG":
+        t[0] = Log(t[5], t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "LOG10":
+        t[0] = Log(t[3], 10, t.lineno(1), t.lexpos(0))
+
+
+def p_nativas(t):
+    '''nativas          : LOG PARIZQ ENTERO COMA expression PARDER
+                        | LOG10 PARIZQ expression PARDER
+                        | COS PARIZQ expression PARDER
+                        | SIN PARIZQ expression PARDER
+                        | TAN PARIZQ expression PARDER
+                        | SQRT PARIZQ expression PARDER'''
+    if t.slice[1].type == "LOG":
+        t[0] = Log(t[5], t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "LOG10":
+        t[0] = Log(t[3], 10, t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "COS":
+        t[0] = Cos(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "SIN":
+        t[0] = Sin(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "TAN":
+        t[0] = Tan(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "SQRT":
+        t[0] = Sqrt(t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_exp_list(t):
@@ -390,9 +424,9 @@ def p_error(t):
 parser = yacc.yacc()
 
 
-def parse():
-    f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
-    input = f.read()
+def parse(input):
+    # f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
+    # input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
-    parserrr = parser.parse(input)
+    # parser.parse(input)
     return parser.parse(input)

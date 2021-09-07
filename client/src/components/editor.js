@@ -1,12 +1,23 @@
-import React from 'react'
-import CodeMirror from '@uiw/react-codemirror'
-import 'codemirror/keymap/sublime'
-import 'codemirror/theme/monokai.css'
+import React, {Component} from 'react'
+import {UnControlled as CodeMirror} from 'react-codemirror2';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/theme/monokai.css';
+import 'codemirror/lib/codemirror.css';
 
-export class Editor extends React.Component {
+export class Editor extends Component {
+    state = {
+        value: '',
+    }
+
+    onChange = (editor, data, value) => {
+        this.setState({
+            code: '',
+            console: '',
+            stado: false,
+        });
+    };
+
     render() {
-        var code = "const a = 'hola que tal'"
-        var console = "hola que tal"
         return (
             <div>
                 <div>
@@ -15,32 +26,40 @@ export class Editor extends React.Component {
                 <div>
                     <button class='btn btn-dark m-2'>Abrir</button>
                     <button class='btn btn-dark m-2'>Reportes</button>
-                    <button class='btn btn-dark m-2'>Compilar</button>
+                    <button class='btn btn-dark m-2' onClick={() => this.entrada_datos()}>Compilar
+                    </button>
                     <button class='btn btn-dark m-2'>Gramaticas</button>
                 </div>
-                <br />
-                <br />
+                <br/>
+                <br/>
                 <div class="row">
-                    <div class="col">
+                    <div class="col" className="editor">
                         <CodeMirror
-                            value={code}
+                            value=""
                             options={{
                                 theme: 'monokai',
-                                keyMap: 'sublime',
-                                mode: 'jsx',
-
+                                mode: 'javascript',
+                                lineNumbers: true,
+                            }}
+                            onChange={(editor, data, value) => {
+                                this.setState({code: value})
                             }}
                         ></CodeMirror>
                     </div>
-                    <div class="col">
+                    <div>
+                        <h1>Console</h1>
+                    </div>
+                    <div class="col" className="editor">
                         <CodeMirror
-                            value={console}
+                            value={this.state.console}
                             options={{
                                 theme: 'monokai',
-                                keyMap: 'sublime',
-                                mode: 'jsx',
+                                mode: 'javascript',
                                 readOnly: true,
                                 lineNumbers: false,
+                            }}
+                            onChange={(editor, data, value) => {
+                                this.setState({console: value})
                             }}
                         ></CodeMirror>
                     </div>
@@ -48,4 +67,20 @@ export class Editor extends React.Component {
             </div>
         )
     }
+
+    entrada_datos() {
+        var codigoEnviar = {"code": this.state.code}
+        console.log(codigoEnviar)
+        console.log(this.state.console)
+        fetch('http://192.168.0.19:3000/entrada', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(codigoEnviar)
+        })
+            .then(async response => {
+                const json = await response.json()
+                this.setState({console: json.text})
+            })
+    }
+
 }
