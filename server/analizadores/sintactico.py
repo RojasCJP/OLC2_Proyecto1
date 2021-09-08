@@ -15,6 +15,8 @@ from ..interprete.comandos.nativas.cos import *
 from ..interprete.comandos.nativas.sin import *
 from ..interprete.comandos.nativas.tan import *
 from ..interprete.comandos.nativas.sqrt import *
+from ..interprete.comandos.nativas.uppercase import *
+from ..interprete.comandos.nativas.lowercase import *
 from ..interprete.comandos.variables.asignacion import *
 from ..interprete.comandos.variables.declaracion import *
 
@@ -31,7 +33,7 @@ reservadas = {
     "bool": "BOOL",
     "char": "CHAR",
     "string": "STRING",
-    "uppercase": "UPERCASE",
+    "uppercase": "UPPERCASE",
     "lowercase": "LOWERCASE",
     "log10": "LOG10",
     "log": "LOG",
@@ -333,7 +335,9 @@ def p_nativas(t):
                         | COS PARIZQ expression PARDER
                         | SIN PARIZQ expression PARDER
                         | TAN PARIZQ expression PARDER
-                        | SQRT PARIZQ expression PARDER'''
+                        | SQRT PARIZQ expression PARDER
+                        | UPPERCASE PARIZQ expression PARDER
+                        | LOWERCASE PARIZQ expression PARDER'''
     if t.slice[1].type == "LOG":
         t[0] = Log(t[5], t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "LOG10":
@@ -346,6 +350,10 @@ def p_nativas(t):
         t[0] = Tan(t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "SQRT":
         t[0] = Sqrt(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "UPPERCASE":
+        t[0] = Uppercase(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "LOWERCASE":
+        t[0] = Lowercase(t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_exp_list(t):
@@ -425,8 +433,8 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    # f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
-    # input = f.read()
+    f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
+    input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
-    # parser.parse(input)
+    parser.parse(input)
     return parser.parse(input)

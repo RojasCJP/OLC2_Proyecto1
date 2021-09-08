@@ -29,16 +29,34 @@ class Arithmetic(Expression):
             result.type = Type.FLOAT
 
         if self.type == ArithmeticEnum.PLUS:
+            if leftValue.type == Type.STRING or rightValue.type == Type.STRING:
+                print("error al sumar, no se pueden sumar strings")
+                result.value = ""
+                return result
             result.value = leftValue.value + rightValue.value
         elif self.type == ArithmeticEnum.MINUS:
             result.value = leftValue.value - rightValue.value
         elif self.type == ArithmeticEnum.TIMES:
+            if leftValue.type == Type.STRING or rightValue.type == Type.STRING:
+                result.value = leftValue.value + rightValue.value
+                result.type = Type.STRING
+                return result
             result.value = leftValue.value * rightValue.value
         elif self.type == ArithmeticEnum.DIV:
             result.value = leftValue.value / rightValue.value
             result.type = Type.FLOAT
         elif self.type == ArithmeticEnum.RAISED:
+            if leftValue.type == Type.STRING and rightValue.type == Type.INT:
+                result.value = self.raised_string(leftValue.value, rightValue.value)
+                result.type = Type.STRING
+                return result
             result.value = leftValue.value ** rightValue.value
         elif self.type == ArithmeticEnum.MODULE:
             result.value = leftValue.value % rightValue.value
         return result
+
+    def raised_string(self, text, times):
+        text_res = ""
+        for _ in range(times):
+            text_res += text
+        return text_res

@@ -11,6 +11,8 @@ class Declaration(Instruction):
 
     def execute(self, environment):
         value = self.value
+        while not isinstance(value, Return):
+            value = value.execute(environment)
         # todo aqui tengo que ver que pedo con los tipos
         if value.type == Type.STRUCT:
             environment.save_var_struct(self.id, value.value, value.auxType)

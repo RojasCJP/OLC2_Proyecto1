@@ -1,5 +1,6 @@
 from ..abstracts.instruccion import *
 from ..abstracts.returns import *
+from ..expressions.literal import *
 from .declaracion import *
 
 
@@ -12,6 +13,8 @@ class Asignation(Instruction):
 
     def execute(self, env: Environment):
         value = self.value
+        while not isinstance(value, Return):
+            value = value.execute(env)
         if self.id in env.variables.keys():
             if self.globall:
                 env.get_global_env().save_var(self.id, value, env.variables[self.id].type)
