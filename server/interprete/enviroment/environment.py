@@ -14,6 +14,8 @@ class Environment:
         env = self
         if isinstance(value, int) or isinstance(value, bool) or isinstance(value, str) or isinstance(value, float):
             new_sym = Sym(value, id_var, types)
+        elif isinstance(value, Return):
+            new_sym = Sym(value.value, id_var, types)
         else:
             value_value = value.execute(env)
             new_sym = Sym(value_value.value, id_var, value_value.type)

@@ -17,6 +17,11 @@ from ..interprete.comandos.nativas.tan import *
 from ..interprete.comandos.nativas.sqrt import *
 from ..interprete.comandos.nativas.uppercase import *
 from ..interprete.comandos.nativas.lowercase import *
+from ..interprete.comandos.nativas.string import *
+from ..interprete.comandos.nativas.float import *
+from ..interprete.comandos.nativas.parse import *
+from ..interprete.comandos.nativas.trunc import *
+from ..interprete.comandos.nativas.typeof import *
 from ..interprete.comandos.variables.asignacion import *
 from ..interprete.comandos.variables.declaracion import *
 
@@ -28,11 +33,11 @@ reservadas = {
     "if": "IF",
     "else": "ELSE",
     "nothing": "NOTHING",
-    "int64": "INT",
-    "float64": "FLOAT",
-    "bool": "BOOL",
-    "char": "CHAR",
-    "string": "STRING",
+    "Int64": "INT",
+    "Float64": "FLOAT",
+    "Bool": "BOOL",
+    "Char": "CHAR",
+    "String": "STRING",
     "uppercase": "UPPERCASE",
     "lowercase": "LOWERCASE",
     "log10": "LOG10",
@@ -40,6 +45,11 @@ reservadas = {
     "sin": "SIN",
     "cos": "COS",
     "tan": "TAN",
+    "trunc": "TRUNC",
+    "float": "TOFLOAT",
+    "string": "TOSTRING",
+    "parse": "PARSE",
+    "typeof": "TYPEOF",
     "sqrt": "SQRT",
     "true": "TRUE",
     "false": "FALSE",
@@ -134,7 +144,7 @@ def t_ENTERO(t):
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     # Check for reserved words
-    t.type = reservadas.get(t.value.lower(), 'ID')
+    t.type = reservadas.get(t.value, 'ID')
     return t
 
 
@@ -337,7 +347,13 @@ def p_nativas(t):
                         | TAN PARIZQ expression PARDER
                         | SQRT PARIZQ expression PARDER
                         | UPPERCASE PARIZQ expression PARDER
-                        | LOWERCASE PARIZQ expression PARDER'''
+                        | LOWERCASE PARIZQ expression PARDER
+                        | TOSTRING PARIZQ expression PARDER
+                        | TOFLOAT PARIZQ expression PARDER
+                        | TRUNC PARIZQ INT COMA expression PARDER
+                        | TYPEOF PARIZQ expression PARDER
+                        | PARSE PARIZQ tipo COMA expression PARDER
+                        '''
     if t.slice[1].type == "LOG":
         t[0] = Log(t[5], t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "LOG10":
@@ -354,6 +370,16 @@ def p_nativas(t):
         t[0] = Uppercase(t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "LOWERCASE":
         t[0] = Lowercase(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "TOSTRING":
+        t[0] = ToString(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "TOFLOAT":
+        t[0] = ToFloat(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "TRUNC":
+        t[0] = Trunc(t[5], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "TYPEOF":
+        t[0] = TypeOf(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "PARSE":
+        t[0] = Parse(t[5], t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_exp_list(t):
@@ -376,7 +402,8 @@ def p_tipo(t):
                 | FLOAT
                 | BOOL
                 | CHAR
-                | STRING'''
+                | STRING
+    '''
     if t.slice[1].type == "INT":
         t[0] = Type.INT
     elif t.slice[1].type == "FLOAT":
