@@ -10,7 +10,7 @@ class Statement(Instruction):
 
     def execute(self, env: Environment):
         newEnv = Environment(env)
-        for ins in self.instruction:
+        for ins in self.instructions:
             res = ins.execute(newEnv)
             if res is not None:
                 return res

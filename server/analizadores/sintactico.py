@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 import ply.lex as lex
+
 from ..interprete.comandos.expressions.access import *
 from ..interprete.comandos.expressions.access_expression import *
 from ..interprete.comandos.expressions.arithmetic import *
@@ -8,7 +9,15 @@ from ..interprete.comandos.expressions.call_func import *
 from ..interprete.comandos.expressions.literal import *
 from ..interprete.comandos.expressions.relational import *
 
+from ..interprete.comandos.funciones.param import *
+from ..interprete.comandos.funciones.function import *
+from ..interprete.comandos.funciones.return_st import *
+
+from ..interprete.comandos.ciclos.breaks import *
+from ..interprete.comandos.ciclos.continues import *
+
 from ..interprete.comandos.statement import *
+
 from ..interprete.comandos.nativas.print import *
 from ..interprete.comandos.nativas.log import *
 from ..interprete.comandos.nativas.cos import *
@@ -51,6 +60,11 @@ reservadas = {
     "parse": "PARSE",
     "typeof": "TYPEOF",
     "sqrt": "SQRT",
+    "function": "FUNCTION",
+    "break": "BREAK",
+    "continue": "CONTINUE",
+    "return":"RETURN",
+    "end": "END",
     "true": "TRUE",
     "false": "FALSE",
     "local": "LOCAL",
@@ -219,11 +233,16 @@ def p_instrucciones_lista(t):
 
 
 def p_instruccion(t):
-    '''instruccion      : print_instr
-                        | println_instr
-                        | definicion_instr
-                        | asignacion_instr
-                        | definicion_asignacion_instr'''
+    '''instruccion      : print_instr PTCOMA
+                        | println_instr PTCOMA
+                        | definicion_instr PTCOMA
+                        | asignacion_instr PTCOMA
+                        | definicion_asignacion_instr PTCOMA
+                        | call_function PTCOMA
+                        | declare_function PTCOMA
+                        | return_state PTCOMA
+                        | break_state PTCOMA
+                        | continue_state PTCOMA'''
     t[0] = t[1]
 
 
@@ -382,18 +401,13 @@ def p_nativas(t):
         t[0] = Parse(t[5], t[3], t.lineno(1), t.lexpos(0))
 
 
-def p_exp_list(t):
-    '''exp_list         : exp_list COMA expression
-                        | expression'''
-
-
 def p_print_instr(t):
-    'print_instr    : PRINT PARIZQ expression PARDER PTCOMA'
+    'print_instr    : PRINT PARIZQ expression PARDER'
     t[0] = Print(t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_println_instr(t):
-    'println_instr  : PRINTLN PARIZQ expression PARDER PTCOMA'
+    'println_instr  : PRINTLN PARIZQ expression PARDER'
     t[0] = Print(t[3], t.lineno(1), t.lexpos(0), 1)
 
 
@@ -417,8 +431,8 @@ def p_tipo(t):
 
 
 def p_definicion_instr(t):
-    '''definicion_instr   :  LOCAL ID PTCOMA
-                            | GLOBAL ID PTCOMA'''
+    '''definicion_instr   :  LOCAL ID
+                            | GLOBAL ID'''
     if t.slice[1].type == "LOCAL":
         t[0] = Declaration(t[2], None, t.lineno(1), t.lexpos(0), False)
     elif t.slice[1].type == "GLOBAL":
@@ -426,10 +440,10 @@ def p_definicion_instr(t):
 
 
 def p_asignacion_instr(t):
-    '''asignacion_instr   : ID IGUAL expression PTCOMA
-                            | LOCAL ID IGUAL expression PTCOMA
-                            | GLOBAL ID IGUAL expression PTCOMA'''
-    if len(t) == 5:
+    '''asignacion_instr   : ID IGUAL expression
+                            | LOCAL ID IGUAL expression
+                            | GLOBAL ID IGUAL expression'''
+    if len(t) == 4:
         t[0] = Asignation(t[1], t[3], t.lineno(1), t.lexpos(0), False)
     else:
         if t.slice[1].type == "LOCAL":
@@ -439,9 +453,9 @@ def p_asignacion_instr(t):
 
 
 def p_definicion_asignacion_instr(t):
-    '''definicion_asignacion_instr  : ID IGUAL expression DOSP DOSP tipo PTCOMA
-                                    | LOCAL ID IGUAL expression DOSP DOSP tipo PTCOMA
-                                    | GLOBAL ID IGUAL expression DOSP DOSP tipo PTCOMA'''
+    '''definicion_asignacion_instr  : ID IGUAL expression DOSP DOSP tipo
+                                    | LOCAL ID IGUAL expression DOSP DOSP tipo
+                                    | GLOBAL ID IGUAL expression DOSP DOSP tipo'''
     if len(t) == 8:
         t[0] = Declaration(t[2], t[3], t.lineno(1), t.lexpos(0), False)
     else:
@@ -450,6 +464,67 @@ def p_definicion_asignacion_instr(t):
         elif t.slice[1].type == "GLOBAL":
             t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), True)
 
+
+def p_call_function_instr(t):
+    '''call_function    : ID PARIZQ PARDER
+                        | ID PARIZQ exp_list PARDER'''
+    if len(t) == 4:
+        t[0] = CallFunc(t[1], [], t.lineno(1), t.lexpos(1))
+    else:
+        t[0] = CallFunc(t[1], t[3], t.lineno(1), t.lexpos(1))
+
+
+def p_exp_list_instr(t):
+    '''exp_list         : exp_list COMA expression
+                        | expression'''
+    if len(t) == 2:
+        t[0] = [t[1]]
+    else:
+        t[1].append(t[3])
+        t[0] = t[1]
+
+
+def p_statement(t):
+    '''statement        : instrucciones'''
+    t[0] = Statement(t[1], t.lineno(1), t.lexpos(0))
+
+
+def p_declare_function(t):
+    '''declare_function     : FUNCTION ID PARIZQ PARDER statement END
+                            | FUNCTION ID PARIZQ dec_params PARDER statement END'''
+    if len(t) == 7:
+        t[0] = Function(t[2], [], t[5], t.lineno(1), t.lexpos(0))
+    else:
+        t[0] = Function(t[2], t[4], t[6], t.lineno(1), t.lexpos(0))
+
+
+def p_dec_params(t):
+    '''dec_params :    dec_params COMA ID
+                    | ID'''
+    if len(t) == 2:
+        t[0] = [Param(t[1], t.lineno(1), t.lexpos(0))]
+    else:
+        t[1].append(Param(t[3], t.lineno(1), t.lexpos(0)))
+        t[0] = t[1]
+
+
+def p_break(t):
+    '''break_state      : BREAK'''
+    t[0] = Break(t.lineno(1), t.lexpos(0))
+
+
+def p_continue(t):
+    '''continue_state      : CONTINUE'''
+    t[0] = Continue(t.lineno(1), t.lexpos(0))
+
+
+def p_return(t):
+    '''return_state     : RETURN
+                        | RETURN expression'''
+    if len(t) == 2:
+        t[0] = ReturnST(None,t.lineno(1), t.lexpos(0))
+    else:
+        t[0] = ReturnST(t[2],t.lineno(1), t.lexpos(0))
 
 def p_error(t):
     print(t)

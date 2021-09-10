@@ -18,7 +18,7 @@ class CallFunc(Expression):
                 for i, param in enumerate(self.params):
                     value = self.params[i].execute(environment)
                     new_env.save_var(func.params[i].id, value.value, value.type)
-                res = func.instr.execute(new_env)
+                res = func.instructions.execute(new_env)
                 if res is not None:
                     if res["type"] == Type.RETURN_ST:
                         return res["value"]
