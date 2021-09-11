@@ -13,6 +13,10 @@ from ..interprete.comandos.funciones.param import *
 from ..interprete.comandos.funciones.function import *
 from ..interprete.comandos.funciones.return_st import *
 
+from ..interprete.comandos.condicionales.ifs import *
+
+from ..interprete.comandos.ciclos.whiles import *
+
 from ..interprete.comandos.ciclos.breaks import *
 from ..interprete.comandos.ciclos.continues import *
 
@@ -40,6 +44,7 @@ reservadas = {
     "print": "PRINT",
     "while": "WHILE",
     "if": "IF",
+    "elseif": "ELSEIF",
     "else": "ELSE",
     "nothing": "NOTHING",
     "Int64": "INT",
@@ -242,7 +247,9 @@ def p_instruccion(t):
                         | declare_function PTCOMA
                         | return_state PTCOMA
                         | break_state PTCOMA
-                        | continue_state PTCOMA'''
+                        | continue_state PTCOMA
+                        | if_state PTCOMA
+                        | while_state PTCOMA'''
     t[0] = t[1]
 
 
@@ -506,6 +513,35 @@ def p_dec_params(t):
     else:
         t[1].append(Param(t[3], t.lineno(1), t.lexpos(0)))
         t[0] = t[1]
+
+
+def p_if_state(t):
+    '''if_state     : IF expression statement END
+                    | IF expression statement ELSE statement END
+                    | IF expression statement else_if_list END'''
+    if len(t) == 5:
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0))
+    elif len(t) == 6:
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[4])
+    elif len(t) == 7:
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[5])
+
+
+def p_else_if_list(t):
+    '''else_if_list     : ELSEIF expression statement
+                        | ELSEIF expression statement ELSE statement
+                        | ELSEIF expression statement else_if_list'''
+    if len(t) == 4:
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0))
+    elif len(t) == 5:
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[4])
+    elif len(t) == 6:
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[5])
+
+
+def p_while_state(t):
+    '''while_state      : WHILE expression statement END'''
+    t[0] = While(t[2], t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_break(t):

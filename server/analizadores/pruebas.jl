@@ -1,16 +1,25 @@
-hola = 5+5;
-hola = 5+5+5;
-println(typeof(3.1));
-println(typeof(3));
-println(typeof(3+123+4));
-println(typeof(false));
-println(typeof("e"));
-println(parse(Int64,"50")+6);
-
-function prueba(entrada)
-println("hola en metodo");
-println(entrada);
+x= 100;
+if x == 8
+var1 = (x + 8);
+println(sqrt(var1));
+elseif x>8
+println(log(10,x));
+else
+println("else");
 end;
-prueba(123^2);
 
+println("aqui empieza lo de las variables");
+var = 1;
+println(var);
+if var == 1
+var = var +1;
+println(var);
+end;
+var = var +1;
+println(var);
 
+var = 0;
+while var < 4
+println("hola buenas");
+var = var +1;
+end;
