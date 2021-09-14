@@ -20,8 +20,8 @@ class CallFunc(Expression):
                     new_env.save_var(func.params[i].id, value.value, value.type)
                 res = func.instructions.execute(new_env)
                 if res is not None:
-                    if res["type"] == Type.RETURN_ST:
-                        return res["value"]
+                    if res.type == Type.RETURN_ST:
+                        return res.value
                     else:
                         return res
             else:

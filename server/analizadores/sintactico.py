@@ -16,6 +16,7 @@ from ..interprete.comandos.funciones.return_st import *
 from ..interprete.comandos.condicionales.ifs import *
 
 from ..interprete.comandos.ciclos.whiles import *
+from ..interprete.comandos.ciclos.fors import *
 
 from ..interprete.comandos.ciclos.breaks import *
 from ..interprete.comandos.ciclos.continues import *
@@ -39,11 +40,12 @@ from ..interprete.comandos.variables.asignacion import *
 from ..interprete.comandos.variables.declaracion import *
 
 reservadas = {
-    "numero": "NUMERO",
     "println": "PRINTLN",
     "print": "PRINT",
     "while": "WHILE",
+    "for":"FOR",
     "if": "IF",
+    "in": "IN",
     "elseif": "ELSEIF",
     "else": "ELSE",
     "nothing": "NOTHING",
@@ -68,7 +70,7 @@ reservadas = {
     "function": "FUNCTION",
     "break": "BREAK",
     "continue": "CONTINUE",
-    "return":"RETURN",
+    "return": "RETURN",
     "end": "END",
     "true": "TRUE",
     "false": "FALSE",
@@ -249,7 +251,8 @@ def p_instruccion(t):
                         | break_state PTCOMA
                         | continue_state PTCOMA
                         | if_state PTCOMA
-                        | while_state PTCOMA'''
+                        | while_state PTCOMA
+                        | for_state PTCOMA'''
     t[0] = t[1]
 
 
@@ -334,7 +337,7 @@ def p_final_expression(t):
                             | ID
                             | TRUE
                             | FALSE
-                            | call_func
+                            | call_function
                             | nativas'''
     if len(t) == 2:
         if t.slice[1].type == "ENTERO":
@@ -349,20 +352,13 @@ def p_final_expression(t):
             t[0] = Literal(str(t[1]), Type.STRING, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "ID":
             t[0] = Access(t[1], t.lineno(1), t.lexpos(0))
+        elif t.slice[1].type == "call_function":
+            t[0] = t[1]
         elif t.slice[1].type == "nativas":
             t[0] = t[1]
 
     else:
         t[0] = t[2]
-
-
-def p_call_func(t):
-    '''call_func        : ID PARIZQ PARDER
-                        | ID PARIZQ exp_list PARDER'''
-    if t.slice[1].type == "LOG":
-        t[0] = Log(t[5], t[3], t.lineno(1), t.lexpos(0))
-    elif t.slice[1].type == "LOG10":
-        t[0] = Log(t[3], 10, t.lineno(1), t.lexpos(0))
 
 
 def p_nativas(t):
@@ -409,12 +405,12 @@ def p_nativas(t):
 
 
 def p_print_instr(t):
-    'print_instr    : PRINT PARIZQ expression PARDER'
+    'print_instr    : PRINT PARIZQ exp_list PARDER'
     t[0] = Print(t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_println_instr(t):
-    'println_instr  : PRINTLN PARIZQ expression PARDER'
+    'println_instr  : PRINTLN PARIZQ exp_list PARDER'
     t[0] = Print(t[3], t.lineno(1), t.lexpos(0), 1)
 
 
@@ -544,6 +540,15 @@ def p_while_state(t):
     t[0] = While(t[2], t[3], t.lineno(1), t.lexpos(0))
 
 
+def p_for_state(t):
+    '''for_state        : FOR ID IN expression DOSP expression statement END
+                        | FOR ID IN expression statement END'''
+    if len(t) == 9:
+        t[0] = For(t[2], t[4], t[7], t.lineno(1), t.lexpos(0), t[6])
+    else:
+        t[0] = For(t[2], t[4], t[5], t.lineno(1), t.lexpos(0))
+
+
 def p_break(t):
     '''break_state      : BREAK'''
     t[0] = Break(t.lineno(1), t.lexpos(0))
@@ -558,9 +563,10 @@ def p_return(t):
     '''return_state     : RETURN
                         | RETURN expression'''
     if len(t) == 2:
-        t[0] = ReturnST(None,t.lineno(1), t.lexpos(0))
+        t[0] = ReturnST(None, t.lineno(1), t.lexpos(0))
     else:
-        t[0] = ReturnST(t[2],t.lineno(1), t.lexpos(0))
+        t[0] = ReturnST(t[2], t.lineno(1), t.lexpos(0))
+
 
 def p_error(t):
     print(t)

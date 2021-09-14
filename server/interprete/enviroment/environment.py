@@ -59,10 +59,12 @@ class Environment:
         return None
 
     def get_function(self, id_func):
-        if id_func in self.functions.keys():
-            return self.functions[id_func]
-        else:
-            return None
+        env = self
+        while env is not None:
+            if id_func in env.functions.keys():
+                return env.functions[id_func]
+            env = env.prev
+        return None
 
     def get_struct(self, id_struct):
         env = self

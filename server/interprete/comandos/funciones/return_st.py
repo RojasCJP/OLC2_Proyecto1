@@ -8,10 +8,12 @@ class ReturnST(Expression):
         Expression.__init__(self, line, column)
         self.expression = expression
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
+        res = Return(None, Type.RETURN_ST)
         try:
-            value = self.expression.execute(environment)
-            return {"value": value, "type": Type.RETURN_ST}
+            if self.expression is not None:
+                value = self.expression.execute(environment)
+                res.value = value
+            return res
         except Exception as e:
-            print(e)
-            print("error al retornar un valor")
+            print("Erorr en Return", e)

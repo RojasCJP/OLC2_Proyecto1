@@ -1,5 +1,6 @@
 from ..abstracts.instruccion import *
 from ..abstracts.returns import *
+from ..expressions.literal import *
 
 
 class Declaration(Instruction):
@@ -11,6 +12,8 @@ class Declaration(Instruction):
 
     def execute(self, environment):
         value = self.value
+        if value is None:
+            value = Literal(0, Type.NULL, self.line, self.column)
         while not isinstance(value, Return):
             value = value.execute(environment)
         # todo aqui tengo que ver que pedo con los tipos

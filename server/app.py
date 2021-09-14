@@ -1,8 +1,12 @@
+import sys
+
 from flask import Flask
 from flask import request
 from flask_cors import CORS
 from server.analizadores.sintactico import parse
 from server.interprete.enviroment.environment import *
+
+sys.setrecursionlimit(3000)
 
 app = Flask("__server__")
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})

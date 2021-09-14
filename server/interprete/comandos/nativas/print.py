@@ -9,9 +9,12 @@ class Print(Instruction):
         self.newLine = newLine
 
     def execute(self, env: Environment):
-        value = self.value.execute(env)
         if self.newLine:
-            print(value.value)
+            for value in self.value:
+                val = value.execute(env)
+                print(val.value)
         else:
-            print(value.value, end="")
+            for value in self.value:
+                val = value.execute(env)
+                print(val.value, end="")
         # todo tengo que mandarlo a la cola de impresion porque no se va a imprimir en consola
