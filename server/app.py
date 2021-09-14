@@ -26,6 +26,7 @@ def entrada(input):
 
 entrada("x")
 
+
 @app.route("/")
 def hello_world():
     return {"text": "hola que tal como estas"}

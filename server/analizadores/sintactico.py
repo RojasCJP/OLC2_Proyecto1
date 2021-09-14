@@ -43,7 +43,7 @@ reservadas = {
     "println": "PRINTLN",
     "print": "PRINT",
     "while": "WHILE",
-    "for":"FOR",
+    "for": "FOR",
     "if": "IF",
     "in": "IN",
     "elseif": "ELSEIF",
@@ -109,6 +109,7 @@ tokens = [
              "DECIMAL",
              "ENTERO",
              "CADENA",
+             "CARACTER",
              "ID"
          ] + list(reservadas.values())
 
@@ -174,6 +175,10 @@ def t_CADENA(t):
     t.value = t.value[1:-1]  # remuevo las comillas
     return t
 
+def t_CARACTER(t):
+    r'\'.\''
+    t.value = t.value[1:-1]
+    return t
 
 # Comentario de múltiples líneas /* .. */
 
@@ -334,6 +339,7 @@ def p_final_expression(t):
                             | DECIMAL
                             | ENTERO
                             | CADENA
+                            | CARACTER
                             | ID
                             | TRUE
                             | FALSE
@@ -350,6 +356,8 @@ def p_final_expression(t):
             t[0] = Literal(True, Type.BOOL, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "CADENA":
             t[0] = Literal(str(t[1]), Type.STRING, t.lineno(1), t.lexpos(0))
+        elif t.slice[1].type == "CARACTER":
+            t[0] = Literal(str(t[1]), Type.CHAR, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "ID":
             t[0] = Access(t[1], t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "call_function":
@@ -459,13 +467,13 @@ def p_definicion_asignacion_instr(t):
     '''definicion_asignacion_instr  : ID IGUAL expression DOSP DOSP tipo
                                     | LOCAL ID IGUAL expression DOSP DOSP tipo
                                     | GLOBAL ID IGUAL expression DOSP DOSP tipo'''
-    if len(t) == 8:
-        t[0] = Declaration(t[2], t[3], t.lineno(1), t.lexpos(0), False)
+    if len(t) == 7:
+        t[0] = Declaration(t[1], t[3], t.lineno(1), t.lexpos(0), False, t[6])
     else:
         if t.slice[1].type == "LOCAL":
-            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), False)
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), False, t[7])
         elif t.slice[1].type == "GLOBAL":
-            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), True)
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), True, t[7])
 
 
 def p_call_function_instr(t):
