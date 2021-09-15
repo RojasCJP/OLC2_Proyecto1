@@ -9,11 +9,31 @@ class Environment:
         self.structs = {}
         self.prev = prev_env
 
+    def get_items_array(self, array):
+        env = self
+        array_return = []
+        for element in array:
+            if isinstance(element, int) or isinstance(element, bool) or isinstance(element, str) or isinstance(element, float):
+                array_return.append(element)
+            elif isinstance(element, Return):
+                array_return.append(element.value)
+            elif isinstance(element, list):
+                array_return.append(self.get_items_array(element))
+            else:
+                element_value = element.execute(env)
+                if element_value.type != Type.ARRAY:
+                    array_return.append(element_value.value)
+                else:
+                    array_return.append(self.get_items_array(element_value.value))
+        return array_return
+
     def save_var(self, id_var, value, types):
-        # todo tengo que cambiar el tipo de variable si es que cambia y verificar si es estricto, en ese caso no cambiarla
         env = self
         if isinstance(value, int) or isinstance(value, bool) or isinstance(value, str) or isinstance(value, float):
             new_sym = Sym(value, id_var, types)
+        elif isinstance(value, list):
+            arreglo = self.get_items_array(value)
+            new_sym = Sym(arreglo, id_var, types)
         elif isinstance(value, Return):
             new_sym = Sym(value.value, id_var, types)
         else:
@@ -23,7 +43,6 @@ class Environment:
         while env is not None:
             if id_var in env.variables.keys():
                 env.variables[id_var] = new_sym
-                return
             env = env.prev
         self.variables[id_var] = new_sym
 

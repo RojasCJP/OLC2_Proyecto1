@@ -30,9 +30,14 @@ class For(Instruction):
             tamano = len(val_left.value)
             if var is not None:
                 while num < tamano:
-                    execution = self.instructions.execute(env)
-                    if execution is not None:
-                        return execution
+                    element = self.instructions.execute(env)
+                    if element is not None:
+                        if element.type == Type.BREAK_ST:
+                            break
+                        elif element.type == Type.CONTINUE_ST:
+                            continue
+                        else:
+                            return element
                     if len(val_left.value) > num + 1:
                         var.value = val_left.value[num]
                         env.save_var(self.variable, val_left.value[num + 1], val_left.type)

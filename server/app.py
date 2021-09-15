@@ -25,6 +25,11 @@ def entrada(input):
 
 
 entrada("x")
+# prueba = [1, [1, 2, 3, 4, 5], 3]
+# entradas = [1, 2]
+# gett = prueba
+# gett[1][2] = 123
+# print(prueba[1][2])
 
 
 @app.route("/")

@@ -6,6 +6,7 @@ from ..interprete.comandos.expressions.access_expression import *
 from ..interprete.comandos.expressions.arithmetic import *
 from ..interprete.comandos.expressions.logic import *
 from ..interprete.comandos.expressions.call_func import *
+from ..interprete.comandos.expressions.access_list import *
 from ..interprete.comandos.expressions.literal import *
 from ..interprete.comandos.expressions.relational import *
 
@@ -36,8 +37,13 @@ from ..interprete.comandos.nativas.float import *
 from ..interprete.comandos.nativas.parse import *
 from ..interprete.comandos.nativas.trunc import *
 from ..interprete.comandos.nativas.typeof import *
+from ..interprete.comandos.nativas.length import *
+from ..interprete.comandos.nativas.push import *
+from ..interprete.comandos.nativas.pops import *
+
 from ..interprete.comandos.variables.asignacion import *
 from ..interprete.comandos.variables.declaracion import *
+from ..interprete.comandos.variables.asignacion_list import *
 
 reservadas = {
     "println": "PRINTLN",
@@ -67,6 +73,9 @@ reservadas = {
     "parse": "PARSE",
     "typeof": "TYPEOF",
     "sqrt": "SQRT",
+    "length": "LENGTH",
+    "push": "PUSH",
+    "pop": "POP",
     "function": "FUNCTION",
     "break": "BREAK",
     "continue": "CONTINUE",
@@ -175,10 +184,12 @@ def t_CADENA(t):
     t.value = t.value[1:-1]  # remuevo las comillas
     return t
 
+
 def t_CARACTER(t):
     r'\'.\''
     t.value = t.value[1:-1]
     return t
+
 
 # Comentario de múltiples líneas /* .. */
 
@@ -249,6 +260,7 @@ def p_instruccion(t):
                         | println_instr PTCOMA
                         | definicion_instr PTCOMA
                         | asignacion_instr PTCOMA
+                        | asignacion_arreglo_instr PTCOMA
                         | definicion_asignacion_instr PTCOMA
                         | call_function PTCOMA
                         | declare_function PTCOMA
@@ -257,7 +269,8 @@ def p_instruccion(t):
                         | continue_state PTCOMA
                         | if_state PTCOMA
                         | while_state PTCOMA
-                        | for_state PTCOMA'''
+                        | for_state PTCOMA
+                        | nativas PTCOMA'''
     t[0] = t[1]
 
 
@@ -336,11 +349,13 @@ def p_expression(t):
 # todo falta potencia y modulo
 def p_final_expression(t):
     '''final_expression     : PARIZQ expression PARDER
+                            | CORCHETEIZQ exp_list CORCHETEDER
                             | DECIMAL
                             | ENTERO
                             | CADENA
                             | CARACTER
                             | ID
+                            | ID index_list
                             | TRUE
                             | FALSE
                             | call_function
@@ -364,9 +379,14 @@ def p_final_expression(t):
             t[0] = t[1]
         elif t.slice[1].type == "nativas":
             t[0] = t[1]
-
+    elif len(t) == 3:
+        t[0] = AccessList(t[1], t[2], t.lineno(1), t.lexpos(0))
     else:
-        t[0] = t[2]
+        if t.slice[1].type == "PARIZQ":
+            t[0] = t[2]
+        else:
+            t[0] = Literal(t[2], Type.ARRAY, t.lineno(1), t.lexpos(0))
+        # TODO tengo que ver lo de los corchetes
 
 
 def p_nativas(t):
@@ -383,6 +403,9 @@ def p_nativas(t):
                         | TRUNC PARIZQ INT COMA expression PARDER
                         | TYPEOF PARIZQ expression PARDER
                         | PARSE PARIZQ tipo COMA expression PARDER
+                        | LENGTH PARIZQ expression PARDER
+                        | PUSH PARIZQ expression COMA expression PARDER
+                        | POP PARIZQ expression PARDER
                         '''
     if t.slice[1].type == "LOG":
         t[0] = Log(t[5], t[3], t.lineno(1), t.lexpos(0))
@@ -410,6 +433,12 @@ def p_nativas(t):
         t[0] = TypeOf(t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "PARSE":
         t[0] = Parse(t[5], t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "LENGTH":
+        t[0] = Length(t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "PUSH":
+        t[0] = Push(t[5], t[3], t.lineno(1), t.lexpos(0))
+    elif t.slice[1].type == "POP":
+        t[0] = Pop(t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_print_instr(t):
@@ -451,7 +480,7 @@ def p_definicion_instr(t):
 
 
 def p_asignacion_instr(t):
-    '''asignacion_instr   : ID IGUAL expression
+    '''asignacion_instr     : ID IGUAL expression
                             | LOCAL ID IGUAL expression
                             | GLOBAL ID IGUAL expression'''
     if len(t) == 4:
@@ -476,6 +505,13 @@ def p_definicion_asignacion_instr(t):
             t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), True, t[7])
 
 
+def p_asignacion_arreglo_instr(t):
+    '''asignacion_arreglo_instr     : ID index_list IGUAL expression'''
+    t[0] = AssignationList(t[1], t[2], t[4], t.lineno(1), t.lexpos(0))
+
+
+# todo tengo que hacer que se asignar y declarar los arreglos con index
+
 def p_call_function_instr(t):
     '''call_function    : ID PARIZQ PARDER
                         | ID PARIZQ exp_list PARDER'''
@@ -490,6 +526,16 @@ def p_exp_list_instr(t):
                         | expression'''
     if len(t) == 2:
         t[0] = [t[1]]
+    else:
+        t[1].append(t[3])
+        t[0] = t[1]
+
+
+def p_index_list_instr(t):
+    '''index_list       : index_list CORCHETEIZQ expression CORCHETEDER
+                        | CORCHETEIZQ expression CORCHETEDER'''
+    if len(t) == 4:
+        t[0] = [t[2]]
     else:
         t[1].append(t[3])
         t[0] = t[1]
