@@ -14,4 +14,6 @@ class Access(Expression):
             print("error la variable que busca no existe")
             return
         else:
+            if isinstance(value, dict):
+                return Return(value, type(value))
             return Return(value.value, value.type)

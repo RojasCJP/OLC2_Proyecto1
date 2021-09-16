@@ -29,7 +29,7 @@ class Environment:
 
     def save_var(self, id_var, value, types):
         env = self
-        if isinstance(value, int) or isinstance(value, bool) or isinstance(value, str) or isinstance(value, float):
+        if isinstance(value, int) or isinstance(value, bool) or isinstance(value, str) or isinstance(value, float) or isinstance(value,dict):
             new_sym = Sym(value, id_var, types)
         elif isinstance(value, list):
             arreglo = self.get_items_array(value)
@@ -49,7 +49,7 @@ class Environment:
     def save_var_struct(self, id_var, attributes, types):
         env = self
         new_sym = Sym(None, id_var, Type.STRUCT, types)
-        new_sym = attributes
+        new_sym.value = attributes
         while env is not None:
             if id_var in env.variables.keys():
                 env.variables[id_var] = new_sym
@@ -90,7 +90,7 @@ class Environment:
         while env is not None:
             if id_struct in env.structs.keys():
                 return env.structs[id_struct]
-            end = end.prev
+            env = env.prev
         return None
 
     def get_global_env(self):

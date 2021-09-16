@@ -1,41 +1,56 @@
-function swap(i, j, arr)
-    temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-    return arr;
+struct Actor
+    nombre;
+    edad;
 end;
 
-function bubbleSort(arr)
-    for i in 0:(length(arr) - 1)
-        for j in 1:(length(arr) - 1)
-            if(arr[j] > arr[j + 1])
-                arr =swap(j, j+1, arr);
-            end;
+struct Pelicula
+    nombre;
+    posicion;
+end;
+
+struct Contrato
+    actor;
+    pelicula;
+end;
+
+actores = ["Elizabeth Olsen", "Adam Sandler", "Christian Bale", "Jennifer Aniston"];
+peliculas = ["Avengers: Age of Ultron", "Mr. Deeds", "Batman: The Dark Knight", "Marley & Me"];
+
+function contratar(actor, pelicula)
+    contrato:: Contrato;
+    contrato.actor=actor;
+    contrato.pelicula=pelicula;
+    return contrato;
+end;
+
+function crearActor(nombre, edad)
+    actor::Actor;
+    actor.nombre = nombre;
+    actor.edad = edad;
+    return actor;
+end;
+
+function crearPelicula(nombre, posicion)
+    pelicula::Pelicula;
+    pelicula.nombre = nombre;
+    pelicula.posicion = posicion;
+    return pelicula;
+end;
+
+function imprimir(contrato)
+    println(contrato);
+end;
+
+function contratos()
+    for i in 1:(1*1+2)
+        contrato::Contrato;
+        if(i < 4)
+            actor = crearActor(actores[i], i+38);
+            pelicula = crearPelicula(peliculas[i], i);
+            contrato = contratar(actor, pelicula);
         end;
+        imprimir(contrato);
     end;
-               return arr;
 end;
 
-function insertionSort(arr)
-
-    for i in 1:length(arr)
-        j = i;
-        temp = arr[i];
-        while(j > 1 && arr[j - 1] > temp)
-            arr[j] = arr[j-1];
-            j = j - 1;
-        end;
-        arr[j] = temp;
-    end;
-    return arr;
-end;
-
-arreglo = [32,7*3,7,89,56,909,109,2,9,9874^0,44,3,820*10,11,8*0+8,10];
-arreglo = bubbleSort(arreglo);
-print("BubbleSort => ",arreglo);
-println("");
-
-arregloo = [32,7*3,7,89,56,909,109,2,9,9874^0,44,3,820*10,11,8*0+8,10];
-arregloo[1] = arregloo[2] - 21+4;
-arregloo = insertionSort(arregloo);
-print("InsertionSort => ",arregloo);
+contratos();

@@ -41,6 +41,10 @@ from ..interprete.comandos.nativas.length import *
 from ..interprete.comandos.nativas.push import *
 from ..interprete.comandos.nativas.pops import *
 
+from ..interprete.comandos.structs.assignation import *
+from ..interprete.comandos.structs.creation import *
+from ..interprete.comandos.structs.declaration import *
+
 from ..interprete.comandos.variables.asignacion import *
 from ..interprete.comandos.variables.declaracion import *
 from ..interprete.comandos.variables.asignacion_list import *
@@ -60,6 +64,7 @@ reservadas = {
     "Bool": "BOOL",
     "Char": "CHAR",
     "String": "STRING",
+    "struct": "STRUCT",
     "uppercase": "UPPERCASE",
     "lowercase": "LOWERCASE",
     "log10": "LOG10",
@@ -270,7 +275,10 @@ def p_instruccion(t):
                         | if_state PTCOMA
                         | while_state PTCOMA
                         | for_state PTCOMA
-                        | nativas PTCOMA'''
+                        | nativas PTCOMA
+                        | create_struct PTCOMA
+                        | declare_struct PTCOMA
+                        | assign_access PTCOMA'''
     t[0] = t[1]
 
 
@@ -621,6 +629,30 @@ def p_return(t):
     else:
         t[0] = ReturnST(t[2], t.lineno(1), t.lexpos(0))
 
+
+def p_createStruct(t):
+    'create_struct : STRUCT ID attList END'
+    t[0] = CreateStruct(t[2], t[3], t.lineno(1), t.lexpos(1))
+
+
+def p_attList(t):
+    '''attList :  attList ID PTCOMA
+                | ID PTCOMA'''
+    if len(t) == 3:
+        t[0] = [t[1]]
+    else:
+        t[1].append(t[2])
+        t[0] = t[1]
+
+
+def p_declareStruct(t):
+    'declare_struct : ID DOSP DOSP ID'
+    t[0] = DeclareStruct(t[1], t[4], t.lineno(1), t.lexpos(1))
+
+# ASSIGN ACCESS
+def p_assignAccess(t):
+    'assign_access : ID PUNTO ID IGUAL expression'
+    t[0] = AssignAccess(t[1], t[3], t[5], t.lineno(1), t.lexpos(1))
 
 def p_error(t):
     print(t)
