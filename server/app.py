@@ -23,7 +23,7 @@ ultima_entrada = ""
 def entrada(input):
     env = Environment(None)
     ast = parse(input)
-    arbol(input)
+    Environment.entrada = input
     try:
         for i in ast:
             i.execute(env)
@@ -60,7 +60,9 @@ def get_variables():
         nuevoObjeto["type"] = "struct"
         retorno.append(nuevoObjeto)
     retorno_true["value"] = retorno
-    print(retorno_true)
+    Environment.variables = {}
+    Environment.functions = {}
+    Environment.structs = {}
     return retorno_true
 
 
@@ -68,6 +70,7 @@ def get_variables():
 def get_errores():
     retorno = {}
     retorno["value"] = Environment.errores
+    Environment.errores = []
     return retorno
 
 
@@ -84,6 +87,7 @@ def entrada_codigo():
 
 @app.route("/ast")
 def get_ast():
-    arbol(ultima_entrada)
-    return{"text": "reporte generado"}
+    salida = arbol(Environment.entrada)
+    Environment.entrada = ""
+    return{"text": salida}
 # app.run(host='0.0.0.0', port=3000)

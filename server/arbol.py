@@ -203,7 +203,7 @@ def p_init(t):
     '''init            : instrucciones'''
     initial_node = Node("incial")
     initial_node.insert_child(t[1])
-    t[0] = initial_node
+    t[0] = initial_node.get_graph_ast()
     file = open("./salida.txt", "w")
     file.write(initial_node.get_graph_ast())
 
@@ -355,7 +355,7 @@ def p_nativas(t):
     if t.slice[1].type == "LOG":
         nativa.insert_child(Node("log"))
         nativa.insert_child(Node("("))
-        nativa.insert_child(Node(Node(t[3])))
+        nativa.insert_child(Node(t[3]))
         nativa.insert_child(Node(","))
         nativa.insert_child(t[5])
         nativa.insert_child(Node(")"))
@@ -407,7 +407,7 @@ def p_nativas(t):
     elif t.slice[1].type == "TRUNC":
         nativa.insert_child(Node("log"))
         nativa.insert_child(Node("("))
-        nativa.insert_child(Node(Node(t[3])))
+        nativa.insert_child(Node(t[3]))
         nativa.insert_child(Node(","))
         nativa.insert_child(t[5])
         nativa.insert_child(Node(")"))
@@ -685,13 +685,14 @@ def p_else_if_list(t):
         if_list.insert_child(Node("elseif"))
         if_list.insert_child(t[2])
         if_list.insert_child(t[3])
-        if_list.insert_child(Node("else"))
-        if_list.insert_child(t[5])
+        if_list.insert_child(t[4])
     elif len(t) == 6:
         if_list.insert_child(Node("elseif"))
         if_list.insert_child(t[2])
         if_list.insert_child(t[3])
-        if_list.insert_child(t[4])
+        if_list.insert_child(Node("else"))
+        if_list.insert_child(t[5])
+    t[0] = if_list
 
 
 def p_while_state(t):

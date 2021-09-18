@@ -19,6 +19,7 @@ class Node:
 
     def graph_ast(self, padre, temp):
         for child in temp.child:
+            print(child.value)
             child_name = "nodo"+str(self.contador)
             self.grafo += child_name + \
                 "[label=\"" + str(child.value) + "\"];\n"

@@ -29,7 +29,6 @@ export class Editor extends Component {
                     <h1>Editor</h1>
                 </div>
                 <div>
-                    <button class='btn btn-dark m-2' onClick={() => this.state.redirect = "/reportes"}>Reportes</button>
                     <button class='btn btn-dark m-2' onClick={() => this.entrada_datos()}>Compilar
                     </button>
                 </div>

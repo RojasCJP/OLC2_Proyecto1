@@ -7,6 +7,7 @@ class Environment:
     functions = {}
     structs = {}
     errores = []
+    entrada = ""
 
     def __init__(self, prev_env):
         self.variables = {}
