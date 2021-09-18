@@ -19,7 +19,7 @@ class Relational(Expression):
         self.right = right
         self.type = type
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         left_value = self.left.execute(environment)
         right_value = self.right.execute(environment)
 

@@ -7,7 +7,7 @@ class AccessStruct(Expression):
         self.id = idd
         self.attribute = attribute
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         var = None
         if isinstance(self.id, AccessStruct):
             var = self.id.execute(environment)

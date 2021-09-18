@@ -1,6 +1,6 @@
+from interprete.enviroment.environment import Environment
 from ..abstracts.expression import *
 from ..abstracts.returns import *
-from server.interprete.enviroment.environment import *
 
 
 class CallFunc(Expression):
@@ -10,14 +10,15 @@ class CallFunc(Expression):
         self.id = idd
         self.params = params
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         try:
             func = environment.get_function(self.id)
             if func is not None:
                 new_env = Environment(environment.get_global_env())
                 for i, param in enumerate(self.params):
                     value = self.params[i].execute(environment)
-                    new_env.save_var(func.params[i].id, value.value, value.type)
+                    new_env.save_var(
+                        func.params[i].id, value.value, value.type)
                 res = func.instructions.execute(new_env)
                 if res is not None:
                     if res.type == Type.RETURN_ST:

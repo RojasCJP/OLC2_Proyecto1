@@ -17,7 +17,7 @@ class Logic(Expression):
         self.right = right
         self.type = types
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         leftValue = self.left.execute(environment)
         rightValue = self.right.execute(environment)
 

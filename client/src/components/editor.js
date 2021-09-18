@@ -1,12 +1,14 @@
-import React, {Component} from 'react'
-import {UnControlled as CodeMirror} from 'react-codemirror2';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/theme/monokai.css';
-import 'codemirror/lib/codemirror.css';
+import React, { Component } from 'react'
+import { UnControlled as CodeMirror } from 'react-codemirror2'
+import { Redirect } from "react-router-dom"
+import 'codemirror/mode/javascript/javascript'
+import 'codemirror/theme/monokai.css'
+import 'codemirror/lib/codemirror.css'
 
 export class Editor extends Component {
     state = {
         value: '',
+        redirect: null
     }
 
     onChange = (editor, data, value) => {
@@ -14,24 +16,25 @@ export class Editor extends Component {
             code: '',
             console: '',
             stado: false,
-        });
+        })
     };
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
         return (
             <div>
                 <div>
                     <h1>Editor</h1>
                 </div>
                 <div>
-                    <button class='btn btn-dark m-2'>Abrir</button>
-                    <button class='btn btn-dark m-2'>Reportes</button>
+                    <button class='btn btn-dark m-2' onClick={() => this.state.redirect = "/reportes"}>Reportes</button>
                     <button class='btn btn-dark m-2' onClick={() => this.entrada_datos()}>Compilar
                     </button>
-                    <button class='btn btn-dark m-2'>Gramaticas</button>
                 </div>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <div class="row">
                     <div class="col" className="editor">
                         <CodeMirror
@@ -42,7 +45,7 @@ export class Editor extends Component {
                                 lineNumbers: true,
                             }}
                             onChange={(editor, data, value) => {
-                                this.setState({code: value})
+                                this.setState({ code: value })
                             }}
                         ></CodeMirror>
                     </div>
@@ -59,7 +62,7 @@ export class Editor extends Component {
                                 lineNumbers: false,
                             }}
                             onChange={(editor, data, value) => {
-                                this.setState({console: value})
+                                this.setState({ console: value })
                             }}
                         ></CodeMirror>
                     </div>
@@ -69,17 +72,17 @@ export class Editor extends Component {
     }
 
     entrada_datos() {
-        var codigoEnviar = {"code": this.state.code}
+        var codigoEnviar = { "code": this.state.code }
         console.log(codigoEnviar)
         console.log(this.state.console)
-        fetch('http://192.168.0.19:3000/entrada', {
+        fetch('https://jolc-server.herokuapp.com/entrada', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(codigoEnviar)
         })
             .then(async response => {
                 const json = await response.json()
-                this.setState({console: json.text})
+                this.setState({ console: json.text })
             })
     }
 

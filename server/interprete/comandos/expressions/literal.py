@@ -8,5 +8,5 @@ class Literal(Expression):
         self.value = value
         self.type = types
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         return Return(self.value, self.type)

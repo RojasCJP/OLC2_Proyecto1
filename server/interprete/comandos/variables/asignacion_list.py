@@ -13,7 +13,7 @@ class AssignationList(Expression):
         self.index = index
         self.value = value
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         value = environment.get_var(self.id)
         result = Literal(0, Type.UNDEFINED, self.line, self.column)
         valor_retorno = value.value
@@ -27,25 +27,29 @@ class AssignationList(Expression):
             elif len(self.index) == 2:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
-                valor_retorno[valor0][valor1] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 3:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
                 valor2 = self.return_value(self.index[2], environment)-1
-                valor_retorno[valor0][valor1][valor2] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 4:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
                 valor2 = self.return_value(self.index[2], environment)-1
                 valor3 = self.return_value(self.index[3], environment)-1
-                valor_retorno[valor0][valor1][valor2][valor3] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2][valor3] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 5:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
                 valor2 = self.return_value(self.index[2], environment)-1
                 valor3 = self.return_value(self.index[3], environment)-1
                 valor4 = self.return_value(self.index[4], environment)-1
-                valor_retorno[valor0][valor1][valor2][valor3][valor4] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2][valor3][valor4] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 6:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
@@ -53,7 +57,8 @@ class AssignationList(Expression):
                 valor3 = self.return_value(self.index[3], environment)-1
                 valor4 = self.return_value(self.index[4], environment)-1
                 valor5 = self.return_value(self.index[5], environment)-1
-                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 7:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
@@ -62,7 +67,8 @@ class AssignationList(Expression):
                 valor4 = self.return_value(self.index[4], environment)-1
                 valor5 = self.return_value(self.index[5], environment)-1
                 valor6 = self.return_value(self.index[6], environment)-1
-                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 8:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
@@ -72,7 +78,8 @@ class AssignationList(Expression):
                 valor5 = self.return_value(self.index[5], environment)-1
                 valor6 = self.return_value(self.index[6], environment)-1
                 valor7 = self.return_value(self.index[7], environment)-1
-                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6][valor7] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6][valor7] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 9:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
@@ -83,7 +90,8 @@ class AssignationList(Expression):
                 valor6 = self.return_value(self.index[6], environment)-1
                 valor7 = self.return_value(self.index[7], environment)-1
                 valor8 = self.return_value(self.index[8], environment)-1
-                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6][valor7][valor8] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6][valor7][valor8] = self.get_value(
+                    self.value, environment)
             elif len(self.index) == 10:
                 valor0 = self.return_value(self.index[0], environment)-1
                 valor1 = self.return_value(self.index[1], environment)-1
@@ -95,7 +103,8 @@ class AssignationList(Expression):
                 valor7 = self.return_value(self.index[7], environment)-1
                 valor8 = self.return_value(self.index[8], environment)-1
                 valor9 = self.return_value(self.index[9], environment)-1
-                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6][valor7][valor8][valor9] = self.get_value(self.value, environment)
+                valor_retorno[valor0][valor1][valor2][valor3][valor4][valor5][valor6][valor7][valor8][valor9] = self.get_value(
+                    self.value, environment)
         result.value = valor_retorno
         return None
 

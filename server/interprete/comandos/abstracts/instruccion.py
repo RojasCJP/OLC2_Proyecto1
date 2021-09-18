@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from server.interprete.enviroment.environment import Environment
+from interprete.enviroment.environment import Environment
 
 
 class Instruction(ABC):

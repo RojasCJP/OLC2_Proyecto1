@@ -11,7 +11,7 @@ class AccessList(Expression):
         self.id = idd
         self.index = index
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         value = environment.get_var(self.id)
         valor_retorno = value.value
         if value is None:

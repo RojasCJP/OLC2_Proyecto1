@@ -19,7 +19,7 @@ class Arithmetic(Expression):
         self.right = right
         self.type = types
 
-    def execute(self, environment: Environment):
+    def execute(self, environment):
         leftValue = self.left.execute(environment)
         rightValue = self.right.execute(environment)
 
@@ -47,7 +47,8 @@ class Arithmetic(Expression):
             result.type = Type.FLOAT
         elif self.type == ArithmeticEnum.RAISED:
             if leftValue.type == Type.STRING and rightValue.type == Type.INT:
-                result.value = self.raised_string(leftValue.value, rightValue.value)
+                result.value = self.raised_string(
+                    leftValue.value, rightValue.value)
                 result.type = Type.STRING
                 return result
             result.value = leftValue.value ** rightValue.value

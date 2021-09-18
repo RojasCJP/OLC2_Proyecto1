@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from server.interprete.enviroment.environment import *
 
 
 class Expression(ABC):
@@ -8,4 +7,4 @@ class Expression(ABC):
         self.column = column
 
     @abstractmethod
-    def execute(self, environment: Environment): pass
+    def execute(self, environment): pass

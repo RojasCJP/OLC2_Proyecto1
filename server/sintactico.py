@@ -1,53 +1,53 @@
 import ply.yacc as yacc
 import ply.lex as lex
 
-from ..interprete.comandos.expressions.access import *
-from ..interprete.comandos.expressions.access_expression import *
-from ..interprete.comandos.expressions.arithmetic import *
-from ..interprete.comandos.expressions.logic import *
-from ..interprete.comandos.expressions.call_func import *
-from ..interprete.comandos.expressions.access_list import *
-from ..interprete.comandos.expressions.literal import *
-from ..interprete.comandos.expressions.relational import *
+from interprete.comandos.expressions.access import *
+from interprete.comandos.expressions.access_expression import *
+from interprete.comandos.expressions.arithmetic import *
+from interprete.comandos.expressions.logic import *
+from interprete.comandos.expressions.call_func import *
+from interprete.comandos.expressions.access_list import *
+from interprete.comandos.expressions.literal import *
+from interprete.comandos.expressions.relational import *
 
-from ..interprete.comandos.funciones.param import *
-from ..interprete.comandos.funciones.function import *
-from ..interprete.comandos.funciones.return_st import *
+from interprete.comandos.funciones.param import *
+from interprete.comandos.funciones.function import *
+from interprete.comandos.funciones.return_st import *
 
-from ..interprete.comandos.condicionales.ifs import *
+from interprete.comandos.condicionales.ifs import *
 
-from ..interprete.comandos.ciclos.whiles import *
-from ..interprete.comandos.ciclos.fors import *
+from interprete.comandos.ciclos.whiles import *
+from interprete.comandos.ciclos.fors import *
 
-from ..interprete.comandos.ciclos.breaks import *
-from ..interprete.comandos.ciclos.continues import *
+from interprete.comandos.ciclos.breaks import *
+from interprete.comandos.ciclos.continues import *
 
-from ..interprete.comandos.statement import *
+from interprete.comandos.statement import *
 
-from ..interprete.comandos.nativas.print import *
-from ..interprete.comandos.nativas.log import *
-from ..interprete.comandos.nativas.cos import *
-from ..interprete.comandos.nativas.sin import *
-from ..interprete.comandos.nativas.tan import *
-from ..interprete.comandos.nativas.sqrt import *
-from ..interprete.comandos.nativas.uppercase import *
-from ..interprete.comandos.nativas.lowercase import *
-from ..interprete.comandos.nativas.string import *
-from ..interprete.comandos.nativas.float import *
-from ..interprete.comandos.nativas.parse import *
-from ..interprete.comandos.nativas.trunc import *
-from ..interprete.comandos.nativas.typeof import *
-from ..interprete.comandos.nativas.length import *
-from ..interprete.comandos.nativas.push import *
-from ..interprete.comandos.nativas.pops import *
+from interprete.comandos.nativas.print import *
+from interprete.comandos.nativas.log import *
+from interprete.comandos.nativas.cos import *
+from interprete.comandos.nativas.sin import *
+from interprete.comandos.nativas.tan import *
+from interprete.comandos.nativas.sqrt import *
+from interprete.comandos.nativas.uppercase import *
+from interprete.comandos.nativas.lowercase import *
+from interprete.comandos.nativas.string import *
+from interprete.comandos.nativas.float import *
+from interprete.comandos.nativas.parse import *
+from interprete.comandos.nativas.trunc import *
+from interprete.comandos.nativas.typeof import *
+from interprete.comandos.nativas.length import *
+from interprete.comandos.nativas.push import *
+from interprete.comandos.nativas.pops import *
 
-from ..interprete.comandos.structs.assignation import *
-from ..interprete.comandos.structs.creation import *
-from ..interprete.comandos.structs.declaration import *
+from interprete.comandos.structs.assignation import *
+from interprete.comandos.structs.creation import *
+from interprete.comandos.structs.declaration import *
 
-from ..interprete.comandos.variables.asignacion import *
-from ..interprete.comandos.variables.declaracion import *
-from ..interprete.comandos.variables.asignacion_list import *
+from interprete.comandos.variables.asignacion import *
+from interprete.comandos.variables.declaracion import *
+from interprete.comandos.variables.asignacion_list import *
 
 reservadas = {
     "println": "PRINTLN",
@@ -93,39 +93,39 @@ reservadas = {
 }
 
 tokens = [
-             "PTCOMA",
-             "DOSP",
-             "PUNTO",
-             "COMA",
-             "LLAVIZQ",
-             "LLAVDER",
-             "CORCHETEIZQ",
-             "CORCHETEDER",
-             "PARIZQ",
-             "PARDER",
-             "IGUAL",
-             "MAS",
-             "MENOS",
-             "POR",
-             "DIVIDIDO",
-             "POTENCIA",
-             "MODULO",
-             "CONCAT",
-             "MENQUE",
-             "MENIGUALQUE",
-             "MAYQUE",
-             "MAYIGUALQUE",
-             "OR",
-             "AND",
-             "NOT",
-             "IGUALQUE",
-             "NIGUALQUE",
-             "DECIMAL",
-             "ENTERO",
-             "CADENA",
-             "CARACTER",
-             "ID"
-         ] + list(reservadas.values())
+    "PTCOMA",
+    "DOSP",
+    "PUNTO",
+    "COMA",
+    "LLAVIZQ",
+    "LLAVDER",
+    "CORCHETEIZQ",
+    "CORCHETEDER",
+    "PARIZQ",
+    "PARDER",
+    "IGUAL",
+    "MAS",
+    "MENOS",
+    "POR",
+    "DIVIDIDO",
+    "POTENCIA",
+    "MODULO",
+    "CONCAT",
+    "MENQUE",
+    "MENIGUALQUE",
+    "MAYQUE",
+    "MAYIGUALQUE",
+    "OR",
+    "AND",
+    "NOT",
+    "IGUALQUE",
+    "NIGUALQUE",
+    "DECIMAL",
+    "ENTERO",
+    "CADENA",
+    "CARACTER",
+    "ID"
+] + list(reservadas.values())
 
 # Tokens
 t_PTCOMA = r';'
@@ -222,6 +222,11 @@ def t_newline(t):
 
 
 def t_error(t):
+    error_lexico = {}
+    error_lexico["type"] = "lexico"
+    error_lexico["value"] = "Caracter no reconocido " + t.value[0] + "\n"
+    Environment.errores.append(error_lexico)
+    Print.printlist += "Caracter no reconocido " + t.value[0] + "\n"
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
@@ -508,9 +513,11 @@ def p_definicion_asignacion_instr(t):
         t[0] = Declaration(t[1], t[3], t.lineno(1), t.lexpos(0), False, t[6])
     else:
         if t.slice[1].type == "LOCAL":
-            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), False, t[7])
+            t[0] = Declaration(t[2], t[4], t.lineno(1),
+                               t.lexpos(0), False, t[7])
         elif t.slice[1].type == "GLOBAL":
-            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0), True, t[7])
+            t[0] = Declaration(t[2], t[4], t.lineno(1),
+                               t.lexpos(0), True, t[7])
 
 
 def p_asignacion_arreglo_instr(t):
@@ -650,21 +657,29 @@ def p_declareStruct(t):
     t[0] = DeclareStruct(t[1], t[4], t.lineno(1), t.lexpos(1))
 
 # ASSIGN ACCESS
+
+
 def p_assignAccess(t):
     'assign_access : ID PUNTO ID IGUAL expression'
     t[0] = AssignAccess(t[1], t[3], t[5], t.lineno(1), t.lexpos(1))
 
+
 def p_error(t):
     print(t)
     print("Error sintáctico en '%s'" % t.value)
+    error_sintactico = {}
+    error_sintactico["type"] = "sintactico"
+    error_sintactico["value"] = "Error sintactico en " + t.value+"\n"
+    Environment.errores.append(error_sintactico)
+    Print.printlist += "Error sintactico en " + t.value+"\n"
 
 
 parser = yacc.yacc()
 
 
 def parse(input):
-    f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
-    input = f.read()
+    # f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
+    # input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     parser.parse(input)
     return parser.parse(input)
