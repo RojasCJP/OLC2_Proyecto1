@@ -414,6 +414,7 @@ def p_nativas(t):
                         | TOSTRING PARIZQ expression PARDER
                         | TOFLOAT PARIZQ expression PARDER
                         | TRUNC PARIZQ INT COMA expression PARDER
+                        | TRUNC PARIZQ expression PARDER
                         | TYPEOF PARIZQ expression PARDER
                         | PARSE PARIZQ tipo COMA expression PARDER
                         | LENGTH PARIZQ expression PARDER
@@ -441,7 +442,10 @@ def p_nativas(t):
     elif t.slice[1].type == "TOFLOAT":
         t[0] = ToFloat(t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "TRUNC":
-        t[0] = Trunc(t[5], t.lineno(1), t.lexpos(0))
+        if len(t) == 5:
+            t[0] = Trunc(t[3], t.lineno(1), t.lexpos(0))
+        else:
+            t[0] = Trunc(t[5], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "TYPEOF":
         t[0] = TypeOf(t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "PARSE":

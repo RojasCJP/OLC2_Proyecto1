@@ -1,56 +1,39 @@
-struct Actor
-    nombre;
-    edad;
-end;
+val1 = 1::Int64;
+val2 = 10::Int64;
+val3 = 2021.2020::Float64;
 
-struct Pelicula
-    nombre;
-    posicion;
-end;
+println("Probando declaracion de variables");
+println(val1, " ", val2, " ", val3);
+println("---------------------------------");
+val1 = val1 + 41 - 123 * 4 / (2 + 2 * 2) - (10 + (125 % 5)) * 2 ^ 2;
+val2 = 11 * (11 % (12 + -10)) + 22 / 2;
+val3 = 2 ^ (2 * 12 / 6) + 25 / 5;
+println("Probando asignación de variables y aritmeticas");
+println(val1, " ", val2, " ", val3);
+println("---------------------------------");
 
-struct Contrato
-    actor;
-    pelicula;
-end;
+rel1 = (((val1 - val2) == 24) && (true && (false || 5 >= 5))) || ((7*7) != (15+555) || -61 > 51);
+rel2 = (7*7) <= (15+555) && 1 < 2;
+rel3 = ((0 == 0) != ((532 > 532)) == ("Hola" == "Hola")) && (false || (false == true));
+println("Probando relacionales y logicas");
+println(rel1, " ", rel2, " ", rel3);
+println("---------------------------------");
 
-actores = ["Elizabeth Olsen", "Adam Sandler", "Christian Bale", "Jennifer Aniston"];
-peliculas = ["Avengers: Age of Ultron", "Mr. Deeds", "Batman: The Dark Knight", "Marley & Me"];
+println("OPERACIONES " * "CON " * "Cadenas"^3);
+despedida = "Adios mundo :c";
+println(uppercase("Hola Mundo! ") * lowercase(despedida));
 
-function contratar(actor, pelicula)
-    contrato:: Contrato;
-    contrato.actor=actor;
-    contrato.pelicula=pelicula;
-    return contrato;
-end;
-
-function crearActor(nombre, edad)
-    actor::Actor;
-    actor.nombre = nombre;
-    actor.edad = edad;
-    return actor;
-end;
-
-function crearPelicula(nombre, posicion)
-    pelicula::Pelicula;
-    pelicula.nombre = nombre;
-    pelicula.posicion = posicion;
-    return pelicula;
-end;
-
-function imprimir(contrato)
-    println(contrato);
-end;
-
-function contratos()
-    for i in 1:(1*1+2)
-        contrato::Contrato;
-        if(i < 4)
-            actor = crearActor(actores[i], i+38);
-            pelicula = crearPelicula(peliculas[i], i);
-            contrato = contratar(actor, pelicula);
-        end;
-        imprimir(contrato);
-    end;
-end;
-
-contratos();
+println("Probando funciones nativas de JOLC");
+println("Funciones de operaciones aritmeticas");
+val3 = log10(1000) * log(2, 4);
+print("log10(1000) * log(2, 4): ");
+println(val3);
+println(sin(134), " ", cos(val1), " ", tan(12), " ", sqrt(100));
+println("Funciones relacionadas a conversiones");
+println(parse(Float64, "3.141516"), " ", parse(Int64, "45"));
+println(trunc(35.156105));
+println(float(11));
+carnet = "201807394";
+println("Hola " * string(carnet));
+println(typeof(val1), " ", typeof(rel1));
+println("---------------------------------");
