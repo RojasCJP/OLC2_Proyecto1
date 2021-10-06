@@ -15,6 +15,7 @@ export class Editor extends Component {
         this.setState({
             code: '',
             console: '',
+            direcciones: '',
             stado: false,
         })
     };
@@ -65,6 +66,23 @@ export class Editor extends Component {
                             }}
                         ></CodeMirror>
                     </div>
+                </div>
+                <div>
+                    <h1>3 Direcciones</h1>
+                </div>
+                <div class="col" className="editor">
+                    <CodeMirror
+                        value={this.state.direcciones}
+                        options={{
+                            theme: 'monokai',
+                            mode: 'javascript',
+                            readOnly: true,
+                            lineNumbers: true,
+                        }}
+                        onChange={(editor, data, value) => {
+                            this.setState({ direcciones: value })
+                        }}
+                    ></CodeMirror>
                 </div>
             </div>
         )
