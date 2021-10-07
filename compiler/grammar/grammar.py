@@ -3,9 +3,19 @@ import ply.lex as lex
 
 from symbol.Environment import *
 from abstract.Return import *
+
 from instruction.Statement import *
 from instruction.nativas.Print import *
 from instruction.functions.Param import *
+
+from expressions.Access_struct import *
+from expressions.Access import *
+from expressions.Arithmetic import *
+from expressions.Call_func import *
+from expressions.Literal import *
+from expressions.Logical import *
+from expressions.Relational import *
+
 reservadas = {
     "println": "PRINTLN",
     "print": "PRINT",

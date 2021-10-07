@@ -39,7 +39,7 @@ class Environment:
                         self.get_items_array(element_value.value))
         return array_return
 
-    def saveVar(self, id_var, sym_type, in_heap):
+    def save_var(self, id_var, sym_type, in_heap):
         if id_var in self.variables.keys():
             print("Variable ya existe")
         else:
@@ -49,19 +49,19 @@ class Environment:
             self.variables[id_var] = newSymbol
         return self.variables[id_var]
 
-    def saveFunc(self, id_func, function):
+    def save_func(self, id_func, function):
         if id_func in self.functions.keys():
             print("Función repetida")
         else:
             self.functions[id_func] = function
 
-    def saveStruct(self, id_struct, attributes):
+    def save_struct(self, id_struct, attributes):
         if id_struct in self.structs.keys():
             print("Struct repetido")
         else:
             self.structs[id_struct] = attributes
 
-    def getVar(self, id_var):
+    def get_var(self, id_var):
         env = self
         while env != None:
             if id_var in env.variables.keys():
@@ -69,13 +69,13 @@ class Environment:
             env = env.prev
         return None
 
-    def getFunc(self, id_func):
+    def get_func(self, id_func):
         if id_func in self.functions.keys():
             return self.functions[id_func]
         else:
             return None
 
-    def getStruct(self, id_struct):
+    def get_struct(self, id_struct):
         env = self
         while env != None:
             if id_struct in env.structs.keys():
@@ -83,7 +83,7 @@ class Environment:
             end = end.prev
         return None
 
-    def getGlobal(self):
+    def get_global(self):
         env = self
         while env.prev != None:
             env = env.prev
