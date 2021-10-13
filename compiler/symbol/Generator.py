@@ -155,37 +155,37 @@ class Generator:
         self.print_string = True
         self.in_natives = True
 
-        self.addBegin_func('print_string')
+        self.add_begin_func('print_string')
         # Label para salir de la funcion
-        returnLbl = self.newLabel()
+        returnLbl = self.new_label()
         # Label para la comparacion para buscar fin de cadena
-        compareLbl = self.newLabel()
+        compareLbl = self.new_label()
 
         # Temporal puntero a Stack
-        tempP = self.addTemp()
+        tempP = self.add_temp()
 
         # Temporal puntero a Heap
-        tempH = self.addTemp()
+        tempH = self.add_temp()
 
-        self.addExp(tempP, 'P', '1', '+')
+        self.add_expression(tempP, 'P', '1', '+')
 
-        self.getStack(tempH, tempP)
+        self.get_stack(tempH, tempP)
 
         # Temporal para comparark
-        tempC = self.addTemp()
+        tempC = self.add_temp()
 
-        self.putLabel(compareLbl)
+        self.put_label(compareLbl)
 
-        self.getHeap(tempC, tempH)
+        self.get_heap(tempC, tempH)
 
-        self.addIf(tempC, '-1', '==', returnLbl)
+        self.add_if(tempC, '-1', '==', returnLbl)
 
-        self.addPrint('c', tempC)
+        self.add_print('c', tempC)
 
-        self.addExp(tempH, tempH, '1', '+')
+        self.add_expression(tempH, tempH, '1', '+')
 
-        self.addGoto(compareLbl)
+        self.add_goto(compareLbl)
 
-        self.putLabel(returnLbl)
-        self.addEndFunc()
+        self.put_label(returnLbl)
+        self.add_end_func()
         self.in_natives = False
