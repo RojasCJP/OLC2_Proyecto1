@@ -1,12 +1,13 @@
 import ply.yacc as yacc
 import ply.lex as lex
 
-from symbol.Environment import *
+from sym.Environment import *
 from abstract.Return import *
 
 from instruction.Statement import *
 from instruction.nativas.Print import *
 from instruction.functions.Param import *
+from instruction.variables.Declaration import *
 
 from expressions.Access_struct import *
 from expressions.Access import *
@@ -275,39 +276,52 @@ def p_expression(t):
         t[0] = t[1]
     elif len(t) == 3:
         if t[1] == "-":
-            # todo esto tiene que cambiar dependiendo del tipo del que me manden
-            pass
+            t[0] = Arithmetic(Literal(0, Type.INT, t.lineno(1), t.lexpos(
+                0)), t[2], ArithmethicOption.MINUS, t.lineno(1), t.lexpos(0))
         else:
+            # TODO este es el negado
             pass
     else:
         if t[2] == "+":
-            pass
+            t[0] = Arithmetic(t[1], t[3], ArithmethicOption.PLUS,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == "-":
-            pass
+            t[0] = Arithmetic(
+                t[1], t[3], ArithmethicOption.MINUS, t.lineno(1), t.lexpos(0))
         elif t[2] == "*":
-            pass
+            t[0] = Arithmetic(
+                t[1], t[3], ArithmethicOption.TIMES, t.lineno(1), t.lexpos(0))
         elif t[2] == "/":
-            pass
+            t[0] = Arithmetic(t[1], t[3], ArithmethicOption.DIV,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == "^":
             pass
         elif t[2] == "%":
             pass
         elif t[2] == "||":
-            pass
+            t[0] = Logical(t[1], t[3], LogicOption.OR,
+                           t.lineno(1), t.lexpos(0))
         elif t[2] == "&&":
-            pass
+            t[0] = Logical(t[1], t[3], LogicOption.AND,
+                           t.lineno(1), t.lexpos(0))
         elif t[2] == "<":
-            pass
+            t[0] = Relational(t[1], t[3], RelationalOption.LESS,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == ">":
-            pass
+            t[0] = Relational(
+                t[1], t[3], RelationalOption.GREATER, t.lineno(1), t.lexpos(0))
         elif t[2] == "<=":
-            pass
+            t[0] = Relational(
+                t[1], t[3], RelationalOption.LESSEQUAL, t.lineno(1), t.lexpos(0))
         elif t[2] == ">=":
-            pass
+            t[0] = Relational(
+                t[1], t[3], RelationalOption.GREATEREQUAL, t.lineno(1), t.lexpos(0))
         elif t[2] == "==":
-            pass
+            t[0] = Relational(t[1], t[3], RelationalOption.EQUAL,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == "!=":
-            pass
+            t[0] = Relational(
+                t[1], t[3], RelationalOption.DISTINCT, t.lineno(1), t.lexpos(0))
 
 
 # todo falta potencia y modulo
@@ -326,19 +340,19 @@ def p_final_expression(t):
                             | nativas'''
     if len(t) == 2:
         if t.slice[1].type == "ENTERO":
-            pass
+            t[0] = Literal(t[1], Type.INT, t.lineno(1), t.lexpos(0))
         if t.slice[1].type == "DECIMAL":
-            pass
+            t[0] = Literal(t[1], Type.FLOAT, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "FALSE":
-            pass
+            t[0] = Literal(False, Type.BOOL, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "TRUE":
-            pass
+            t[0] = Literal(True, Type.BOOL, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "CADENA":
-            pass
+            t[0] = Literal(str(t[1]), Type.STRING, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "CARACTER":
-            pass
+            t[0] = Literal(str(t[1]), Type.CHAR, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "ID":
-            pass
+            t[0] = Access(t[1], t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "call_function":
             pass
         elif t.slice[1].type == "nativas":
@@ -347,7 +361,7 @@ def p_final_expression(t):
         pass
     else:
         if t.slice[1].type == "PARIZQ":
-            pass
+            t[0] = t[2]
         else:
             pass
         # TODO tengo que ver lo de los corchetes
@@ -410,11 +424,13 @@ def p_nativas(t):
 
 
 def p_print_instr(t):
-    'print_instr    : PRINT PARIZQ exp_list PARDER'
+    'print_instr    : PRINT PARIZQ expression PARDER'
+    t[0] = Print(t[3], t.lineno(1), t.lexpos(0), False)
 
 
 def p_println_instr(t):
-    'println_instr  : PRINTLN PARIZQ exp_list PARDER'
+    'println_instr  : PRINTLN PARIZQ expression PARDER'
+    t[0] = Print(t[3], t.lineno(1), t.lexpos(0), True)
 
 
 def p_tipo(t):
@@ -440,9 +456,9 @@ def p_definicion_instr(t):
     '''definicion_instr   :  LOCAL ID
                             | GLOBAL ID'''
     if t.slice[1].type == "LOCAL":
-        pass
+        t[0] = Declaration(t[2], 0, t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "GLOBAL":
-        pass
+        t[0] = Declaration(t[2], 0, t.lineno(1), t.lexpos(0))
 
 
 def p_asignacion_instr(t):
@@ -450,12 +466,12 @@ def p_asignacion_instr(t):
                             | LOCAL ID IGUAL expression
                             | GLOBAL ID IGUAL expression'''
     if len(t) == 4:
-        pass
+        t[0] = Declaration(t[1], t[3], t.lineno(1), t.lexpos(0))
     else:
         if t.slice[1].type == "LOCAL":
-            pass
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0))
         else:
-            pass
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0))
 
 
 def p_definicion_asignacion_instr(t):
@@ -463,12 +479,12 @@ def p_definicion_asignacion_instr(t):
                                     | LOCAL ID IGUAL expression DOSP DOSP tipo
                                     | GLOBAL ID IGUAL expression DOSP DOSP tipo'''
     if len(t) == 7:
-        pass
+        t[0] = Declaration(t[1], t[3], t.lineno(1), t.lexpos(0))
     else:
         if t.slice[1].type == "LOCAL":
-            pass
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "GLOBAL":
-            pass
+            t[0] = Declaration(t[2], t[4], t.lineno(1), t.lexpos(0))
 
 
 def p_asignacion_arreglo_instr(t):
@@ -623,8 +639,8 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    # f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\server\\analizadores\\pruebas.jl", "r")
-    # input = f.read()
+    f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\compiler\\grammar\\pruebas.jl", "r")
+    input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     parser.parse(input)
     return parser.parse(input)

@@ -1,6 +1,6 @@
 from abstract.Expression import *
 from abstract.Return import *
-from symbol.Generator import *
+from sym.Generator import *
 from enum import Enum
 import uuid
 
@@ -16,7 +16,7 @@ class ArithmethicOption(Enum):
 
 class Arithmetic(Expression):
     def __init__(self, left, right, type, line, column):
-        Expression.__init__(line, column)
+        Expression.__init__(self, line, column)
         self.left = left
         self.right = right
         self.type = type

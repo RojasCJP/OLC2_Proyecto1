@@ -1,6 +1,6 @@
 from abstract.Expression import *
 from abstract.Return import *
-from symbol.Generator import Generator
+from sym.Generator import Generator
 import uuid
 
 

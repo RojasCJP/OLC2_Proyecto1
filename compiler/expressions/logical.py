@@ -1,6 +1,6 @@
 from abstract.Expression import *
 from abstract.Return import *
-from symbol.Generator import *
+from sym.Generator import *
 from enum import Enum
 
 

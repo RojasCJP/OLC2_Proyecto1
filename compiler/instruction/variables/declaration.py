@@ -1,4 +1,4 @@
-from symbol.Generator import *
+from sym.Generator import *
 from abstract.Instruction import *
 from abstract.Return import *
 

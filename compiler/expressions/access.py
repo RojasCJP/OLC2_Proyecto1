@@ -1,4 +1,4 @@
-from symbol.Generator import *
+from sym.Generator import *
 from abstract.Expression import *
 from abstract.Return import *
 
@@ -6,7 +6,7 @@ from abstract.Return import *
 class Access(Expression):
 
     def __init__(self, id, line, column):
-        Expression.__init__(line, column)
+        Expression.__init__(self, line, column)
         self.id = id
 
     def compile(self, env):

@@ -40,7 +40,7 @@ class Generator:
         return ret
 
     def get_code(self):
-        return f'{self.getHeader()}{self.natives}\n{self.funcs}\nfunc main(){{\n{self.code}\n}}'
+        return f'{self.get_header()}{self.natives}\n{self.funcs}\nfunc main(){{\n{self.code}\n}}'
 
     def code_in(self, code, tab="\t"):
         if(self.in_natives):
@@ -55,7 +55,7 @@ class Generator:
             self.code = self.code + '\t' + code
 
     def add_comment(self, comment):
-        self.codeIn(f'/* {comment} */\n')
+        self.code_in(f'/* {comment} */\n')
 
     def get_instance(self):
         if Generator.generator == None:
@@ -63,90 +63,90 @@ class Generator:
         return Generator.generator
 
     def add_space(self):
-        self.codeIn("\n")
+        self.code_in("\n")
 
     # Manejo de Temporales
     def add_temp(self):
-        temp = f't{self.countTemp}'
-        self.countTemp += 1
+        temp = f't{self.count_temp}'
+        self.count_temp += 1
         self.temps.append(temp)
         return temp
 
     # Manejo de Labels
     def new_label(self):
-        label = f'L{self.countLabel}'
-        self.countLabel += 1
+        label = f'L{self.count_label}'
+        self.count_label += 1
         return label
 
     def put_label(self, label):
-        self.codeIn(f'{label}:\n')
+        self.code_in(f'{label}:\n')
 
     # GOTO
     def add_goto(self, label):
-        self.codeIn(f'goto {label};\n')
+        self.code_in(f'goto {label};\n')
 
     # IF
     def add_if(self, left, right, op, label):
-        self.codeIn(f'if {left} {op} {right} {{goto {label};}}\n')
+        self.code_in(f'if {left} {op} {right} {{goto {label};}}\n')
 
     # EXPRESIONES
     def add_expression(self, result, left, right, op):
-        self.codeIn(f'{result}={left}{op}{right};\n')
+        self.code_in(f'{result}={left}{op}{right};\n')
 
     # FUNCS
     def add_begin_func(self, id):
         if(not self.in_natives):
             self.in_func = True
-        self.codeIn(f'func {id}(){{\n', '')
+        self.code_in(f'func {id}(){{\n', '')
 
     def add_end_func(self):
-        self.codeIn('return;\n}\n')
+        self.code_in('return;\n}\n')
         if(not self.in_natives):
             self.in_func = False
 
     # STACK
     def set_stack(self, pos, value):
-        self.codeIn(f'stack[int({pos})]={value};\n')
+        self.code_in(f'stack[int({pos})]={value};\n')
 
     def get_stack(self, place, pos):
-        self.codeIn(f'{place}=stack[int({pos})];\n')
+        self.code_in(f'{place}=stack[int({pos})];\n')
 
     # ENVS
     def new_env(self, size):
-        self.codeIn(f'P=P+{size};\n')
+        self.code_in(f'P=P+{size};\n')
 
     def call_fun(self, id):
-        self.codeIn(f'{id}();\n')
+        self.code_in(f'{id}();\n')
 
     def ret_env(self, size):
-        self.codeIn(f'P=P-{size};\n')
+        self.code_in(f'P=P-{size};\n')
 
     # HEAP
     def set_heap(self, pos, value):
-        self.codeIn(f'heap[int({pos})]={value};\n')
+        self.code_in(f'heap[int({pos})]={value};\n')
 
     def get_heap(self, place, pos):
-        self.codeIn(f'{place}=heap[int({pos})];\n')
+        self.code_in(f'{place}=heap[int({pos})];\n')
 
     def next_heap(self):
-        self.codeIn('H=H+1;\n')
+        self.code_in('H=H+1;\n')
 
     # INSTRUCCIONES
     def add_print(self, type, value):
-        self.codeIn(f'fmt.Printf("%{type}", int({value}));\n')
+        self.code_in(f'fmt.Printf("%{type}", int({value}));\n')
 
     def print_true(self):
-        self.addPrint("c", 116)
-        self.addPrint("c", 114)
-        self.addPrint("c", 117)
-        self.addPrint("c", 101)
+        self.add_print("c", 116)
+        self.add_print("c", 114)
+        self.add_print("c", 117)
+        self.add_print("c", 101)
 
     def print_false(self):
-        self.addPrint("c", 102)
-        self.addPrint("c", 97)
-        self.addPrint("c", 108)
-        self.addPrint("c", 115)
-        self.addPrint("c", 101)
+        self.add_print("c", 102)
+        self.add_print("c", 97)
+        self.add_print("c", 108)
+        self.add_print("c", 115)
+        self.add_print("c", 101)
 
     # NATIVES
     def fprint_string(self):

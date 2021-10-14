@@ -1,12 +1,12 @@
 import uuid
 from abstract.Instruction import *
 from abstract.Return import *
-from symbol.Generator import *
+from sym.Generator import *
 
 
 class Print(Instruction):
     def __init__(self, value, line, column, new_line=False):
-        Instruction.__init__(line, column)
+        Instruction.__init__(self, line, column)
         self.value = value
         self.new_line = new_line
 
@@ -32,7 +32,7 @@ class Print(Instruction):
             generator.add_expression(param_temp, param_temp, '1', '+')
             generator.set_stack(param_temp, val.value)
             generator.new_env(env.size)
-            generator.call_fun('printString')
+            generator.call_fun('print_string')
             temp = generator.add_temp()
             generator.get_stack(temp, 'P')
             generator.ret_env(env.size)
