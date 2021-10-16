@@ -12,9 +12,13 @@ def compile():
     try:
         for inst in ast:
             inst.compile(new_env)
-        print(generator.get_code())
-    except:
-        print("no se puede compilar")
+        C3D = generator.get_code()
+        print(C3D)
+        f = open("salida.go", 'w')
+        f.write(C3D)
+        f.close()
+    except Exception as e:
+        print("no se puede compilar", e)
 
 
 compile()

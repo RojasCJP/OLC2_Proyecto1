@@ -24,7 +24,7 @@ class Arithmetic(Expression):
     def compile(self, env):
         gen_aux = Generator()
         generator = gen_aux.get_instance()
-        left_value = self.left.complie(env)
+        left_value = self.left.compile(env)
         right_value = self.right.compile(env)
 
         temp = generator.add_temp()
