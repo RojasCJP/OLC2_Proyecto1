@@ -53,7 +53,6 @@ class Relational(Expression):
             if right.type != Type.BOOL:
                 print("error, no se pueden comparar")
                 return
-                # TODO tengo que pasarlo a la printlist
             goto_end = generator.new_label()
             right_temp = generator.add_temp()
             generator.put_label(right.true_lbl)

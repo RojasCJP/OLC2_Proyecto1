@@ -1,7 +1,7 @@
 from abstract.Instruction import *
 
 
-class Param(Instruction):
+class StructAttribute(Instruction):
 
     def __init__(self, id, type, line, column):
         Instruction.__init__(self, line, column)

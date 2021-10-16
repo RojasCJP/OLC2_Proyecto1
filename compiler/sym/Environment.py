@@ -15,8 +15,14 @@ class Environment:
         self.structs = {}
         self.prev = prev_env
         self.size = 0
+        self.break_lbl = ''
+        self.continue_lbl = ''
+        self.return_lbl = ''
         if prev_env is not None:
             self.size = self.prev.size
+            self.break_lbl = self.prev.break_lbl
+            self.continue_lbl = self.prev.continue_lbl
+            self.return_lbl = self.prev.return_lbl
 # TODO este metodo lo voy a tener que cambiar fijo
 # TODO tambien voy a tener que poner cosas en los accesos de seguro
 

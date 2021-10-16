@@ -1,1 +1,3 @@
- println("hola buenas");
+
+print("hola");
+print("otro");

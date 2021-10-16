@@ -14,6 +14,7 @@ class Generator:
         self.in_natives = False
         self.temps = []
         self.print_string = False
+        self.potencia = False
 
     def clean_all(self):
         self.count_temp = 0
@@ -187,5 +188,32 @@ class Generator:
         self.add_goto(compareLbl)
 
         self.put_label(returnLbl)
+        self.add_end_func()
+        self.in_natives = False
+
+    def fpotencia(self):
+        if(self.potencia):
+            return
+        self.potencia = True
+        self.in_natives = True
+        self.add_begin_func('potencia')
+        t0 = self.add_temp()
+        self.add_expression(t0, 'P', '1', '+')
+        t1 = self.add_temp()
+        self.get_stack(t1, t0)
+        self.add_expression(t0, t0, '1', '+')
+        t2 = self.add_temp()
+        self.get_stack(t2, t0)
+        self.add_expression(t0, t1, '', '')
+        L0 = self.new_label()
+        L1 = self.new_label()
+
+        self.put_label(L0)
+        self.add_if(t2, '1', '<=', L1)
+        self.add_expression(t1, t1, t0, '*')
+        self.add_expression(t2, t2, '1', '-')
+        self.add_goto(L0)
+        self.add_goto(L1)
+        self.set_stack('P', t1)
         self.add_end_func()
         self.in_natives = False

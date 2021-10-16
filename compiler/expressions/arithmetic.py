@@ -37,5 +37,22 @@ class Arithmetic(Expression):
             op = '*'
         elif self.type == ArithmethicOption.DIV:
             op = '/'
-        generator.add_expression(temp, left_value.value, right_value.value, op)
-        return Return(temp, Type.INT, True)
+
+        if (self.type == ArithmethicOption.RAISED):
+            generator.f_potencia()
+            param_temp = generator.add_temp()
+            generator.add_expression(param_temp, 'P', env.size, '+')
+            generator.add_expression(param_temp, param_temp, '1', '+')
+            generator.set_stack(param_temp, left_value.value)
+            generator.add_expression(param_temp, param_temp, '1', '+')
+            generator.set_stack(param_temp, right_value.value)
+            generator.new_env(env.size)
+            generator.call_fun('potencia')
+            temp = generator.add_temp()
+            generator.get_stack(temp, 'P')
+            generator.ret_env(env.size)
+            return Return(temp, Type.INT, True)
+        else:
+            generator.add_expression(
+                temp, left_value.value, right_value.value, op)
+            return Return(temp, Type.INT, True)
