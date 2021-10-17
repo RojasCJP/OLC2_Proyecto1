@@ -9,7 +9,7 @@ class ReturnSt(Expression):
         Expression.__init__(self, line, column)
         self.expr = expr
 
-    def compiel(self, env):
+    def compile(self, env):
         if(env.return_lbl == ''):
             print("return fuera de funcion")
             return

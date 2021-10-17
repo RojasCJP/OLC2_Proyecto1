@@ -4,10 +4,26 @@ import ply.lex as lex
 from sym.Environment import *
 from abstract.Return import *
 
-from instruction.Statement import *
-from instruction.nativas.Print import *
+from instruction.conditionals.If import *
+
 from instruction.functions.Param import *
+from instruction.functions.Function import *
+from instruction.functions.ReturnST import *
+
+from instruction.loops.Break import *
+from instruction.loops.Continue import *
+from instruction.loops.While import *
+
+from instruction.nativas.Print import *
+
+from instruction.structs.AssignAccess import *
+from instruction.structs.CreateStruct import *
+from instruction.structs.DeclareStruct import *
+from instruction.structs.StructAttr import *
+
 from instruction.variables.Declaration import *
+
+from instruction.Statement import *
 
 from expressions.Access_struct import *
 from expressions.Access import *
@@ -337,6 +353,7 @@ def p_final_expression(t):
                             | TRUE
                             | FALSE
                             | call_function
+                            | access_struct
                             | nativas'''
     if len(t) == 2:
         if t.slice[1].type == "ENTERO":
@@ -353,8 +370,8 @@ def p_final_expression(t):
             t[0] = Literal(str(t[1]), Type.CHAR, t.lineno(1), t.lexpos(0))
         elif t.slice[1].type == "ID":
             t[0] = Access(t[1], t.lineno(1), t.lexpos(0))
-        elif t.slice[1].type == "call_function":
-            pass
+        elif t.slice[1].type == "call_function" or t.slice[1].type == "access_struct":
+            t[0] = t[1]
         elif t.slice[1].type == "nativas":
             pass
     elif len(t) == 3:
@@ -498,9 +515,9 @@ def p_call_function_instr(t):
     '''call_function    : ID PARIZQ PARDER
                         | ID PARIZQ exp_list PARDER'''
     if len(t) == 4:
-        pass
+        t[0] = CallFunc(t[1], [], t.lineno(1), t.lexpos(0))
     else:
-        pass
+        t[0] = CallFunc(t[1], t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_exp_list_instr(t):
@@ -529,21 +546,21 @@ def p_statement(t):
 
 
 def p_declare_function(t):
-    '''declare_function     : FUNCTION ID PARIZQ PARDER statement END
-                            | FUNCTION ID PARIZQ dec_params PARDER statement END'''
-    if len(t) == 7:
-        pass
+    '''declare_function     : FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
+                            | FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END'''
+    if len(t) == 10:
+        t[0] = Function(t[2], [], t[7], t[8], t.lineno(1), t.lexpos(0))
     else:
-        pass
+        t[0] = Function(t[2], t[4], t[8], t[9], t.lineno(1), t.lexpos(0))
 
 
 def p_dec_params(t):
-    '''dec_params :    dec_params COMA ID
-                    | ID'''
-    if len(t) == 2:
-        t[0] = [Param(t[1], t.lineno(1), t.lexpos(0))]
+    '''dec_params :    dec_params COMA ID DOSP DOSP tipo
+                    | ID DOSP DOSP tipo'''
+    if len(t) == 5:
+        t[0] = [Param(t[1], t[4], t.lineno(1), t.lexpos(0))]
     else:
-        t[1].append(Param(t[3], t.lineno(1), t.lexpos(0)))
+        t[1].append(Param(t[3], t[6], t.lineno(1), t.lexpos(0)))
         t[0] = t[1]
 
 
@@ -552,11 +569,11 @@ def p_if_state(t):
                     | IF expression statement ELSE statement END
                     | IF expression statement else_if_list END'''
     if len(t) == 5:
-        pass
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0))
     elif len(t) == 6:
-        pass
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[4])
     elif len(t) == 7:
-        pass
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[5])
 
 
 def p_else_if_list(t):
@@ -564,15 +581,16 @@ def p_else_if_list(t):
                         | ELSEIF expression statement ELSE statement
                         | ELSEIF expression statement else_if_list'''
     if len(t) == 4:
-        pass
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0))
     elif len(t) == 5:
-        pass
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[4])
     elif len(t) == 6:
-        pass
+        t[0] = If(t[2], t[3], t.lineno(1), t.lexpos(0), t[5])
 
 
 def p_while_state(t):
     '''while_state      : WHILE expression statement END'''
+    t[0] = While(t[2], t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_for_state(t):
@@ -586,43 +604,52 @@ def p_for_state(t):
 
 def p_break(t):
     '''break_state      : BREAK'''
+    t[0] = Break(t.lineno(1), t.lexpos(0))
 
 
 def p_continue(t):
     '''continue_state      : CONTINUE'''
+    t[0] = Continue(t.lineno(1), t.lexpos(0))
 
 
 def p_return(t):
     '''return_state     : RETURN
                         | RETURN expression'''
     if len(t) == 2:
-        pass
+        t[0] = ReturnSt(None, t.lineno(1), t.lexpos(0))
     else:
-        pass
+        t[0] = ReturnSt(t[2], t.lineno(1), t.lexpos(0))
 
 
 def p_createStruct(t):
     'create_struct : STRUCT ID attList END'
+    t[0] = CreateStruct(t[2], t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_attList(t):
-    '''attList :  attList ID PTCOMA
-                | ID PTCOMA'''
-    if len(t) == 3:
-        t[0] = [t[1]]
+    '''attList :  attList ID DOSP DOSP tipo PTCOMA
+                | ID DOSP DOSP tipo PTCOMA'''
+    if len(t) == 6:
+        prueba = t[4]
+        t[0] = [StructAttribute(t[1], t[4], t.lineno(1), t.lexpos(0))]
     else:
-        t[1].append(t[2])
+        t[1].append(StructAttribute(t[2], t[5], t.lineno(1), t.lexpos(0)))
         t[0] = t[1]
 
 
 def p_declareStruct(t):
     'declare_struct : ID DOSP DOSP ID'
-
-# ASSIGN ACCESS
+    t[0] = DeclareStruct(t[1], t[4], t.lineno(1), t.lexpos(0))
 
 
 def p_assignAccess(t):
     'assign_access : ID PUNTO ID IGUAL expression'
+    t[0] = AssignAccess(t[1], t[3], t[5], t.lineno(1), t.lexpos(0))
+
+
+def p_access_struct(t):
+    '''access_struct : ID PUNTO ID'''
+    t[0] = AccessStruct(t[1], t[3], t.lineno(1), t.lexpos(0))
 
 
 def p_error(t):

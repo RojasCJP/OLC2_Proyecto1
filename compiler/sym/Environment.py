@@ -45,10 +45,13 @@ class Environment:
                         self.get_items_array(element_value.value))
         return array_return
 
-    def save_var(self, id_var, sym_type, in_heap):
-        if id_var in self.variables.keys():
-            print("Variable ya existe")
-        else:
+    def save_var(self, id_var, sym_type, in_heap, struct_type=''):
+        env = self
+        while env is not None:
+            if id_var in self.variables.keys():
+                print("Variable ya existe")
+                return env.variables[id_var]
+            env = env.prev
             newSymbol = Symbol(id_var, sym_type, self.size,
                                self.prev == None, in_heap)
             self.size += 1

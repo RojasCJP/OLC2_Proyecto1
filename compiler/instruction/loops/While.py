@@ -6,7 +6,7 @@ from sym.Generator import *
 class While(Instruction):
 
     def __init__(self, condition, instructions, line, column):
-        Instruction.__init__(line, column)
+        Instruction.__init__(self, line, column)
         self.condition = condition
         self.instructions = instructions
 

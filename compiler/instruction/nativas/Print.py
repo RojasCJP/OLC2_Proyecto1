@@ -5,6 +5,8 @@ from sym.Generator import *
 
 
 class Print(Instruction):
+    printlist = ''
+
     def __init__(self, value, line, column, new_line=False):
         Instruction.__init__(self, line, column)
         self.value = value
