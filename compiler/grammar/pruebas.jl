@@ -1,7 +1,7 @@
-a = 0;
-println(a);
-while a < 10
-    println(a);
-    a = a +1 ;
+function prueba(entrada::Int64)::Int64
+    if (entrada == 3)
+        return 100;
+    end;
+    return 50;
 end;
-println(a);
+print(prueba(3));

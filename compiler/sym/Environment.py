@@ -50,12 +50,14 @@ class Environment:
         while env is not None:
             if id_var in self.variables.keys():
                 print("Variable ya existe")
+                env.variables[id_var] = Symbol(id_var, sym_type, self.size,
+                                               self.prev == None, in_heap)
                 return env.variables[id_var]
             env = env.prev
-            newSymbol = Symbol(id_var, sym_type, self.size,
-                               self.prev == None, in_heap)
-            self.size += 1
-            self.variables[id_var] = newSymbol
+        newSymbol = Symbol(id_var, sym_type, self.size,
+                           self.prev == None, in_heap)
+        self.size += 1
+        self.variables[id_var] = newSymbol
         return self.variables[id_var]
 
     def save_func(self, id_func, function):

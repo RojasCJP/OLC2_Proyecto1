@@ -37,6 +37,8 @@ class Arithmetic(Expression):
             op = '*'
         elif self.type == ArithmethicOption.DIV:
             op = '/'
+        elif self.type == ArithmethicOption.MODULE:
+            op = '%'
 
         if (self.type == ArithmethicOption.RAISED):
             generator.f_potencia()
@@ -55,4 +57,6 @@ class Arithmetic(Expression):
         else:
             generator.add_expression(
                 temp, left_value.value, right_value.value, op)
+            if(left_value.type == Type.FLOAT or right_value.type == Type.FLOAT or self.type == ArithmethicOption.DIV):
+                return Return(temp, Type.FLOAT, True)
             return Return(temp, Type.INT, True)

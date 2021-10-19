@@ -19,6 +19,8 @@ class Print(Instruction):
 
         if val.type == Type.INT:
             generator.add_print("d", val.value)
+        elif val.type == Type.FLOAT:
+            generator.print_float("f", val.value)
         elif val.type == Type.BOOL:
             temp_lbl = generator.new_label()
             generator.put_label(val.true_lbl)

@@ -136,6 +136,9 @@ class Generator:
     def add_print(self, type, value):
         self.code_in(f'fmt.Printf("%{type}", int({value}));\n')
 
+    def print_float(self, type, value):
+        self.code_in(f'fmt.Printf("%{type}", {value});\n')
+
     def print_true(self):
         self.add_print("c", 116)
         self.add_print("c", 114)
@@ -191,7 +194,7 @@ class Generator:
         self.add_end_func()
         self.in_natives = False
 
-    def fpotencia(self):
+    def f_potencia(self):
         if(self.potencia):
             return
         self.potencia = True
@@ -213,7 +216,7 @@ class Generator:
         self.add_expression(t1, t1, t0, '*')
         self.add_expression(t2, t2, '1', '-')
         self.add_goto(L0)
-        self.add_goto(L1)
+        self.put_label(L1)
         self.set_stack('P', t1)
         self.add_end_func()
         self.in_natives = False

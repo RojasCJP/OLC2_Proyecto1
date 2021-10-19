@@ -103,59 +103,61 @@ Rule 90    index_list -> CORCHETEIZQ expression CORCHETEDER
 Rule 91    statement -> instrucciones
 Rule 92    declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
 Rule 93    declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-Rule 94    dec_params -> dec_params COMA ID DOSP DOSP tipo
-Rule 95    dec_params -> ID DOSP DOSP tipo
-Rule 96    if_state -> IF expression statement END
-Rule 97    if_state -> IF expression statement ELSE statement END
-Rule 98    if_state -> IF expression statement else_if_list END
-Rule 99    else_if_list -> ELSEIF expression statement
-Rule 100   else_if_list -> ELSEIF expression statement ELSE statement
-Rule 101   else_if_list -> ELSEIF expression statement else_if_list
-Rule 102   while_state -> WHILE expression statement END
-Rule 103   for_state -> FOR ID IN expression DOSP expression statement END
-Rule 104   for_state -> FOR ID IN expression statement END
-Rule 105   break_state -> BREAK
-Rule 106   continue_state -> CONTINUE
-Rule 107   return_state -> RETURN
-Rule 108   return_state -> RETURN expression
-Rule 109   create_struct -> STRUCT ID attList END
-Rule 110   attList -> attList ID DOSP DOSP tipo PTCOMA
-Rule 111   attList -> ID DOSP DOSP tipo PTCOMA
-Rule 112   declare_struct -> ID DOSP DOSP ID
-Rule 113   assign_access -> ID PUNTO ID IGUAL expression
-Rule 114   access_struct -> ID PUNTO ID
+Rule 94    declare_function -> FUNCTION ID PARIZQ dec_params PARDER statement END
+Rule 95    declare_function -> FUNCTION ID PARIZQ PARDER statement END
+Rule 96    dec_params -> dec_params COMA ID DOSP DOSP tipo
+Rule 97    dec_params -> ID DOSP DOSP tipo
+Rule 98    if_state -> IF expression statement END
+Rule 99    if_state -> IF expression statement ELSE statement END
+Rule 100   if_state -> IF expression statement else_if_list END
+Rule 101   else_if_list -> ELSEIF expression statement
+Rule 102   else_if_list -> ELSEIF expression statement ELSE statement
+Rule 103   else_if_list -> ELSEIF expression statement else_if_list
+Rule 104   while_state -> WHILE expression statement END
+Rule 105   for_state -> FOR ID IN expression DOSP expression statement END
+Rule 106   for_state -> FOR ID IN expression statement END
+Rule 107   break_state -> BREAK
+Rule 108   continue_state -> CONTINUE
+Rule 109   return_state -> RETURN
+Rule 110   return_state -> RETURN expression
+Rule 111   create_struct -> STRUCT ID attList END
+Rule 112   attList -> attList ID DOSP DOSP tipo PTCOMA
+Rule 113   attList -> ID DOSP DOSP tipo PTCOMA
+Rule 114   declare_struct -> ID DOSP DOSP ID
+Rule 115   assign_access -> ID PUNTO ID IGUAL expression
+Rule 116   access_struct -> ID PUNTO ID
 
 Terminals, with rules where they appear
 
 AND                  : 37
 BOOL                 : 73
-BREAK                : 105
+BREAK                : 107
 CADENA               : 43
 CARACTER             : 44
 CHAR                 : 74
-COMA                 : 52 62 65 67 87 94
+COMA                 : 52 62 65 67 87 96
 CONCAT               : 
-CONTINUE             : 106
+CONTINUE             : 108
 CORCHETEDER          : 40 89 90
 CORCHETEIZQ          : 40 89 90
 COS                  : 54
 DECIMAL              : 41
 DIVIDIDO             : 27
-DOSP                 : 81 81 82 82 83 83 92 92 93 93 94 94 95 95 103 110 110 111 111 112 112
-ELSE                 : 97 100
-ELSEIF               : 99 100 101
-END                  : 92 93 96 97 98 102 103 104 109
+DOSP                 : 81 81 82 82 83 83 92 92 93 93 96 96 97 97 105 112 112 113 113 114 114
+ELSE                 : 99 102
+ELSEIF               : 101 102 103
+END                  : 92 93 94 95 98 99 100 104 105 106 111
 ENTERO               : 42 52
 FALSE                : 48
 FLOAT                : 72
-FOR                  : 103 104
-FUNCTION             : 92 93
+FOR                  : 105 106
+FUNCTION             : 92 93 94 95
 GLOBAL               : 77 80 83
-ID                   : 45 46 76 77 78 79 80 81 82 83 84 85 86 92 93 94 95 103 104 109 110 111 112 112 113 113 114 114
-IF                   : 96 97 98
-IGUAL                : 78 79 80 81 82 83 84 113
+ID                   : 45 46 76 77 78 79 80 81 82 83 84 85 86 92 93 94 95 96 97 105 106 111 112 113 114 114 115 115 116 116
+IF                   : 98 99 100
+IGUAL                : 78 79 80 81 82 83 84 115
 IGUALQUE             : 34
-IN                   : 103 104
+IN                   : 105 106
 INT                  : 62 71
 LENGTH               : 66
 LLAVDER              : 
@@ -175,22 +177,22 @@ NIGUALQUE            : 35
 NOT                  : 23
 NOTHING              : 
 OR                   : 36
-PARDER               : 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 85 86 92 93
-PARIZQ               : 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 85 86 92 93
+PARDER               : 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 85 86 92 93 94 95
+PARIZQ               : 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 85 86 92 93 94 95
 PARSE                : 65
 POP                  : 68
 POR                  : 26
 POTENCIA             : 28
 PRINT                : 69
 PRINTLN              : 70
-PTCOMA               : 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 110 111
-PUNTO                : 113 114
+PTCOMA               : 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 112 113
+PUNTO                : 115 116
 PUSH                 : 67
-RETURN               : 107 108
+RETURN               : 109 110
 SIN                  : 55
 SQRT                 : 57
 STRING               : 75
-STRUCT               : 109
+STRUCT               : 111
 TAN                  : 56
 TOFLOAT              : 61
 TOSTRING             : 60
@@ -198,7 +200,7 @@ TRUE                 : 47
 TRUNC                : 62 63
 TYPEOF               : 64
 UPPERCASE            : 58
-WHILE                : 102
+WHILE                : 104
 error                : 
 
 Nonterminals, with rules where they appear
@@ -207,19 +209,19 @@ access_struct        : 50
 asignacion_arreglo_instr : 8
 asignacion_instr     : 7
 assign_access        : 21
-attList              : 109 110
+attList              : 111 112
 break_state          : 13
 call_function        : 10 49
 continue_state       : 14
 create_struct        : 19
-dec_params           : 93 94
+dec_params           : 93 94 96
 declare_function     : 11
 declare_struct       : 20
 definicion_asignacion_instr : 9
 definicion_instr     : 6
-else_if_list         : 98 101
+else_if_list         : 100 103
 exp_list             : 40 86 87
-expression           : 22 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 67 68 69 70 78 79 80 81 82 83 84 87 88 89 90 96 97 98 99 100 101 102 103 103 104 108 113
+expression           : 22 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 67 68 69 70 78 79 80 81 82 83 84 87 88 89 90 98 99 100 101 102 103 104 105 105 106 110 115
 final_expression     : 38
 for_state            : 17
 if_state             : 15
@@ -231,8 +233,8 @@ nativas              : 18 51
 print_instr          : 4
 println_instr        : 5
 return_state         : 12
-statement            : 92 93 96 97 97 98 99 100 100 101 102 103 104
-tipo                 : 65 81 82 83 92 93 94 95 110 111
+statement            : 92 93 94 95 98 99 99 100 101 102 102 103 104 105 106
+tipo                 : 65 81 82 83 92 93 96 97 112 113
 while_state          : 16
 
 Parsing method: LALR
@@ -276,16 +278,18 @@ state 0
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -303,9 +307,9 @@ state 0
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     PRINT           shift and go to state 22
     PRINTLN         shift and go to state 23
@@ -402,16 +406,18 @@ state 2
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -429,9 +435,9 @@ state 2
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     $end            reduce using rule 1 (init -> instrucciones .)
     PRINT           shift and go to state 22
@@ -679,8 +685,8 @@ state 25
     (81) definicion_asignacion_instr -> ID . IGUAL expression DOSP DOSP tipo
     (85) call_function -> ID . PARIZQ PARDER
     (86) call_function -> ID . PARIZQ exp_list PARDER
-    (112) declare_struct -> ID . DOSP DOSP ID
-    (113) assign_access -> ID . PUNTO ID IGUAL expression
+    (114) declare_struct -> ID . DOSP DOSP ID
+    (115) assign_access -> ID . PUNTO ID IGUAL expression
     (89) index_list -> . index_list CORCHETEIZQ expression CORCHETEDER
     (90) index_list -> . CORCHETEIZQ expression CORCHETEDER
 
@@ -705,14 +711,16 @@ state 27
 
     (92) declare_function -> FUNCTION . ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> FUNCTION . ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
+    (94) declare_function -> FUNCTION . ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> FUNCTION . ID PARIZQ PARDER statement END
 
     ID              shift and go to state 80
 
 
 state 28
 
-    (107) return_state -> RETURN .
-    (108) return_state -> RETURN . expression
+    (109) return_state -> RETURN .
+    (110) return_state -> RETURN . expression
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -745,7 +753,7 @@ state 28
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -764,7 +772,7 @@ state 28
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
 
-    PTCOMA          reduce using rule 107 (return_state -> RETURN .)
+    PTCOMA          reduce using rule 109 (return_state -> RETURN .)
     MENOS           shift and go to state 82
     NOT             shift and go to state 83
     PARIZQ          shift and go to state 85
@@ -801,23 +809,23 @@ state 28
 
 state 29
 
-    (105) break_state -> BREAK .
+    (107) break_state -> BREAK .
 
-    PTCOMA          reduce using rule 105 (break_state -> BREAK .)
+    PTCOMA          reduce using rule 107 (break_state -> BREAK .)
 
 
 state 30
 
-    (106) continue_state -> CONTINUE .
+    (108) continue_state -> CONTINUE .
 
-    PTCOMA          reduce using rule 106 (continue_state -> CONTINUE .)
+    PTCOMA          reduce using rule 108 (continue_state -> CONTINUE .)
 
 
 state 31
 
-    (96) if_state -> IF . expression statement END
-    (97) if_state -> IF . expression statement ELSE statement END
-    (98) if_state -> IF . expression statement else_if_list END
+    (98) if_state -> IF . expression statement END
+    (99) if_state -> IF . expression statement ELSE statement END
+    (100) if_state -> IF . expression statement else_if_list END
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -850,7 +858,7 @@ state 31
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -905,7 +913,7 @@ state 31
 
 state 32
 
-    (102) while_state -> WHILE . expression statement END
+    (104) while_state -> WHILE . expression statement END
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -938,7 +946,7 @@ state 32
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -993,8 +1001,8 @@ state 32
 
 state 33
 
-    (103) for_state -> FOR . ID IN expression DOSP expression statement END
-    (104) for_state -> FOR . ID IN expression statement END
+    (105) for_state -> FOR . ID IN expression DOSP expression statement END
+    (106) for_state -> FOR . ID IN expression statement END
 
     ID              shift and go to state 99
 
@@ -1114,7 +1122,7 @@ state 49
 
 state 50
 
-    (109) create_struct -> STRUCT . ID attList END
+    (111) create_struct -> STRUCT . ID attList END
 
     ID              shift and go to state 116
 
@@ -1895,7 +1903,7 @@ state 70
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -1983,7 +1991,7 @@ state 71
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -2082,7 +2090,7 @@ state 73
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -2146,7 +2154,7 @@ state 74
 
 state 75
 
-    (112) declare_struct -> ID DOSP . DOSP ID
+    (114) declare_struct -> ID DOSP . DOSP ID
 
     DOSP            shift and go to state 123
 
@@ -2189,7 +2197,7 @@ state 76
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -2246,7 +2254,7 @@ state 76
 
 state 77
 
-    (113) assign_access -> ID PUNTO . ID IGUAL expression
+    (115) assign_access -> ID PUNTO . ID IGUAL expression
 
     ID              shift and go to state 127
 
@@ -2286,7 +2294,7 @@ state 78
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -2353,13 +2361,15 @@ state 80
 
     (92) declare_function -> FUNCTION ID . PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> FUNCTION ID . PARIZQ dec_params PARDER DOSP DOSP tipo statement END
+    (94) declare_function -> FUNCTION ID . PARIZQ dec_params PARDER statement END
+    (95) declare_function -> FUNCTION ID . PARIZQ PARDER statement END
 
     PARIZQ          shift and go to state 130
 
 
 state 81
 
-    (108) return_state -> RETURN expression .
+    (110) return_state -> RETURN expression .
     (24) expression -> expression . MAS expression
     (25) expression -> expression . MENOS expression
     (26) expression -> expression . POR expression
@@ -2375,7 +2385,7 @@ state 81
     (36) expression -> expression . OR expression
     (37) expression -> expression . AND expression
 
-    PTCOMA          reduce using rule 108 (return_state -> RETURN expression .)
+    PTCOMA          reduce using rule 110 (return_state -> RETURN expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
     POR             shift and go to state 133
@@ -2427,7 +2437,7 @@ state 82
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -2515,7 +2525,7 @@ state 83
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -2657,7 +2667,7 @@ state 85
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -2747,7 +2757,7 @@ state 86
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -3023,7 +3033,7 @@ state 91
     (46) final_expression -> ID . index_list
     (85) call_function -> ID . PARIZQ PARDER
     (86) call_function -> ID . PARIZQ exp_list PARDER
-    (114) access_struct -> ID . PUNTO ID
+    (116) access_struct -> ID . PUNTO ID
     (89) index_list -> . index_list CORCHETEIZQ expression CORCHETEDER
     (90) index_list -> . CORCHETEIZQ expression CORCHETEDER
 
@@ -3353,9 +3363,9 @@ state 96
 
 state 97
 
-    (96) if_state -> IF expression . statement END
-    (97) if_state -> IF expression . statement ELSE statement END
-    (98) if_state -> IF expression . statement else_if_list END
+    (98) if_state -> IF expression . statement END
+    (99) if_state -> IF expression . statement ELSE statement END
+    (100) if_state -> IF expression . statement else_if_list END
     (24) expression -> expression . MAS expression
     (25) expression -> expression . MENOS expression
     (26) expression -> expression . POR expression
@@ -3406,16 +3416,18 @@ state 97
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -3433,9 +3445,9 @@ state 97
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -3505,7 +3517,7 @@ state 97
 
 state 98
 
-    (102) while_state -> WHILE expression . statement END
+    (104) while_state -> WHILE expression . statement END
     (24) expression -> expression . MAS expression
     (25) expression -> expression . MENOS expression
     (26) expression -> expression . POR expression
@@ -3556,16 +3568,18 @@ state 98
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -3583,9 +3597,9 @@ state 98
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -3655,8 +3669,8 @@ state 98
 
 state 99
 
-    (103) for_state -> FOR ID . IN expression DOSP expression statement END
-    (104) for_state -> FOR ID . IN expression statement END
+    (105) for_state -> FOR ID . IN expression DOSP expression statement END
+    (106) for_state -> FOR ID . IN expression statement END
 
     IN              shift and go to state 154
 
@@ -3703,7 +3717,7 @@ state 101
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -3791,7 +3805,7 @@ state 102
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -3879,7 +3893,7 @@ state 103
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -3967,7 +3981,7 @@ state 104
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4055,7 +4069,7 @@ state 105
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4143,7 +4157,7 @@ state 106
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4231,7 +4245,7 @@ state 107
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4319,7 +4333,7 @@ state 108
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4407,7 +4421,7 @@ state 109
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4496,7 +4510,7 @@ state 110
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4585,7 +4599,7 @@ state 111
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4690,7 +4704,7 @@ state 113
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4778,7 +4792,7 @@ state 114
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4866,7 +4880,7 @@ state 115
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -4921,9 +4935,9 @@ state 115
 
 state 116
 
-    (109) create_struct -> STRUCT ID . attList END
-    (110) attList -> . attList ID DOSP DOSP tipo PTCOMA
-    (111) attList -> . ID DOSP DOSP tipo PTCOMA
+    (111) create_struct -> STRUCT ID . attList END
+    (112) attList -> . attList ID DOSP DOSP tipo PTCOMA
+    (113) attList -> . ID DOSP DOSP tipo PTCOMA
 
     ID              shift and go to state 177
 
@@ -5035,7 +5049,7 @@ state 119
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5160,7 +5174,7 @@ state 121
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5248,7 +5262,7 @@ state 122
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5303,7 +5317,7 @@ state 122
 
 state 123
 
-    (112) declare_struct -> ID DOSP DOSP . ID
+    (114) declare_struct -> ID DOSP DOSP . ID
 
     ID              shift and go to state 185
 
@@ -5410,7 +5424,7 @@ state 126
 
 state 127
 
-    (113) assign_access -> ID PUNTO ID . IGUAL expression
+    (115) assign_access -> ID PUNTO ID . IGUAL expression
 
     IGUAL           shift and go to state 188
 
@@ -5486,7 +5500,7 @@ state 129
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5543,8 +5557,10 @@ state 130
 
     (92) declare_function -> FUNCTION ID PARIZQ . PARDER DOSP DOSP tipo statement END
     (93) declare_function -> FUNCTION ID PARIZQ . dec_params PARDER DOSP DOSP tipo statement END
-    (94) dec_params -> . dec_params COMA ID DOSP DOSP tipo
-    (95) dec_params -> . ID DOSP DOSP tipo
+    (94) declare_function -> FUNCTION ID PARIZQ . dec_params PARDER statement END
+    (95) declare_function -> FUNCTION ID PARIZQ . PARDER statement END
+    (96) dec_params -> . dec_params COMA ID DOSP DOSP tipo
+    (97) dec_params -> . ID DOSP DOSP tipo
 
     PARDER          shift and go to state 192
     ID              shift and go to state 191
@@ -5586,7 +5602,7 @@ state 131
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5674,7 +5690,7 @@ state 132
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5762,7 +5778,7 @@ state 133
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5850,7 +5866,7 @@ state 134
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -5938,7 +5954,7 @@ state 135
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6026,7 +6042,7 @@ state 136
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6114,7 +6130,7 @@ state 137
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6202,7 +6218,7 @@ state 138
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6290,7 +6306,7 @@ state 139
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6378,7 +6394,7 @@ state 140
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6466,7 +6482,7 @@ state 141
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6554,7 +6570,7 @@ state 142
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6642,7 +6658,7 @@ state 143
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -6730,7 +6746,7 @@ state 144
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -7051,19 +7067,19 @@ state 149
 
 state 150
 
-    (114) access_struct -> ID PUNTO . ID
+    (116) access_struct -> ID PUNTO . ID
 
     ID              shift and go to state 210
 
 
 state 151
 
-    (96) if_state -> IF expression statement . END
-    (97) if_state -> IF expression statement . ELSE statement END
-    (98) if_state -> IF expression statement . else_if_list END
-    (99) else_if_list -> . ELSEIF expression statement
-    (100) else_if_list -> . ELSEIF expression statement ELSE statement
-    (101) else_if_list -> . ELSEIF expression statement else_if_list
+    (98) if_state -> IF expression statement . END
+    (99) if_state -> IF expression statement . ELSE statement END
+    (100) if_state -> IF expression statement . else_if_list END
+    (101) else_if_list -> . ELSEIF expression statement
+    (102) else_if_list -> . ELSEIF expression statement ELSE statement
+    (103) else_if_list -> . ELSEIF expression statement else_if_list
 
     END             shift and go to state 211
     ELSE            shift and go to state 212
@@ -7108,16 +7124,18 @@ state 152
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -7135,9 +7153,9 @@ state 152
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     END             reduce using rule 91 (statement -> instrucciones .)
     ELSE            reduce using rule 91 (statement -> instrucciones .)
@@ -7194,15 +7212,15 @@ state 152
 
 state 153
 
-    (102) while_state -> WHILE expression statement . END
+    (104) while_state -> WHILE expression statement . END
 
     END             shift and go to state 215
 
 
 state 154
 
-    (103) for_state -> FOR ID IN . expression DOSP expression statement END
-    (104) for_state -> FOR ID IN . expression statement END
+    (105) for_state -> FOR ID IN . expression DOSP expression statement END
+    (106) for_state -> FOR ID IN . expression statement END
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -7235,7 +7253,7 @@ state 154
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -7991,15 +8009,15 @@ state 176
 
 state 177
 
-    (111) attList -> ID . DOSP DOSP tipo PTCOMA
+    (113) attList -> ID . DOSP DOSP tipo PTCOMA
 
     DOSP            shift and go to state 234
 
 
 state 178
 
-    (109) create_struct -> STRUCT ID attList . END
-    (110) attList -> attList . ID DOSP DOSP tipo PTCOMA
+    (111) create_struct -> STRUCT ID attList . END
+    (112) attList -> attList . ID DOSP DOSP tipo PTCOMA
 
     END             shift and go to state 236
     ID              shift and go to state 235
@@ -8135,9 +8153,9 @@ state 184
 
 state 185
 
-    (112) declare_struct -> ID DOSP DOSP ID .
+    (114) declare_struct -> ID DOSP DOSP ID .
 
-    PTCOMA          reduce using rule 112 (declare_struct -> ID DOSP DOSP ID .)
+    PTCOMA          reduce using rule 114 (declare_struct -> ID DOSP DOSP ID .)
 
 
 state 186
@@ -8229,7 +8247,7 @@ state 187
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -8284,7 +8302,7 @@ state 187
 
 state 188
 
-    (113) assign_access -> ID PUNTO ID IGUAL . expression
+    (115) assign_access -> ID PUNTO ID IGUAL . expression
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -8317,7 +8335,7 @@ state 188
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -8465,7 +8483,7 @@ state 190
 
 state 191
 
-    (95) dec_params -> ID . DOSP DOSP tipo
+    (97) dec_params -> ID . DOSP DOSP tipo
 
     DOSP            shift and go to state 243
 
@@ -8473,17 +8491,137 @@ state 191
 state 192
 
     (92) declare_function -> FUNCTION ID PARIZQ PARDER . DOSP DOSP tipo statement END
+    (95) declare_function -> FUNCTION ID PARIZQ PARDER . statement END
+    (91) statement -> . instrucciones
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . print_instr PTCOMA
+    (5) instruccion -> . println_instr PTCOMA
+    (6) instruccion -> . definicion_instr PTCOMA
+    (7) instruccion -> . asignacion_instr PTCOMA
+    (8) instruccion -> . asignacion_arreglo_instr PTCOMA
+    (9) instruccion -> . definicion_asignacion_instr PTCOMA
+    (10) instruccion -> . call_function PTCOMA
+    (11) instruccion -> . declare_function PTCOMA
+    (12) instruccion -> . return_state PTCOMA
+    (13) instruccion -> . break_state PTCOMA
+    (14) instruccion -> . continue_state PTCOMA
+    (15) instruccion -> . if_state PTCOMA
+    (16) instruccion -> . while_state PTCOMA
+    (17) instruccion -> . for_state PTCOMA
+    (18) instruccion -> . nativas PTCOMA
+    (19) instruccion -> . create_struct PTCOMA
+    (20) instruccion -> . declare_struct PTCOMA
+    (21) instruccion -> . assign_access PTCOMA
+    (69) print_instr -> . PRINT PARIZQ expression PARDER
+    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (76) definicion_instr -> . LOCAL ID
+    (77) definicion_instr -> . GLOBAL ID
+    (78) asignacion_instr -> . ID IGUAL expression
+    (79) asignacion_instr -> . LOCAL ID IGUAL expression
+    (80) asignacion_instr -> . GLOBAL ID IGUAL expression
+    (84) asignacion_arreglo_instr -> . ID index_list IGUAL expression
+    (81) definicion_asignacion_instr -> . ID IGUAL expression DOSP DOSP tipo
+    (82) definicion_asignacion_instr -> . LOCAL ID IGUAL expression DOSP DOSP tipo
+    (83) definicion_asignacion_instr -> . GLOBAL ID IGUAL expression DOSP DOSP tipo
+    (85) call_function -> . ID PARIZQ PARDER
+    (86) call_function -> . ID PARIZQ exp_list PARDER
+    (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
+    (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
+    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
+    (53) nativas -> . LOG10 PARIZQ expression PARDER
+    (54) nativas -> . COS PARIZQ expression PARDER
+    (55) nativas -> . SIN PARIZQ expression PARDER
+    (56) nativas -> . TAN PARIZQ expression PARDER
+    (57) nativas -> . SQRT PARIZQ expression PARDER
+    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
+    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
+    (60) nativas -> . TOSTRING PARIZQ expression PARDER
+    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
+    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
+    (63) nativas -> . TRUNC PARIZQ expression PARDER
+    (64) nativas -> . TYPEOF PARIZQ expression PARDER
+    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
+    (66) nativas -> . LENGTH PARIZQ expression PARDER
+    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
+    (68) nativas -> . POP PARIZQ expression PARDER
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     DOSP            shift and go to state 244
+    PRINT           shift and go to state 22
+    PRINTLN         shift and go to state 23
+    LOCAL           shift and go to state 24
+    GLOBAL          shift and go to state 26
+    ID              shift and go to state 25
+    FUNCTION        shift and go to state 27
+    RETURN          shift and go to state 28
+    BREAK           shift and go to state 29
+    CONTINUE        shift and go to state 30
+    IF              shift and go to state 31
+    WHILE           shift and go to state 32
+    FOR             shift and go to state 33
+    LOG             shift and go to state 34
+    LOG10           shift and go to state 35
+    COS             shift and go to state 36
+    SIN             shift and go to state 37
+    TAN             shift and go to state 38
+    SQRT            shift and go to state 39
+    UPPERCASE       shift and go to state 40
+    LOWERCASE       shift and go to state 41
+    TOSTRING        shift and go to state 42
+    TOFLOAT         shift and go to state 43
+    TRUNC           shift and go to state 44
+    TYPEOF          shift and go to state 45
+    PARSE           shift and go to state 46
+    LENGTH          shift and go to state 47
+    PUSH            shift and go to state 48
+    POP             shift and go to state 49
+    STRUCT          shift and go to state 50
 
+    statement                      shift and go to state 245
+    instrucciones                  shift and go to state 152
+    instruccion                    shift and go to state 3
+    print_instr                    shift and go to state 4
+    println_instr                  shift and go to state 5
+    definicion_instr               shift and go to state 6
+    asignacion_instr               shift and go to state 7
+    asignacion_arreglo_instr       shift and go to state 8
+    definicion_asignacion_instr    shift and go to state 9
+    call_function                  shift and go to state 10
+    declare_function               shift and go to state 11
+    return_state                   shift and go to state 12
+    break_state                    shift and go to state 13
+    continue_state                 shift and go to state 14
+    if_state                       shift and go to state 15
+    while_state                    shift and go to state 16
+    for_state                      shift and go to state 17
+    nativas                        shift and go to state 18
+    create_struct                  shift and go to state 19
+    declare_struct                 shift and go to state 20
+    assign_access                  shift and go to state 21
 
 state 193
 
     (93) declare_function -> FUNCTION ID PARIZQ dec_params . PARDER DOSP DOSP tipo statement END
-    (94) dec_params -> dec_params . COMA ID DOSP DOSP tipo
+    (94) declare_function -> FUNCTION ID PARIZQ dec_params . PARDER statement END
+    (96) dec_params -> dec_params . COMA ID DOSP DOSP tipo
 
-    PARDER          shift and go to state 245
-    COMA            shift and go to state 246
+    PARDER          shift and go to state 246
+    COMA            shift and go to state 247
 
 
 state 194
@@ -9758,68 +9896,68 @@ state 209
 
 state 210
 
-    (114) access_struct -> ID PUNTO ID .
+    (116) access_struct -> ID PUNTO ID .
 
-    MAS             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    MENOS           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    POR             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    DIVIDIDO        reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    POTENCIA        reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    MODULO          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    MAYQUE          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    MENQUE          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    MENIGUALQUE     reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    MAYIGUALQUE     reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    IGUALQUE        reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    NIGUALQUE       reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    OR              reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    AND             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    PTCOMA          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    PRINT           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    PRINTLN         reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    LOCAL           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    GLOBAL          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    ID              reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    FUNCTION        reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    RETURN          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    BREAK           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    CONTINUE        reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    IF              reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    WHILE           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    FOR             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    LOG             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    LOG10           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    COS             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    SIN             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    TAN             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    SQRT            reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    UPPERCASE       reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    LOWERCASE       reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    TOSTRING        reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    TOFLOAT         reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    TRUNC           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    TYPEOF          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    PARSE           reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    LENGTH          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    PUSH            reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    POP             reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    STRUCT          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    PARDER          reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    DOSP            reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    COMA            reduce using rule 114 (access_struct -> ID PUNTO ID .)
-    CORCHETEDER     reduce using rule 114 (access_struct -> ID PUNTO ID .)
+    MAS             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    MENOS           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    POR             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    DIVIDIDO        reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    POTENCIA        reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    MODULO          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    MAYQUE          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    MENQUE          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    MENIGUALQUE     reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    MAYIGUALQUE     reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    IGUALQUE        reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    NIGUALQUE       reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    OR              reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    AND             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    PTCOMA          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    PRINT           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    PRINTLN         reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    LOCAL           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    GLOBAL          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    ID              reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    FUNCTION        reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    RETURN          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    BREAK           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    CONTINUE        reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    IF              reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    WHILE           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    FOR             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    LOG             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    LOG10           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    COS             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    SIN             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    TAN             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    SQRT            reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    UPPERCASE       reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    LOWERCASE       reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    TOSTRING        reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    TOFLOAT         reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    TRUNC           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    TYPEOF          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    PARSE           reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    LENGTH          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    PUSH            reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    POP             reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    STRUCT          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    PARDER          reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    DOSP            reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    COMA            reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    CORCHETEDER     reduce using rule 116 (access_struct -> ID PUNTO ID .)
 
 
 state 211
 
-    (96) if_state -> IF expression statement END .
+    (98) if_state -> IF expression statement END .
 
-    PTCOMA          reduce using rule 96 (if_state -> IF expression statement END .)
+    PTCOMA          reduce using rule 98 (if_state -> IF expression statement END .)
 
 
 state 212
 
-    (97) if_state -> IF expression statement ELSE . statement END
+    (99) if_state -> IF expression statement ELSE . statement END
     (91) statement -> . instrucciones
     (2) instrucciones -> . instrucciones instruccion
     (3) instrucciones -> . instruccion
@@ -9856,16 +9994,18 @@ state 212
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -9883,9 +10023,9 @@ state 212
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     PRINT           shift and go to state 22
     PRINTLN         shift and go to state 23
@@ -9917,7 +10057,7 @@ state 212
     POP             shift and go to state 49
     STRUCT          shift and go to state 50
 
-    statement                      shift and go to state 247
+    statement                      shift and go to state 248
     instrucciones                  shift and go to state 152
     instruccion                    shift and go to state 3
     print_instr                    shift and go to state 4
@@ -9941,16 +10081,16 @@ state 212
 
 state 213
 
-    (98) if_state -> IF expression statement else_if_list . END
+    (100) if_state -> IF expression statement else_if_list . END
 
-    END             shift and go to state 248
+    END             shift and go to state 249
 
 
 state 214
 
-    (99) else_if_list -> ELSEIF . expression statement
-    (100) else_if_list -> ELSEIF . expression statement ELSE statement
-    (101) else_if_list -> ELSEIF . expression statement else_if_list
+    (101) else_if_list -> ELSEIF . expression statement
+    (102) else_if_list -> ELSEIF . expression statement ELSE statement
+    (103) else_if_list -> ELSEIF . expression statement else_if_list
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -9983,7 +10123,7 @@ state 214
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -10030,7 +10170,7 @@ state 214
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 249
+    expression                     shift and go to state 250
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -10038,15 +10178,15 @@ state 214
 
 state 215
 
-    (102) while_state -> WHILE expression statement END .
+    (104) while_state -> WHILE expression statement END .
 
-    PTCOMA          reduce using rule 102 (while_state -> WHILE expression statement END .)
+    PTCOMA          reduce using rule 104 (while_state -> WHILE expression statement END .)
 
 
 state 216
 
-    (103) for_state -> FOR ID IN expression . DOSP expression statement END
-    (104) for_state -> FOR ID IN expression . statement END
+    (105) for_state -> FOR ID IN expression . DOSP expression statement END
+    (106) for_state -> FOR ID IN expression . statement END
     (24) expression -> expression . MAS expression
     (25) expression -> expression . MENOS expression
     (26) expression -> expression . POR expression
@@ -10097,16 +10237,18 @@ state 216
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -10124,11 +10266,11 @@ state 216
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
-    DOSP            shift and go to state 250
+    DOSP            shift and go to state 251
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
     POR             shift and go to state 133
@@ -10173,7 +10315,7 @@ state 216
     POP             shift and go to state 49
     STRUCT          shift and go to state 50
 
-    statement                      shift and go to state 251
+    statement                      shift and go to state 252
     instrucciones                  shift and go to state 152
     instruccion                    shift and go to state 3
     print_instr                    shift and go to state 4
@@ -10230,7 +10372,7 @@ state 217
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -10277,7 +10419,7 @@ state 217
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 252
+    expression                     shift and go to state 253
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -10804,7 +10946,7 @@ state 227
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -10851,7 +10993,7 @@ state 227
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 253
+    expression                     shift and go to state 254
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -11000,7 +11142,7 @@ state 230
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -11047,7 +11189,7 @@ state 230
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 254
+    expression                     shift and go to state 255
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -11142,7 +11284,7 @@ state 232
     (51) final_expression -> . nativas
     (85) call_function -> . ID PARIZQ PARDER
     (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
+    (116) access_struct -> . ID PUNTO ID
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -11189,7 +11331,7 @@ state 232
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 255
+    expression                     shift and go to state 256
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -11251,30 +11393,30 @@ state 233
 
 state 234
 
-    (111) attList -> ID DOSP . DOSP tipo PTCOMA
-
-    DOSP            shift and go to state 256
-
-
-state 235
-
-    (110) attList -> attList ID . DOSP DOSP tipo PTCOMA
+    (113) attList -> ID DOSP . DOSP tipo PTCOMA
 
     DOSP            shift and go to state 257
 
 
+state 235
+
+    (112) attList -> attList ID . DOSP DOSP tipo PTCOMA
+
+    DOSP            shift and go to state 258
+
+
 state 236
 
-    (109) create_struct -> STRUCT ID attList END .
+    (111) create_struct -> STRUCT ID attList END .
 
-    PTCOMA          reduce using rule 109 (create_struct -> STRUCT ID attList END .)
+    PTCOMA          reduce using rule 111 (create_struct -> STRUCT ID attList END .)
 
 
 state 237
 
     (82) definicion_asignacion_instr -> LOCAL ID IGUAL expression DOSP . DOSP tipo
 
-    DOSP            shift and go to state 258
+    DOSP            shift and go to state 259
 
 
 state 238
@@ -11292,7 +11434,7 @@ state 238
     CHAR            shift and go to state 172
     STRING          shift and go to state 173
 
-    tipo                           shift and go to state 259
+    tipo                           shift and go to state 260
 
 state 239
 
@@ -11389,7 +11531,7 @@ state 240
 
 state 241
 
-    (113) assign_access -> ID PUNTO ID IGUAL expression .
+    (115) assign_access -> ID PUNTO ID IGUAL expression .
     (24) expression -> expression . MAS expression
     (25) expression -> expression . MENOS expression
     (26) expression -> expression . POR expression
@@ -11405,7 +11547,7 @@ state 241
     (36) expression -> expression . OR expression
     (37) expression -> expression . AND expression
 
-    PTCOMA          reduce using rule 113 (assign_access -> ID PUNTO ID IGUAL expression .)
+    PTCOMA          reduce using rule 115 (assign_access -> ID PUNTO ID IGUAL expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
     POR             shift and go to state 133
@@ -11426,70 +11568,34 @@ state 242
 
     (83) definicion_asignacion_instr -> GLOBAL ID IGUAL expression DOSP . DOSP tipo
 
-    DOSP            shift and go to state 260
+    DOSP            shift and go to state 261
 
 
 state 243
 
-    (95) dec_params -> ID DOSP . DOSP tipo
+    (97) dec_params -> ID DOSP . DOSP tipo
 
-    DOSP            shift and go to state 261
+    DOSP            shift and go to state 262
 
 
 state 244
 
     (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP . DOSP tipo statement END
 
-    DOSP            shift and go to state 262
+    DOSP            shift and go to state 263
 
 
 state 245
 
-    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER . DOSP DOSP tipo statement END
+    (95) declare_function -> FUNCTION ID PARIZQ PARDER statement . END
 
-    DOSP            shift and go to state 263
+    END             shift and go to state 264
 
 
 state 246
 
-    (94) dec_params -> dec_params COMA . ID DOSP DOSP tipo
-
-    ID              shift and go to state 264
-
-
-state 247
-
-    (97) if_state -> IF expression statement ELSE statement . END
-
-    END             shift and go to state 265
-
-
-state 248
-
-    (98) if_state -> IF expression statement else_if_list END .
-
-    PTCOMA          reduce using rule 98 (if_state -> IF expression statement else_if_list END .)
-
-
-state 249
-
-    (99) else_if_list -> ELSEIF expression . statement
-    (100) else_if_list -> ELSEIF expression . statement ELSE statement
-    (101) else_if_list -> ELSEIF expression . statement else_if_list
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
+    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER . DOSP DOSP tipo statement END
+    (94) declare_function -> FUNCTION ID PARIZQ dec_params PARDER . statement END
     (91) statement -> . instrucciones
     (2) instrucciones -> . instrucciones instruccion
     (3) instrucciones -> . instruccion
@@ -11526,16 +11632,18 @@ state 249
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -11553,24 +11661,11 @@ state 249
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
+    DOSP            shift and go to state 265
     PRINT           shift and go to state 22
     PRINTLN         shift and go to state 23
     LOCAL           shift and go to state 24
@@ -11623,379 +11718,32 @@ state 249
     declare_struct                 shift and go to state 20
     assign_access                  shift and go to state 21
 
-state 250
+state 247
 
-    (103) for_state -> FOR ID IN expression DOSP . expression statement END
-    (22) expression -> . MENOS expression
-    (23) expression -> . NOT expression
-    (24) expression -> . expression MAS expression
-    (25) expression -> . expression MENOS expression
-    (26) expression -> . expression POR expression
-    (27) expression -> . expression DIVIDIDO expression
-    (28) expression -> . expression POTENCIA expression
-    (29) expression -> . expression MODULO expression
-    (30) expression -> . expression MAYQUE expression
-    (31) expression -> . expression MENQUE expression
-    (32) expression -> . expression MENIGUALQUE expression
-    (33) expression -> . expression MAYIGUALQUE expression
-    (34) expression -> . expression IGUALQUE expression
-    (35) expression -> . expression NIGUALQUE expression
-    (36) expression -> . expression OR expression
-    (37) expression -> . expression AND expression
-    (38) expression -> . final_expression
-    (39) final_expression -> . PARIZQ expression PARDER
-    (40) final_expression -> . CORCHETEIZQ exp_list CORCHETEDER
-    (41) final_expression -> . DECIMAL
-    (42) final_expression -> . ENTERO
-    (43) final_expression -> . CADENA
-    (44) final_expression -> . CARACTER
-    (45) final_expression -> . ID
-    (46) final_expression -> . ID index_list
-    (47) final_expression -> . TRUE
-    (48) final_expression -> . FALSE
-    (49) final_expression -> . call_function
-    (50) final_expression -> . access_struct
-    (51) final_expression -> . nativas
-    (85) call_function -> . ID PARIZQ PARDER
-    (86) call_function -> . ID PARIZQ exp_list PARDER
-    (114) access_struct -> . ID PUNTO ID
-    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
-    (53) nativas -> . LOG10 PARIZQ expression PARDER
-    (54) nativas -> . COS PARIZQ expression PARDER
-    (55) nativas -> . SIN PARIZQ expression PARDER
-    (56) nativas -> . TAN PARIZQ expression PARDER
-    (57) nativas -> . SQRT PARIZQ expression PARDER
-    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
-    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
-    (60) nativas -> . TOSTRING PARIZQ expression PARDER
-    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
-    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
-    (63) nativas -> . TRUNC PARIZQ expression PARDER
-    (64) nativas -> . TYPEOF PARIZQ expression PARDER
-    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
-    (66) nativas -> . LENGTH PARIZQ expression PARDER
-    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
-    (68) nativas -> . POP PARIZQ expression PARDER
+    (96) dec_params -> dec_params COMA . ID DOSP DOSP tipo
 
-    MENOS           shift and go to state 82
-    NOT             shift and go to state 83
-    PARIZQ          shift and go to state 85
-    CORCHETEIZQ     shift and go to state 86
-    DECIMAL         shift and go to state 87
-    ENTERO          shift and go to state 88
-    CADENA          shift and go to state 89
-    CARACTER        shift and go to state 90
-    ID              shift and go to state 91
-    TRUE            shift and go to state 92
-    FALSE           shift and go to state 93
-    LOG             shift and go to state 34
-    LOG10           shift and go to state 35
-    COS             shift and go to state 36
-    SIN             shift and go to state 37
-    TAN             shift and go to state 38
-    SQRT            shift and go to state 39
-    UPPERCASE       shift and go to state 40
-    LOWERCASE       shift and go to state 41
-    TOSTRING        shift and go to state 42
-    TOFLOAT         shift and go to state 43
-    TRUNC           shift and go to state 44
-    TYPEOF          shift and go to state 45
-    PARSE           shift and go to state 46
-    LENGTH          shift and go to state 47
-    PUSH            shift and go to state 48
-    POP             shift and go to state 49
+    ID              shift and go to state 267
 
-    expression                     shift and go to state 267
-    final_expression               shift and go to state 84
-    call_function                  shift and go to state 94
-    access_struct                  shift and go to state 95
-    nativas                        shift and go to state 96
 
-state 251
+state 248
 
-    (104) for_state -> FOR ID IN expression statement . END
+    (99) if_state -> IF expression statement ELSE statement . END
 
     END             shift and go to state 268
 
 
-state 252
+state 249
 
-    (52) nativas -> LOG PARIZQ ENTERO COMA expression . PARDER
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
+    (100) if_state -> IF expression statement else_if_list END .
 
-    PARDER          shift and go to state 269
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
+    PTCOMA          reduce using rule 100 (if_state -> IF expression statement else_if_list END .)
 
 
-state 253
+state 250
 
-    (62) nativas -> TRUNC PARIZQ INT COMA expression . PARDER
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
-
-    PARDER          shift and go to state 270
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
-
-
-state 254
-
-    (65) nativas -> PARSE PARIZQ tipo COMA expression . PARDER
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
-
-    PARDER          shift and go to state 271
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
-
-
-state 255
-
-    (67) nativas -> PUSH PARIZQ expression COMA expression . PARDER
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
-
-    PARDER          shift and go to state 272
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
-
-
-state 256
-
-    (111) attList -> ID DOSP DOSP . tipo PTCOMA
-    (71) tipo -> . INT
-    (72) tipo -> . FLOAT
-    (73) tipo -> . BOOL
-    (74) tipo -> . CHAR
-    (75) tipo -> . STRING
-
-    INT             shift and go to state 169
-    FLOAT           shift and go to state 170
-    BOOL            shift and go to state 171
-    CHAR            shift and go to state 172
-    STRING          shift and go to state 173
-
-    tipo                           shift and go to state 273
-
-state 257
-
-    (110) attList -> attList ID DOSP . DOSP tipo PTCOMA
-
-    DOSP            shift and go to state 274
-
-
-state 258
-
-    (82) definicion_asignacion_instr -> LOCAL ID IGUAL expression DOSP DOSP . tipo
-    (71) tipo -> . INT
-    (72) tipo -> . FLOAT
-    (73) tipo -> . BOOL
-    (74) tipo -> . CHAR
-    (75) tipo -> . STRING
-
-    INT             shift and go to state 169
-    FLOAT           shift and go to state 170
-    BOOL            shift and go to state 171
-    CHAR            shift and go to state 172
-    STRING          shift and go to state 173
-
-    tipo                           shift and go to state 275
-
-state 259
-
-    (81) definicion_asignacion_instr -> ID IGUAL expression DOSP DOSP tipo .
-
-    PTCOMA          reduce using rule 81 (definicion_asignacion_instr -> ID IGUAL expression DOSP DOSP tipo .)
-
-
-state 260
-
-    (83) definicion_asignacion_instr -> GLOBAL ID IGUAL expression DOSP DOSP . tipo
-    (71) tipo -> . INT
-    (72) tipo -> . FLOAT
-    (73) tipo -> . BOOL
-    (74) tipo -> . CHAR
-    (75) tipo -> . STRING
-
-    INT             shift and go to state 169
-    FLOAT           shift and go to state 170
-    BOOL            shift and go to state 171
-    CHAR            shift and go to state 172
-    STRING          shift and go to state 173
-
-    tipo                           shift and go to state 276
-
-state 261
-
-    (95) dec_params -> ID DOSP DOSP . tipo
-    (71) tipo -> . INT
-    (72) tipo -> . FLOAT
-    (73) tipo -> . BOOL
-    (74) tipo -> . CHAR
-    (75) tipo -> . STRING
-
-    INT             shift and go to state 169
-    FLOAT           shift and go to state 170
-    BOOL            shift and go to state 171
-    CHAR            shift and go to state 172
-    STRING          shift and go to state 173
-
-    tipo                           shift and go to state 277
-
-state 262
-
-    (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP . tipo statement END
-    (71) tipo -> . INT
-    (72) tipo -> . FLOAT
-    (73) tipo -> . BOOL
-    (74) tipo -> . CHAR
-    (75) tipo -> . STRING
-
-    INT             shift and go to state 169
-    FLOAT           shift and go to state 170
-    BOOL            shift and go to state 171
-    CHAR            shift and go to state 172
-    STRING          shift and go to state 173
-
-    tipo                           shift and go to state 278
-
-state 263
-
-    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP . DOSP tipo statement END
-
-    DOSP            shift and go to state 279
-
-
-state 264
-
-    (94) dec_params -> dec_params COMA ID . DOSP DOSP tipo
-
-    DOSP            shift and go to state 280
-
-
-state 265
-
-    (97) if_state -> IF expression statement ELSE statement END .
-
-    PTCOMA          reduce using rule 97 (if_state -> IF expression statement ELSE statement END .)
-
-
-state 266
-
-    (99) else_if_list -> ELSEIF expression statement .
-    (100) else_if_list -> ELSEIF expression statement . ELSE statement
-    (101) else_if_list -> ELSEIF expression statement . else_if_list
-    (99) else_if_list -> . ELSEIF expression statement
-    (100) else_if_list -> . ELSEIF expression statement ELSE statement
-    (101) else_if_list -> . ELSEIF expression statement else_if_list
-
-    END             reduce using rule 99 (else_if_list -> ELSEIF expression statement .)
-    ELSE            shift and go to state 281
-    ELSEIF          shift and go to state 214
-
-    else_if_list                   shift and go to state 282
-
-state 267
-
-    (103) for_state -> FOR ID IN expression DOSP expression . statement END
+    (101) else_if_list -> ELSEIF expression . statement
+    (102) else_if_list -> ELSEIF expression . statement ELSE statement
+    (103) else_if_list -> ELSEIF expression . statement else_if_list
     (24) expression -> expression . MAS expression
     (25) expression -> expression . MENOS expression
     (26) expression -> expression . POR expression
@@ -12046,16 +11794,18 @@ state 267
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -12073,9 +11823,9 @@ state 267
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -12121,7 +11871,7 @@ state 267
     POP             shift and go to state 49
     STRUCT          shift and go to state 50
 
-    statement                      shift and go to state 283
+    statement                      shift and go to state 269
     instrucciones                  shift and go to state 152
     instruccion                    shift and go to state 3
     print_instr                    shift and go to state 4
@@ -12143,14 +11893,550 @@ state 267
     declare_struct                 shift and go to state 20
     assign_access                  shift and go to state 21
 
+state 251
+
+    (105) for_state -> FOR ID IN expression DOSP . expression statement END
+    (22) expression -> . MENOS expression
+    (23) expression -> . NOT expression
+    (24) expression -> . expression MAS expression
+    (25) expression -> . expression MENOS expression
+    (26) expression -> . expression POR expression
+    (27) expression -> . expression DIVIDIDO expression
+    (28) expression -> . expression POTENCIA expression
+    (29) expression -> . expression MODULO expression
+    (30) expression -> . expression MAYQUE expression
+    (31) expression -> . expression MENQUE expression
+    (32) expression -> . expression MENIGUALQUE expression
+    (33) expression -> . expression MAYIGUALQUE expression
+    (34) expression -> . expression IGUALQUE expression
+    (35) expression -> . expression NIGUALQUE expression
+    (36) expression -> . expression OR expression
+    (37) expression -> . expression AND expression
+    (38) expression -> . final_expression
+    (39) final_expression -> . PARIZQ expression PARDER
+    (40) final_expression -> . CORCHETEIZQ exp_list CORCHETEDER
+    (41) final_expression -> . DECIMAL
+    (42) final_expression -> . ENTERO
+    (43) final_expression -> . CADENA
+    (44) final_expression -> . CARACTER
+    (45) final_expression -> . ID
+    (46) final_expression -> . ID index_list
+    (47) final_expression -> . TRUE
+    (48) final_expression -> . FALSE
+    (49) final_expression -> . call_function
+    (50) final_expression -> . access_struct
+    (51) final_expression -> . nativas
+    (85) call_function -> . ID PARIZQ PARDER
+    (86) call_function -> . ID PARIZQ exp_list PARDER
+    (116) access_struct -> . ID PUNTO ID
+    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
+    (53) nativas -> . LOG10 PARIZQ expression PARDER
+    (54) nativas -> . COS PARIZQ expression PARDER
+    (55) nativas -> . SIN PARIZQ expression PARDER
+    (56) nativas -> . TAN PARIZQ expression PARDER
+    (57) nativas -> . SQRT PARIZQ expression PARDER
+    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
+    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
+    (60) nativas -> . TOSTRING PARIZQ expression PARDER
+    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
+    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
+    (63) nativas -> . TRUNC PARIZQ expression PARDER
+    (64) nativas -> . TYPEOF PARIZQ expression PARDER
+    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
+    (66) nativas -> . LENGTH PARIZQ expression PARDER
+    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
+    (68) nativas -> . POP PARIZQ expression PARDER
+
+    MENOS           shift and go to state 82
+    NOT             shift and go to state 83
+    PARIZQ          shift and go to state 85
+    CORCHETEIZQ     shift and go to state 86
+    DECIMAL         shift and go to state 87
+    ENTERO          shift and go to state 88
+    CADENA          shift and go to state 89
+    CARACTER        shift and go to state 90
+    ID              shift and go to state 91
+    TRUE            shift and go to state 92
+    FALSE           shift and go to state 93
+    LOG             shift and go to state 34
+    LOG10           shift and go to state 35
+    COS             shift and go to state 36
+    SIN             shift and go to state 37
+    TAN             shift and go to state 38
+    SQRT            shift and go to state 39
+    UPPERCASE       shift and go to state 40
+    LOWERCASE       shift and go to state 41
+    TOSTRING        shift and go to state 42
+    TOFLOAT         shift and go to state 43
+    TRUNC           shift and go to state 44
+    TYPEOF          shift and go to state 45
+    PARSE           shift and go to state 46
+    LENGTH          shift and go to state 47
+    PUSH            shift and go to state 48
+    POP             shift and go to state 49
+
+    expression                     shift and go to state 270
+    final_expression               shift and go to state 84
+    call_function                  shift and go to state 94
+    access_struct                  shift and go to state 95
+    nativas                        shift and go to state 96
+
+state 252
+
+    (106) for_state -> FOR ID IN expression statement . END
+
+    END             shift and go to state 271
+
+
+state 253
+
+    (52) nativas -> LOG PARIZQ ENTERO COMA expression . PARDER
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    PARDER          shift and go to state 272
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 254
+
+    (62) nativas -> TRUNC PARIZQ INT COMA expression . PARDER
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    PARDER          shift and go to state 273
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 255
+
+    (65) nativas -> PARSE PARIZQ tipo COMA expression . PARDER
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    PARDER          shift and go to state 274
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 256
+
+    (67) nativas -> PUSH PARIZQ expression COMA expression . PARDER
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    PARDER          shift and go to state 275
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 257
+
+    (113) attList -> ID DOSP DOSP . tipo PTCOMA
+    (71) tipo -> . INT
+    (72) tipo -> . FLOAT
+    (73) tipo -> . BOOL
+    (74) tipo -> . CHAR
+    (75) tipo -> . STRING
+
+    INT             shift and go to state 169
+    FLOAT           shift and go to state 170
+    BOOL            shift and go to state 171
+    CHAR            shift and go to state 172
+    STRING          shift and go to state 173
+
+    tipo                           shift and go to state 276
+
+state 258
+
+    (112) attList -> attList ID DOSP . DOSP tipo PTCOMA
+
+    DOSP            shift and go to state 277
+
+
+state 259
+
+    (82) definicion_asignacion_instr -> LOCAL ID IGUAL expression DOSP DOSP . tipo
+    (71) tipo -> . INT
+    (72) tipo -> . FLOAT
+    (73) tipo -> . BOOL
+    (74) tipo -> . CHAR
+    (75) tipo -> . STRING
+
+    INT             shift and go to state 169
+    FLOAT           shift and go to state 170
+    BOOL            shift and go to state 171
+    CHAR            shift and go to state 172
+    STRING          shift and go to state 173
+
+    tipo                           shift and go to state 278
+
+state 260
+
+    (81) definicion_asignacion_instr -> ID IGUAL expression DOSP DOSP tipo .
+
+    PTCOMA          reduce using rule 81 (definicion_asignacion_instr -> ID IGUAL expression DOSP DOSP tipo .)
+
+
+state 261
+
+    (83) definicion_asignacion_instr -> GLOBAL ID IGUAL expression DOSP DOSP . tipo
+    (71) tipo -> . INT
+    (72) tipo -> . FLOAT
+    (73) tipo -> . BOOL
+    (74) tipo -> . CHAR
+    (75) tipo -> . STRING
+
+    INT             shift and go to state 169
+    FLOAT           shift and go to state 170
+    BOOL            shift and go to state 171
+    CHAR            shift and go to state 172
+    STRING          shift and go to state 173
+
+    tipo                           shift and go to state 279
+
+state 262
+
+    (97) dec_params -> ID DOSP DOSP . tipo
+    (71) tipo -> . INT
+    (72) tipo -> . FLOAT
+    (73) tipo -> . BOOL
+    (74) tipo -> . CHAR
+    (75) tipo -> . STRING
+
+    INT             shift and go to state 169
+    FLOAT           shift and go to state 170
+    BOOL            shift and go to state 171
+    CHAR            shift and go to state 172
+    STRING          shift and go to state 173
+
+    tipo                           shift and go to state 280
+
+state 263
+
+    (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP . tipo statement END
+    (71) tipo -> . INT
+    (72) tipo -> . FLOAT
+    (73) tipo -> . BOOL
+    (74) tipo -> . CHAR
+    (75) tipo -> . STRING
+
+    INT             shift and go to state 169
+    FLOAT           shift and go to state 170
+    BOOL            shift and go to state 171
+    CHAR            shift and go to state 172
+    STRING          shift and go to state 173
+
+    tipo                           shift and go to state 281
+
+state 264
+
+    (95) declare_function -> FUNCTION ID PARIZQ PARDER statement END .
+
+    PTCOMA          reduce using rule 95 (declare_function -> FUNCTION ID PARIZQ PARDER statement END .)
+
+
+state 265
+
+    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP . DOSP tipo statement END
+
+    DOSP            shift and go to state 282
+
+
+state 266
+
+    (94) declare_function -> FUNCTION ID PARIZQ dec_params PARDER statement . END
+
+    END             shift and go to state 283
+
+
+state 267
+
+    (96) dec_params -> dec_params COMA ID . DOSP DOSP tipo
+
+    DOSP            shift and go to state 284
+
+
 state 268
 
-    (104) for_state -> FOR ID IN expression statement END .
+    (99) if_state -> IF expression statement ELSE statement END .
 
-    PTCOMA          reduce using rule 104 (for_state -> FOR ID IN expression statement END .)
+    PTCOMA          reduce using rule 99 (if_state -> IF expression statement ELSE statement END .)
 
 
 state 269
+
+    (101) else_if_list -> ELSEIF expression statement .
+    (102) else_if_list -> ELSEIF expression statement . ELSE statement
+    (103) else_if_list -> ELSEIF expression statement . else_if_list
+    (101) else_if_list -> . ELSEIF expression statement
+    (102) else_if_list -> . ELSEIF expression statement ELSE statement
+    (103) else_if_list -> . ELSEIF expression statement else_if_list
+
+    END             reduce using rule 101 (else_if_list -> ELSEIF expression statement .)
+    ELSE            shift and go to state 285
+    ELSEIF          shift and go to state 214
+
+    else_if_list                   shift and go to state 286
+
+state 270
+
+    (105) for_state -> FOR ID IN expression DOSP expression . statement END
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+    (91) statement -> . instrucciones
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . print_instr PTCOMA
+    (5) instruccion -> . println_instr PTCOMA
+    (6) instruccion -> . definicion_instr PTCOMA
+    (7) instruccion -> . asignacion_instr PTCOMA
+    (8) instruccion -> . asignacion_arreglo_instr PTCOMA
+    (9) instruccion -> . definicion_asignacion_instr PTCOMA
+    (10) instruccion -> . call_function PTCOMA
+    (11) instruccion -> . declare_function PTCOMA
+    (12) instruccion -> . return_state PTCOMA
+    (13) instruccion -> . break_state PTCOMA
+    (14) instruccion -> . continue_state PTCOMA
+    (15) instruccion -> . if_state PTCOMA
+    (16) instruccion -> . while_state PTCOMA
+    (17) instruccion -> . for_state PTCOMA
+    (18) instruccion -> . nativas PTCOMA
+    (19) instruccion -> . create_struct PTCOMA
+    (20) instruccion -> . declare_struct PTCOMA
+    (21) instruccion -> . assign_access PTCOMA
+    (69) print_instr -> . PRINT PARIZQ expression PARDER
+    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (76) definicion_instr -> . LOCAL ID
+    (77) definicion_instr -> . GLOBAL ID
+    (78) asignacion_instr -> . ID IGUAL expression
+    (79) asignacion_instr -> . LOCAL ID IGUAL expression
+    (80) asignacion_instr -> . GLOBAL ID IGUAL expression
+    (84) asignacion_arreglo_instr -> . ID index_list IGUAL expression
+    (81) definicion_asignacion_instr -> . ID IGUAL expression DOSP DOSP tipo
+    (82) definicion_asignacion_instr -> . LOCAL ID IGUAL expression DOSP DOSP tipo
+    (83) definicion_asignacion_instr -> . GLOBAL ID IGUAL expression DOSP DOSP tipo
+    (85) call_function -> . ID PARIZQ PARDER
+    (86) call_function -> . ID PARIZQ exp_list PARDER
+    (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
+    (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
+    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
+    (53) nativas -> . LOG10 PARIZQ expression PARDER
+    (54) nativas -> . COS PARIZQ expression PARDER
+    (55) nativas -> . SIN PARIZQ expression PARDER
+    (56) nativas -> . TAN PARIZQ expression PARDER
+    (57) nativas -> . SQRT PARIZQ expression PARDER
+    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
+    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
+    (60) nativas -> . TOSTRING PARIZQ expression PARDER
+    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
+    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
+    (63) nativas -> . TRUNC PARIZQ expression PARDER
+    (64) nativas -> . TYPEOF PARIZQ expression PARDER
+    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
+    (66) nativas -> . LENGTH PARIZQ expression PARDER
+    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
+    (68) nativas -> . POP PARIZQ expression PARDER
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
+
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+    PRINT           shift and go to state 22
+    PRINTLN         shift and go to state 23
+    LOCAL           shift and go to state 24
+    GLOBAL          shift and go to state 26
+    ID              shift and go to state 25
+    FUNCTION        shift and go to state 27
+    RETURN          shift and go to state 28
+    BREAK           shift and go to state 29
+    CONTINUE        shift and go to state 30
+    IF              shift and go to state 31
+    WHILE           shift and go to state 32
+    FOR             shift and go to state 33
+    LOG             shift and go to state 34
+    LOG10           shift and go to state 35
+    COS             shift and go to state 36
+    SIN             shift and go to state 37
+    TAN             shift and go to state 38
+    SQRT            shift and go to state 39
+    UPPERCASE       shift and go to state 40
+    LOWERCASE       shift and go to state 41
+    TOSTRING        shift and go to state 42
+    TOFLOAT         shift and go to state 43
+    TRUNC           shift and go to state 44
+    TYPEOF          shift and go to state 45
+    PARSE           shift and go to state 46
+    LENGTH          shift and go to state 47
+    PUSH            shift and go to state 48
+    POP             shift and go to state 49
+    STRUCT          shift and go to state 50
+
+    statement                      shift and go to state 287
+    instrucciones                  shift and go to state 152
+    instruccion                    shift and go to state 3
+    print_instr                    shift and go to state 4
+    println_instr                  shift and go to state 5
+    definicion_instr               shift and go to state 6
+    asignacion_instr               shift and go to state 7
+    asignacion_arreglo_instr       shift and go to state 8
+    definicion_asignacion_instr    shift and go to state 9
+    call_function                  shift and go to state 10
+    declare_function               shift and go to state 11
+    return_state                   shift and go to state 12
+    break_state                    shift and go to state 13
+    continue_state                 shift and go to state 14
+    if_state                       shift and go to state 15
+    while_state                    shift and go to state 16
+    for_state                      shift and go to state 17
+    nativas                        shift and go to state 18
+    create_struct                  shift and go to state 19
+    declare_struct                 shift and go to state 20
+    assign_access                  shift and go to state 21
+
+state 271
+
+    (106) for_state -> FOR ID IN expression statement END .
+
+    PTCOMA          reduce using rule 106 (for_state -> FOR ID IN expression statement END .)
+
+
+state 272
 
     (52) nativas -> LOG PARIZQ ENTERO COMA expression PARDER .
 
@@ -12204,7 +12490,7 @@ state 269
     CORCHETEDER     reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
 
 
-state 270
+state 273
 
     (62) nativas -> TRUNC PARIZQ INT COMA expression PARDER .
 
@@ -12258,7 +12544,7 @@ state 270
     CORCHETEDER     reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
 
 
-state 271
+state 274
 
     (65) nativas -> PARSE PARIZQ tipo COMA expression PARDER .
 
@@ -12312,7 +12598,7 @@ state 271
     CORCHETEDER     reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
 
 
-state 272
+state 275
 
     (67) nativas -> PUSH PARIZQ expression COMA expression PARDER .
 
@@ -12366,16 +12652,16 @@ state 272
     CORCHETEDER     reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
 
 
-state 273
+state 276
 
-    (111) attList -> ID DOSP DOSP tipo . PTCOMA
+    (113) attList -> ID DOSP DOSP tipo . PTCOMA
 
-    PTCOMA          shift and go to state 284
+    PTCOMA          shift and go to state 288
 
 
-state 274
+state 277
 
-    (110) attList -> attList ID DOSP DOSP . tipo PTCOMA
+    (112) attList -> attList ID DOSP DOSP . tipo PTCOMA
     (71) tipo -> . INT
     (72) tipo -> . FLOAT
     (73) tipo -> . BOOL
@@ -12388,31 +12674,31 @@ state 274
     CHAR            shift and go to state 172
     STRING          shift and go to state 173
 
-    tipo                           shift and go to state 285
+    tipo                           shift and go to state 289
 
-state 275
+state 278
 
     (82) definicion_asignacion_instr -> LOCAL ID IGUAL expression DOSP DOSP tipo .
 
     PTCOMA          reduce using rule 82 (definicion_asignacion_instr -> LOCAL ID IGUAL expression DOSP DOSP tipo .)
 
 
-state 276
+state 279
 
     (83) definicion_asignacion_instr -> GLOBAL ID IGUAL expression DOSP DOSP tipo .
 
     PTCOMA          reduce using rule 83 (definicion_asignacion_instr -> GLOBAL ID IGUAL expression DOSP DOSP tipo .)
 
 
-state 277
+state 280
 
-    (95) dec_params -> ID DOSP DOSP tipo .
+    (97) dec_params -> ID DOSP DOSP tipo .
 
-    PARDER          reduce using rule 95 (dec_params -> ID DOSP DOSP tipo .)
-    COMA            reduce using rule 95 (dec_params -> ID DOSP DOSP tipo .)
+    PARDER          reduce using rule 97 (dec_params -> ID DOSP DOSP tipo .)
+    COMA            reduce using rule 97 (dec_params -> ID DOSP DOSP tipo .)
 
 
-state 278
+state 281
 
     (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo . statement END
     (91) statement -> . instrucciones
@@ -12451,16 +12737,18 @@ state 278
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -12478,9 +12766,9 @@ state 278
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     PRINT           shift and go to state 22
     PRINTLN         shift and go to state 23
@@ -12512,153 +12800,7 @@ state 278
     POP             shift and go to state 49
     STRUCT          shift and go to state 50
 
-    statement                      shift and go to state 286
-    instrucciones                  shift and go to state 152
-    instruccion                    shift and go to state 3
-    print_instr                    shift and go to state 4
-    println_instr                  shift and go to state 5
-    definicion_instr               shift and go to state 6
-    asignacion_instr               shift and go to state 7
-    asignacion_arreglo_instr       shift and go to state 8
-    definicion_asignacion_instr    shift and go to state 9
-    call_function                  shift and go to state 10
-    declare_function               shift and go to state 11
-    return_state                   shift and go to state 12
-    break_state                    shift and go to state 13
-    continue_state                 shift and go to state 14
-    if_state                       shift and go to state 15
-    while_state                    shift and go to state 16
-    for_state                      shift and go to state 17
-    nativas                        shift and go to state 18
-    create_struct                  shift and go to state 19
-    declare_struct                 shift and go to state 20
-    assign_access                  shift and go to state 21
-
-state 279
-
-    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP . tipo statement END
-    (71) tipo -> . INT
-    (72) tipo -> . FLOAT
-    (73) tipo -> . BOOL
-    (74) tipo -> . CHAR
-    (75) tipo -> . STRING
-
-    INT             shift and go to state 169
-    FLOAT           shift and go to state 170
-    BOOL            shift and go to state 171
-    CHAR            shift and go to state 172
-    STRING          shift and go to state 173
-
-    tipo                           shift and go to state 287
-
-state 280
-
-    (94) dec_params -> dec_params COMA ID DOSP . DOSP tipo
-
-    DOSP            shift and go to state 288
-
-
-state 281
-
-    (100) else_if_list -> ELSEIF expression statement ELSE . statement
-    (91) statement -> . instrucciones
-    (2) instrucciones -> . instrucciones instruccion
-    (3) instrucciones -> . instruccion
-    (4) instruccion -> . print_instr PTCOMA
-    (5) instruccion -> . println_instr PTCOMA
-    (6) instruccion -> . definicion_instr PTCOMA
-    (7) instruccion -> . asignacion_instr PTCOMA
-    (8) instruccion -> . asignacion_arreglo_instr PTCOMA
-    (9) instruccion -> . definicion_asignacion_instr PTCOMA
-    (10) instruccion -> . call_function PTCOMA
-    (11) instruccion -> . declare_function PTCOMA
-    (12) instruccion -> . return_state PTCOMA
-    (13) instruccion -> . break_state PTCOMA
-    (14) instruccion -> . continue_state PTCOMA
-    (15) instruccion -> . if_state PTCOMA
-    (16) instruccion -> . while_state PTCOMA
-    (17) instruccion -> . for_state PTCOMA
-    (18) instruccion -> . nativas PTCOMA
-    (19) instruccion -> . create_struct PTCOMA
-    (20) instruccion -> . declare_struct PTCOMA
-    (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
-    (76) definicion_instr -> . LOCAL ID
-    (77) definicion_instr -> . GLOBAL ID
-    (78) asignacion_instr -> . ID IGUAL expression
-    (79) asignacion_instr -> . LOCAL ID IGUAL expression
-    (80) asignacion_instr -> . GLOBAL ID IGUAL expression
-    (84) asignacion_arreglo_instr -> . ID index_list IGUAL expression
-    (81) definicion_asignacion_instr -> . ID IGUAL expression DOSP DOSP tipo
-    (82) definicion_asignacion_instr -> . LOCAL ID IGUAL expression DOSP DOSP tipo
-    (83) definicion_asignacion_instr -> . GLOBAL ID IGUAL expression DOSP DOSP tipo
-    (85) call_function -> . ID PARIZQ PARDER
-    (86) call_function -> . ID PARIZQ exp_list PARDER
-    (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
-    (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
-    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
-    (53) nativas -> . LOG10 PARIZQ expression PARDER
-    (54) nativas -> . COS PARIZQ expression PARDER
-    (55) nativas -> . SIN PARIZQ expression PARDER
-    (56) nativas -> . TAN PARIZQ expression PARDER
-    (57) nativas -> . SQRT PARIZQ expression PARDER
-    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
-    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
-    (60) nativas -> . TOSTRING PARIZQ expression PARDER
-    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
-    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
-    (63) nativas -> . TRUNC PARIZQ expression PARDER
-    (64) nativas -> . TYPEOF PARIZQ expression PARDER
-    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
-    (66) nativas -> . LENGTH PARIZQ expression PARDER
-    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
-    (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
-
-    PRINT           shift and go to state 22
-    PRINTLN         shift and go to state 23
-    LOCAL           shift and go to state 24
-    GLOBAL          shift and go to state 26
-    ID              shift and go to state 25
-    FUNCTION        shift and go to state 27
-    RETURN          shift and go to state 28
-    BREAK           shift and go to state 29
-    CONTINUE        shift and go to state 30
-    IF              shift and go to state 31
-    WHILE           shift and go to state 32
-    FOR             shift and go to state 33
-    LOG             shift and go to state 34
-    LOG10           shift and go to state 35
-    COS             shift and go to state 36
-    SIN             shift and go to state 37
-    TAN             shift and go to state 38
-    SQRT            shift and go to state 39
-    UPPERCASE       shift and go to state 40
-    LOWERCASE       shift and go to state 41
-    TOSTRING        shift and go to state 42
-    TOFLOAT         shift and go to state 43
-    TRUNC           shift and go to state 44
-    TYPEOF          shift and go to state 45
-    PARSE           shift and go to state 46
-    LENGTH          shift and go to state 47
-    PUSH            shift and go to state 48
-    POP             shift and go to state 49
-    STRUCT          shift and go to state 50
-
-    statement                      shift and go to state 289
+    statement                      shift and go to state 290
     instrucciones                  shift and go to state 152
     instruccion                    shift and go to state 3
     print_instr                    shift and go to state 4
@@ -12682,43 +12824,38 @@ state 281
 
 state 282
 
-    (101) else_if_list -> ELSEIF expression statement else_if_list .
+    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP . tipo statement END
+    (71) tipo -> . INT
+    (72) tipo -> . FLOAT
+    (73) tipo -> . BOOL
+    (74) tipo -> . CHAR
+    (75) tipo -> . STRING
 
-    END             reduce using rule 101 (else_if_list -> ELSEIF expression statement else_if_list .)
+    INT             shift and go to state 169
+    FLOAT           shift and go to state 170
+    BOOL            shift and go to state 171
+    CHAR            shift and go to state 172
+    STRING          shift and go to state 173
 
+    tipo                           shift and go to state 291
 
 state 283
 
-    (103) for_state -> FOR ID IN expression DOSP expression statement . END
+    (94) declare_function -> FUNCTION ID PARIZQ dec_params PARDER statement END .
 
-    END             shift and go to state 290
+    PTCOMA          reduce using rule 94 (declare_function -> FUNCTION ID PARIZQ dec_params PARDER statement END .)
 
 
 state 284
 
-    (111) attList -> ID DOSP DOSP tipo PTCOMA .
+    (96) dec_params -> dec_params COMA ID DOSP . DOSP tipo
 
-    END             reduce using rule 111 (attList -> ID DOSP DOSP tipo PTCOMA .)
-    ID              reduce using rule 111 (attList -> ID DOSP DOSP tipo PTCOMA .)
+    DOSP            shift and go to state 292
 
 
 state 285
 
-    (110) attList -> attList ID DOSP DOSP tipo . PTCOMA
-
-    PTCOMA          shift and go to state 291
-
-
-state 286
-
-    (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement . END
-
-    END             shift and go to state 292
-
-
-state 287
-
-    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo . statement END
+    (102) else_if_list -> ELSEIF expression statement ELSE . statement
     (91) statement -> . instrucciones
     (2) instrucciones -> . instrucciones instruccion
     (3) instrucciones -> . instruccion
@@ -12755,16 +12892,18 @@ state 287
     (86) call_function -> . ID PARIZQ exp_list PARDER
     (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
     (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
-    (107) return_state -> . RETURN
-    (108) return_state -> . RETURN expression
-    (105) break_state -> . BREAK
-    (106) continue_state -> . CONTINUE
-    (96) if_state -> . IF expression statement END
-    (97) if_state -> . IF expression statement ELSE statement END
-    (98) if_state -> . IF expression statement else_if_list END
-    (102) while_state -> . WHILE expression statement END
-    (103) for_state -> . FOR ID IN expression DOSP expression statement END
-    (104) for_state -> . FOR ID IN expression statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
     (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
     (53) nativas -> . LOG10 PARIZQ expression PARDER
     (54) nativas -> . COS PARIZQ expression PARDER
@@ -12782,9 +12921,9 @@ state 287
     (66) nativas -> . LENGTH PARIZQ expression PARDER
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
-    (109) create_struct -> . STRUCT ID attList END
-    (112) declare_struct -> . ID DOSP DOSP ID
-    (113) assign_access -> . ID PUNTO ID IGUAL expression
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
 
     PRINT           shift and go to state 22
     PRINTLN         shift and go to state 23
@@ -12838,9 +12977,169 @@ state 287
     declare_struct                 shift and go to state 20
     assign_access                  shift and go to state 21
 
+state 286
+
+    (103) else_if_list -> ELSEIF expression statement else_if_list .
+
+    END             reduce using rule 103 (else_if_list -> ELSEIF expression statement else_if_list .)
+
+
+state 287
+
+    (105) for_state -> FOR ID IN expression DOSP expression statement . END
+
+    END             shift and go to state 294
+
+
 state 288
 
-    (94) dec_params -> dec_params COMA ID DOSP DOSP . tipo
+    (113) attList -> ID DOSP DOSP tipo PTCOMA .
+
+    END             reduce using rule 113 (attList -> ID DOSP DOSP tipo PTCOMA .)
+    ID              reduce using rule 113 (attList -> ID DOSP DOSP tipo PTCOMA .)
+
+
+state 289
+
+    (112) attList -> attList ID DOSP DOSP tipo . PTCOMA
+
+    PTCOMA          shift and go to state 295
+
+
+state 290
+
+    (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement . END
+
+    END             shift and go to state 296
+
+
+state 291
+
+    (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo . statement END
+    (91) statement -> . instrucciones
+    (2) instrucciones -> . instrucciones instruccion
+    (3) instrucciones -> . instruccion
+    (4) instruccion -> . print_instr PTCOMA
+    (5) instruccion -> . println_instr PTCOMA
+    (6) instruccion -> . definicion_instr PTCOMA
+    (7) instruccion -> . asignacion_instr PTCOMA
+    (8) instruccion -> . asignacion_arreglo_instr PTCOMA
+    (9) instruccion -> . definicion_asignacion_instr PTCOMA
+    (10) instruccion -> . call_function PTCOMA
+    (11) instruccion -> . declare_function PTCOMA
+    (12) instruccion -> . return_state PTCOMA
+    (13) instruccion -> . break_state PTCOMA
+    (14) instruccion -> . continue_state PTCOMA
+    (15) instruccion -> . if_state PTCOMA
+    (16) instruccion -> . while_state PTCOMA
+    (17) instruccion -> . for_state PTCOMA
+    (18) instruccion -> . nativas PTCOMA
+    (19) instruccion -> . create_struct PTCOMA
+    (20) instruccion -> . declare_struct PTCOMA
+    (21) instruccion -> . assign_access PTCOMA
+    (69) print_instr -> . PRINT PARIZQ expression PARDER
+    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (76) definicion_instr -> . LOCAL ID
+    (77) definicion_instr -> . GLOBAL ID
+    (78) asignacion_instr -> . ID IGUAL expression
+    (79) asignacion_instr -> . LOCAL ID IGUAL expression
+    (80) asignacion_instr -> . GLOBAL ID IGUAL expression
+    (84) asignacion_arreglo_instr -> . ID index_list IGUAL expression
+    (81) definicion_asignacion_instr -> . ID IGUAL expression DOSP DOSP tipo
+    (82) definicion_asignacion_instr -> . LOCAL ID IGUAL expression DOSP DOSP tipo
+    (83) definicion_asignacion_instr -> . GLOBAL ID IGUAL expression DOSP DOSP tipo
+    (85) call_function -> . ID PARIZQ PARDER
+    (86) call_function -> . ID PARIZQ exp_list PARDER
+    (92) declare_function -> . FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
+    (93) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
+    (94) declare_function -> . FUNCTION ID PARIZQ dec_params PARDER statement END
+    (95) declare_function -> . FUNCTION ID PARIZQ PARDER statement END
+    (109) return_state -> . RETURN
+    (110) return_state -> . RETURN expression
+    (107) break_state -> . BREAK
+    (108) continue_state -> . CONTINUE
+    (98) if_state -> . IF expression statement END
+    (99) if_state -> . IF expression statement ELSE statement END
+    (100) if_state -> . IF expression statement else_if_list END
+    (104) while_state -> . WHILE expression statement END
+    (105) for_state -> . FOR ID IN expression DOSP expression statement END
+    (106) for_state -> . FOR ID IN expression statement END
+    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
+    (53) nativas -> . LOG10 PARIZQ expression PARDER
+    (54) nativas -> . COS PARIZQ expression PARDER
+    (55) nativas -> . SIN PARIZQ expression PARDER
+    (56) nativas -> . TAN PARIZQ expression PARDER
+    (57) nativas -> . SQRT PARIZQ expression PARDER
+    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
+    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
+    (60) nativas -> . TOSTRING PARIZQ expression PARDER
+    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
+    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
+    (63) nativas -> . TRUNC PARIZQ expression PARDER
+    (64) nativas -> . TYPEOF PARIZQ expression PARDER
+    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
+    (66) nativas -> . LENGTH PARIZQ expression PARDER
+    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
+    (68) nativas -> . POP PARIZQ expression PARDER
+    (111) create_struct -> . STRUCT ID attList END
+    (114) declare_struct -> . ID DOSP DOSP ID
+    (115) assign_access -> . ID PUNTO ID IGUAL expression
+
+    PRINT           shift and go to state 22
+    PRINTLN         shift and go to state 23
+    LOCAL           shift and go to state 24
+    GLOBAL          shift and go to state 26
+    ID              shift and go to state 25
+    FUNCTION        shift and go to state 27
+    RETURN          shift and go to state 28
+    BREAK           shift and go to state 29
+    CONTINUE        shift and go to state 30
+    IF              shift and go to state 31
+    WHILE           shift and go to state 32
+    FOR             shift and go to state 33
+    LOG             shift and go to state 34
+    LOG10           shift and go to state 35
+    COS             shift and go to state 36
+    SIN             shift and go to state 37
+    TAN             shift and go to state 38
+    SQRT            shift and go to state 39
+    UPPERCASE       shift and go to state 40
+    LOWERCASE       shift and go to state 41
+    TOSTRING        shift and go to state 42
+    TOFLOAT         shift and go to state 43
+    TRUNC           shift and go to state 44
+    TYPEOF          shift and go to state 45
+    PARSE           shift and go to state 46
+    LENGTH          shift and go to state 47
+    PUSH            shift and go to state 48
+    POP             shift and go to state 49
+    STRUCT          shift and go to state 50
+
+    statement                      shift and go to state 297
+    instrucciones                  shift and go to state 152
+    instruccion                    shift and go to state 3
+    print_instr                    shift and go to state 4
+    println_instr                  shift and go to state 5
+    definicion_instr               shift and go to state 6
+    asignacion_instr               shift and go to state 7
+    asignacion_arreglo_instr       shift and go to state 8
+    definicion_asignacion_instr    shift and go to state 9
+    call_function                  shift and go to state 10
+    declare_function               shift and go to state 11
+    return_state                   shift and go to state 12
+    break_state                    shift and go to state 13
+    continue_state                 shift and go to state 14
+    if_state                       shift and go to state 15
+    while_state                    shift and go to state 16
+    for_state                      shift and go to state 17
+    nativas                        shift and go to state 18
+    create_struct                  shift and go to state 19
+    declare_struct                 shift and go to state 20
+    assign_access                  shift and go to state 21
+
+state 292
+
+    (96) dec_params -> dec_params COMA ID DOSP DOSP . tipo
     (71) tipo -> . INT
     (72) tipo -> . FLOAT
     (73) tipo -> . BOOL
@@ -12853,53 +13152,53 @@ state 288
     CHAR            shift and go to state 172
     STRING          shift and go to state 173
 
-    tipo                           shift and go to state 294
+    tipo                           shift and go to state 298
 
-state 289
+state 293
 
-    (100) else_if_list -> ELSEIF expression statement ELSE statement .
+    (102) else_if_list -> ELSEIF expression statement ELSE statement .
 
-    END             reduce using rule 100 (else_if_list -> ELSEIF expression statement ELSE statement .)
-
-
-state 290
-
-    (103) for_state -> FOR ID IN expression DOSP expression statement END .
-
-    PTCOMA          reduce using rule 103 (for_state -> FOR ID IN expression DOSP expression statement END .)
+    END             reduce using rule 102 (else_if_list -> ELSEIF expression statement ELSE statement .)
 
 
-state 291
+state 294
 
-    (110) attList -> attList ID DOSP DOSP tipo PTCOMA .
+    (105) for_state -> FOR ID IN expression DOSP expression statement END .
 
-    END             reduce using rule 110 (attList -> attList ID DOSP DOSP tipo PTCOMA .)
-    ID              reduce using rule 110 (attList -> attList ID DOSP DOSP tipo PTCOMA .)
+    PTCOMA          reduce using rule 105 (for_state -> FOR ID IN expression DOSP expression statement END .)
 
 
-state 292
+state 295
+
+    (112) attList -> attList ID DOSP DOSP tipo PTCOMA .
+
+    END             reduce using rule 112 (attList -> attList ID DOSP DOSP tipo PTCOMA .)
+    ID              reduce using rule 112 (attList -> attList ID DOSP DOSP tipo PTCOMA .)
+
+
+state 296
 
     (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END .
 
     PTCOMA          reduce using rule 92 (declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END .)
 
 
-state 293
+state 297
 
     (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement . END
 
-    END             shift and go to state 295
+    END             shift and go to state 299
 
 
-state 294
+state 298
 
-    (94) dec_params -> dec_params COMA ID DOSP DOSP tipo .
+    (96) dec_params -> dec_params COMA ID DOSP DOSP tipo .
 
-    PARDER          reduce using rule 94 (dec_params -> dec_params COMA ID DOSP DOSP tipo .)
-    COMA            reduce using rule 94 (dec_params -> dec_params COMA ID DOSP DOSP tipo .)
+    PARDER          reduce using rule 96 (dec_params -> dec_params COMA ID DOSP DOSP tipo .)
+    COMA            reduce using rule 96 (dec_params -> dec_params COMA ID DOSP DOSP tipo .)
 
 
-state 295
+state 299
 
     (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END .
 

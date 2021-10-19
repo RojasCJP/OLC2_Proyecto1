@@ -2,6 +2,19 @@ from grammar import grammar
 from sym.Environment import *
 from sym.Generator import *
 
+import sys
+from flask import Flask
+from flask import request
+from flask_cors import CORS
+from jinja2 import environment
+
+
+sys.setrecursionlimit(3000)
+
+app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
+
 
 def compile():
     gen_aux = Generator()
@@ -21,4 +34,16 @@ def compile():
         print("no se puede compilar", e)
 
 
-compile()
+@app.route("/")
+def hello_world():
+    return {"text": "hola que tal como estas"}
+
+
+@app.route("/salida")
+def compilacion():
+    compile()
+    return {"text": "revisa la consola para ver el resultado"}
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=3000)

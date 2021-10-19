@@ -311,9 +311,11 @@ def p_expression(t):
             t[0] = Arithmetic(t[1], t[3], ArithmethicOption.DIV,
                               t.lineno(1), t.lexpos(0))
         elif t[2] == "^":
-            pass
+            t[0] = Arithmetic(t[1], t[3], ArithmethicOption.RAISED,
+                              t.lineno(1), t.lexpos(0))
         elif t[2] == "%":
-            pass
+            t[0] = Arithmetic(
+                t[1], t[3], ArithmethicOption.MODULE, t.lineno(1), t.lexpos(0))
         elif t[2] == "||":
             t[0] = Logical(t[1], t[3], LogicOption.OR,
                            t.lineno(1), t.lexpos(0))
@@ -547,9 +549,15 @@ def p_statement(t):
 
 def p_declare_function(t):
     '''declare_function     : FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END
-                            | FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END'''
+                            | FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement END
+                            | FUNCTION ID PARIZQ dec_params PARDER statement END
+                            | FUNCTION ID PARIZQ PARDER statement END'''
     if len(t) == 10:
         t[0] = Function(t[2], [], t[7], t[8], t.lineno(1), t.lexpos(0))
+    elif len(t) == 8:
+        t[0] = Function(t[2], t[4], Type.NULL, t[6], t.lineno(1), t.lexpos(0))
+    elif len(t) == 7:
+        t[0] = Function(t[2], [], Type.NULL, t[5], t.lineno(1), t.lexpos(0))
     else:
         t[0] = Function(t[2], t[4], t[8], t[9], t.lineno(1), t.lexpos(0))
 

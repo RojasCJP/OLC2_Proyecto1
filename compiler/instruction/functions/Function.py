@@ -26,5 +26,6 @@ class Function(Instruction):
             self.instructions.compile(new_env)
         except Exception as e:
             print("erro al compilar instrucciones deuna funcion", e)
-        generator.put_label(return_lbl)
+        if self.type != Type.NULL:
+            generator.put_label(return_lbl)
         generator.add_end_func()
