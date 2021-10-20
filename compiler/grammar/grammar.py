@@ -16,6 +16,8 @@ from instruction.loops.While import *
 from instruction.loops.For import *
 
 from instruction.nativas.Print import *
+from instruction.nativas.ToUpper import *
+from instruction.nativas.ToLower import *
 
 from instruction.structs.AssignAccess import *
 from instruction.structs.CreateStruct import *
@@ -376,7 +378,7 @@ def p_final_expression(t):
         elif t.slice[1].type == "call_function" or t.slice[1].type == "access_struct":
             t[0] = t[1]
         elif t.slice[1].type == "nativas":
-            pass
+            t[0] = t[1]
     elif len(t) == 3:
         pass
     else:
@@ -419,9 +421,9 @@ def p_nativas(t):
     elif t.slice[1].type == "SQRT":
         pass
     elif t.slice[1].type == "UPPERCASE":
-        pass
+        t[0] = ToUpper(t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "LOWERCASE":
-        pass
+        t[0] = ToLower(t[3], t.lineno(1), t.lexpos(0))
     elif t.slice[1].type == "TOSTRING":
         pass
     elif t.slice[1].type == "TOFLOAT":
