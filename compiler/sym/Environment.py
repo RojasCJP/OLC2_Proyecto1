@@ -48,12 +48,14 @@ class Environment:
     def save_var(self, id_var, sym_type, in_heap, struct_type=''):
         env = self
         while env is not None:
-            if id_var in self.variables.keys():
+            if id_var in env.variables.keys():
                 print("Variable ya existe")
-                env.variables[id_var] = Symbol(id_var, sym_type, self.size,
-                                               self.prev == None, in_heap)
+                env.variables[id_var] = Symbol(id_var, sym_type, env.variables[id_var].pos,
+                                               env.prev == None, in_heap)
                 return env.variables[id_var]
             env = env.prev
+        if(id_var[-1] == '#'):
+            id_var = id_var[0:-1]
         newSymbol = Symbol(id_var, sym_type, self.size,
                            self.prev == None, in_heap)
         self.size += 1
@@ -74,17 +76,19 @@ class Environment:
 
     def get_var(self, id_var):
         env = self
-        while env != None:
+        while env is not None:
             if id_var in env.variables.keys():
                 return env.variables[id_var]
             env = env.prev
         return None
 
     def get_func(self, id_func):
-        if id_func in self.functions.keys():
-            return self.functions[id_func]
-        else:
-            return None
+        env = self
+        while env is not None:
+            if id_func in env.functions.keys():
+                return env.functions[id_func]
+            env = env.prev
+        return None
 
     def get_struct(self, id_struct):
         env = self

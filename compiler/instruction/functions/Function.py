@@ -19,7 +19,7 @@ class Function(Instruction):
         new_env.return_lbl = return_lbl
         new_env.size = 1
         for param in self.params:
-            new_env.save_var(param.id, param.type, (param.type ==
+            new_env.save_var(param.id+"#", param.type, (param.type ==
                              Type.STRING or param.type == Type.STRUCT))
         generator.add_begin_func(self.id)
         try:

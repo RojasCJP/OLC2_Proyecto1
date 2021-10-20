@@ -13,6 +13,7 @@ from instruction.functions.ReturnST import *
 from instruction.loops.Break import *
 from instruction.loops.Continue import *
 from instruction.loops.While import *
+from instruction.loops.For import *
 
 from instruction.nativas.Print import *
 
@@ -443,12 +444,12 @@ def p_nativas(t):
 
 
 def p_print_instr(t):
-    'print_instr    : PRINT PARIZQ expression PARDER'
+    'print_instr    : PRINT PARIZQ exp_list PARDER'
     t[0] = Print(t[3], t.lineno(1), t.lexpos(0), False)
 
 
 def p_println_instr(t):
-    'println_instr  : PRINTLN PARIZQ expression PARDER'
+    'println_instr  : PRINTLN PARIZQ exp_list PARDER'
     t[0] = Print(t[3], t.lineno(1), t.lexpos(0), True)
 
 
@@ -605,7 +606,7 @@ def p_for_state(t):
     '''for_state        : FOR ID IN expression DOSP expression statement END
                         | FOR ID IN expression statement END'''
     if len(t) == 9:
-        pass
+        t[0] = For(t[2], t[4], t[7], t.lineno(1), t.lexpos(0), t[6])
     else:
         pass
 

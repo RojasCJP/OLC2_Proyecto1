@@ -1,14 +1,9 @@
-a = 10
-while a > 0:
-    print(a)
-    a = a - 1
+a = "buenas"
+b = 'tardes'
 
-while a < 5:
-    a = a + 1
-    if a == 3:
-        print("a")
-        continue
-    elif a == 4:
-        print("b")
-        break
-    print(a)
+
+def prueba(a, b):
+    return a+b
+
+
+print(prueba(10, 20))

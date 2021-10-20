@@ -12,6 +12,7 @@ from jinja2 import environment
 sys.setrecursionlimit(3000)
 
 app = Flask(__name__)
+app.debug = True
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)
 
@@ -26,7 +27,6 @@ def compile():
         for inst in ast:
             inst.compile(new_env)
         C3D = generator.get_code()
-        print(C3D)
         f = open("salida.go", 'w')
         f.write(C3D)
         f.close()
@@ -45,5 +45,6 @@ def compilacion():
     return {"text": "revisa la consola para ver el resultado"}
 
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=3000)
+compile()
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', port=3000)

@@ -78,8 +78,8 @@ Rule 65    nativas -> PARSE PARIZQ tipo COMA expression PARDER
 Rule 66    nativas -> LENGTH PARIZQ expression PARDER
 Rule 67    nativas -> PUSH PARIZQ expression COMA expression PARDER
 Rule 68    nativas -> POP PARIZQ expression PARDER
-Rule 69    print_instr -> PRINT PARIZQ expression PARDER
-Rule 70    println_instr -> PRINTLN PARIZQ expression PARDER
+Rule 69    print_instr -> PRINT PARIZQ exp_list PARDER
+Rule 70    println_instr -> PRINTLN PARIZQ exp_list PARDER
 Rule 71    tipo -> INT
 Rule 72    tipo -> FLOAT
 Rule 73    tipo -> BOOL
@@ -220,8 +220,8 @@ declare_struct       : 20
 definicion_asignacion_instr : 9
 definicion_instr     : 6
 else_if_list         : 100 103
-exp_list             : 40 86 87
-expression           : 22 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 67 68 69 70 78 79 80 81 82 83 84 87 88 89 90 98 99 100 101 102 103 104 105 105 106 110 115
+exp_list             : 40 69 70 86 87
+expression           : 22 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 39 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 67 68 78 79 80 81 82 83 84 87 88 89 90 98 99 100 101 102 103 104 105 105 106 110 115
 final_expression     : 38
 for_state            : 17
 if_state             : 15
@@ -263,8 +263,8 @@ state 0
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -391,8 +391,8 @@ state 2
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -657,14 +657,14 @@ state 21
 
 state 22
 
-    (69) print_instr -> PRINT . PARIZQ expression PARDER
+    (69) print_instr -> PRINT . PARIZQ exp_list PARDER
 
     PARIZQ          shift and go to state 70
 
 
 state 23
 
-    (70) println_instr -> PRINTLN . PARIZQ expression PARDER
+    (70) println_instr -> PRINTLN . PARIZQ exp_list PARDER
 
     PARIZQ          shift and go to state 71
 
@@ -1870,7 +1870,9 @@ state 69
 
 state 70
 
-    (69) print_instr -> PRINT PARIZQ . expression PARDER
+    (69) print_instr -> PRINT PARIZQ . exp_list PARDER
+    (87) exp_list -> . exp_list COMA expression
+    (88) exp_list -> . expression
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -1950,7 +1952,8 @@ state 70
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 117
+    exp_list                       shift and go to state 117
+    expression                     shift and go to state 118
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -1958,7 +1961,9 @@ state 70
 
 state 71
 
-    (70) println_instr -> PRINTLN PARIZQ . expression PARDER
+    (70) println_instr -> PRINTLN PARIZQ . exp_list PARDER
+    (87) exp_list -> . exp_list COMA expression
+    (88) exp_list -> . expression
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -2038,6 +2043,7 @@ state 71
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
+    exp_list                       shift and go to state 119
     expression                     shift and go to state 118
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
@@ -2051,7 +2057,7 @@ state 72
     (82) definicion_asignacion_instr -> LOCAL ID . IGUAL expression DOSP DOSP tipo
 
     PTCOMA          reduce using rule 76 (definicion_instr -> LOCAL ID .)
-    IGUAL           shift and go to state 119
+    IGUAL           shift and go to state 120
 
 
 state 73
@@ -2137,7 +2143,7 @@ state 73
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 120
+    expression                     shift and go to state 121
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -2148,15 +2154,15 @@ state 74
     (84) asignacion_arreglo_instr -> ID index_list . IGUAL expression
     (89) index_list -> index_list . CORCHETEIZQ expression CORCHETEDER
 
-    IGUAL           shift and go to state 121
-    CORCHETEIZQ     shift and go to state 122
+    IGUAL           shift and go to state 122
+    CORCHETEIZQ     shift and go to state 123
 
 
 state 75
 
     (114) declare_struct -> ID DOSP . DOSP ID
 
-    DOSP            shift and go to state 123
+    DOSP            shift and go to state 124
 
 
 state 76
@@ -2216,7 +2222,7 @@ state 76
     (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
     (68) nativas -> . POP PARIZQ expression PARDER
 
-    PARDER          shift and go to state 124
+    PARDER          shift and go to state 125
     MENOS           shift and go to state 82
     NOT             shift and go to state 83
     PARIZQ          shift and go to state 85
@@ -2245,8 +2251,8 @@ state 76
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    exp_list                       shift and go to state 125
-    expression                     shift and go to state 126
+    exp_list                       shift and go to state 126
+    expression                     shift and go to state 118
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -2627,8 +2633,8 @@ state 84
     POP             reduce using rule 38 (expression -> final_expression .)
     STRUCT          reduce using rule 38 (expression -> final_expression .)
     PARDER          reduce using rule 38 (expression -> final_expression .)
-    DOSP            reduce using rule 38 (expression -> final_expression .)
     COMA            reduce using rule 38 (expression -> final_expression .)
+    DOSP            reduce using rule 38 (expression -> final_expression .)
     CORCHETEDER     reduce using rule 38 (expression -> final_expression .)
 
 
@@ -2805,7 +2811,7 @@ state 86
     POP             shift and go to state 49
 
     exp_list                       shift and go to state 148
-    expression                     shift and go to state 126
+    expression                     shift and go to state 118
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
@@ -2860,8 +2866,8 @@ state 87
     POP             reduce using rule 41 (final_expression -> DECIMAL .)
     STRUCT          reduce using rule 41 (final_expression -> DECIMAL .)
     PARDER          reduce using rule 41 (final_expression -> DECIMAL .)
-    DOSP            reduce using rule 41 (final_expression -> DECIMAL .)
     COMA            reduce using rule 41 (final_expression -> DECIMAL .)
+    DOSP            reduce using rule 41 (final_expression -> DECIMAL .)
     CORCHETEDER     reduce using rule 41 (final_expression -> DECIMAL .)
 
 
@@ -2914,8 +2920,8 @@ state 88
     POP             reduce using rule 42 (final_expression -> ENTERO .)
     STRUCT          reduce using rule 42 (final_expression -> ENTERO .)
     PARDER          reduce using rule 42 (final_expression -> ENTERO .)
-    DOSP            reduce using rule 42 (final_expression -> ENTERO .)
     COMA            reduce using rule 42 (final_expression -> ENTERO .)
+    DOSP            reduce using rule 42 (final_expression -> ENTERO .)
     CORCHETEDER     reduce using rule 42 (final_expression -> ENTERO .)
 
 
@@ -2968,8 +2974,8 @@ state 89
     POP             reduce using rule 43 (final_expression -> CADENA .)
     STRUCT          reduce using rule 43 (final_expression -> CADENA .)
     PARDER          reduce using rule 43 (final_expression -> CADENA .)
-    DOSP            reduce using rule 43 (final_expression -> CADENA .)
     COMA            reduce using rule 43 (final_expression -> CADENA .)
+    DOSP            reduce using rule 43 (final_expression -> CADENA .)
     CORCHETEDER     reduce using rule 43 (final_expression -> CADENA .)
 
 
@@ -3022,8 +3028,8 @@ state 90
     POP             reduce using rule 44 (final_expression -> CARACTER .)
     STRUCT          reduce using rule 44 (final_expression -> CARACTER .)
     PARDER          reduce using rule 44 (final_expression -> CARACTER .)
-    DOSP            reduce using rule 44 (final_expression -> CARACTER .)
     COMA            reduce using rule 44 (final_expression -> CARACTER .)
+    DOSP            reduce using rule 44 (final_expression -> CARACTER .)
     CORCHETEDER     reduce using rule 44 (final_expression -> CARACTER .)
 
 
@@ -3082,8 +3088,8 @@ state 91
     POP             reduce using rule 45 (final_expression -> ID .)
     STRUCT          reduce using rule 45 (final_expression -> ID .)
     PARDER          reduce using rule 45 (final_expression -> ID .)
-    DOSP            reduce using rule 45 (final_expression -> ID .)
     COMA            reduce using rule 45 (final_expression -> ID .)
+    DOSP            reduce using rule 45 (final_expression -> ID .)
     CORCHETEDER     reduce using rule 45 (final_expression -> ID .)
     PARIZQ          shift and go to state 76
     PUNTO           shift and go to state 150
@@ -3140,8 +3146,8 @@ state 92
     POP             reduce using rule 47 (final_expression -> TRUE .)
     STRUCT          reduce using rule 47 (final_expression -> TRUE .)
     PARDER          reduce using rule 47 (final_expression -> TRUE .)
-    DOSP            reduce using rule 47 (final_expression -> TRUE .)
     COMA            reduce using rule 47 (final_expression -> TRUE .)
+    DOSP            reduce using rule 47 (final_expression -> TRUE .)
     CORCHETEDER     reduce using rule 47 (final_expression -> TRUE .)
 
 
@@ -3194,8 +3200,8 @@ state 93
     POP             reduce using rule 48 (final_expression -> FALSE .)
     STRUCT          reduce using rule 48 (final_expression -> FALSE .)
     PARDER          reduce using rule 48 (final_expression -> FALSE .)
-    DOSP            reduce using rule 48 (final_expression -> FALSE .)
     COMA            reduce using rule 48 (final_expression -> FALSE .)
+    DOSP            reduce using rule 48 (final_expression -> FALSE .)
     CORCHETEDER     reduce using rule 48 (final_expression -> FALSE .)
 
 
@@ -3248,8 +3254,8 @@ state 94
     POP             reduce using rule 49 (final_expression -> call_function .)
     STRUCT          reduce using rule 49 (final_expression -> call_function .)
     PARDER          reduce using rule 49 (final_expression -> call_function .)
-    DOSP            reduce using rule 49 (final_expression -> call_function .)
     COMA            reduce using rule 49 (final_expression -> call_function .)
+    DOSP            reduce using rule 49 (final_expression -> call_function .)
     CORCHETEDER     reduce using rule 49 (final_expression -> call_function .)
 
 
@@ -3302,8 +3308,8 @@ state 95
     POP             reduce using rule 50 (final_expression -> access_struct .)
     STRUCT          reduce using rule 50 (final_expression -> access_struct .)
     PARDER          reduce using rule 50 (final_expression -> access_struct .)
-    DOSP            reduce using rule 50 (final_expression -> access_struct .)
     COMA            reduce using rule 50 (final_expression -> access_struct .)
+    DOSP            reduce using rule 50 (final_expression -> access_struct .)
     CORCHETEDER     reduce using rule 50 (final_expression -> access_struct .)
 
 
@@ -3356,8 +3362,8 @@ state 96
     POP             reduce using rule 51 (final_expression -> nativas .)
     STRUCT          reduce using rule 51 (final_expression -> nativas .)
     PARDER          reduce using rule 51 (final_expression -> nativas .)
-    DOSP            reduce using rule 51 (final_expression -> nativas .)
     COMA            reduce using rule 51 (final_expression -> nativas .)
+    DOSP            reduce using rule 51 (final_expression -> nativas .)
     CORCHETEDER     reduce using rule 51 (final_expression -> nativas .)
 
 
@@ -3401,8 +3407,8 @@ state 97
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -3553,8 +3559,8 @@ state 98
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -4945,42 +4951,16 @@ state 116
 
 state 117
 
-    (69) print_instr -> PRINT PARIZQ expression . PARDER
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
+    (69) print_instr -> PRINT PARIZQ exp_list . PARDER
+    (87) exp_list -> exp_list . COMA expression
 
     PARDER          shift and go to state 179
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
+    COMA            shift and go to state 180
 
 
 state 118
 
-    (70) println_instr -> PRINTLN PARIZQ expression . PARDER
+    (88) exp_list -> expression .
     (24) expression -> expression . MAS expression
     (25) expression -> expression . MENOS expression
     (26) expression -> expression . POR expression
@@ -4996,7 +4976,9 @@ state 118
     (36) expression -> expression . OR expression
     (37) expression -> expression . AND expression
 
-    PARDER          shift and go to state 180
+    PARDER          reduce using rule 88 (exp_list -> expression .)
+    COMA            reduce using rule 88 (exp_list -> expression .)
+    CORCHETEDER     reduce using rule 88 (exp_list -> expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
     POR             shift and go to state 133
@@ -5014,6 +4996,15 @@ state 118
 
 
 state 119
+
+    (70) println_instr -> PRINTLN PARIZQ exp_list . PARDER
+    (87) exp_list -> exp_list . COMA expression
+
+    PARDER          shift and go to state 181
+    COMA            shift and go to state 180
+
+
+state 120
 
     (79) asignacion_instr -> LOCAL ID IGUAL . expression
     (82) definicion_asignacion_instr -> LOCAL ID IGUAL . expression DOSP DOSP tipo
@@ -5096,13 +5087,13 @@ state 119
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 181
+    expression                     shift and go to state 182
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
     nativas                        shift and go to state 96
 
-state 120
+state 121
 
     (78) asignacion_instr -> ID IGUAL expression .
     (81) definicion_asignacion_instr -> ID IGUAL expression . DOSP DOSP tipo
@@ -5122,7 +5113,7 @@ state 120
     (37) expression -> expression . AND expression
 
     PTCOMA          reduce using rule 78 (asignacion_instr -> ID IGUAL expression .)
-    DOSP            shift and go to state 182
+    DOSP            shift and go to state 183
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
     POR             shift and go to state 133
@@ -5139,97 +5130,9 @@ state 120
     AND             shift and go to state 144
 
 
-state 121
-
-    (84) asignacion_arreglo_instr -> ID index_list IGUAL . expression
-    (22) expression -> . MENOS expression
-    (23) expression -> . NOT expression
-    (24) expression -> . expression MAS expression
-    (25) expression -> . expression MENOS expression
-    (26) expression -> . expression POR expression
-    (27) expression -> . expression DIVIDIDO expression
-    (28) expression -> . expression POTENCIA expression
-    (29) expression -> . expression MODULO expression
-    (30) expression -> . expression MAYQUE expression
-    (31) expression -> . expression MENQUE expression
-    (32) expression -> . expression MENIGUALQUE expression
-    (33) expression -> . expression MAYIGUALQUE expression
-    (34) expression -> . expression IGUALQUE expression
-    (35) expression -> . expression NIGUALQUE expression
-    (36) expression -> . expression OR expression
-    (37) expression -> . expression AND expression
-    (38) expression -> . final_expression
-    (39) final_expression -> . PARIZQ expression PARDER
-    (40) final_expression -> . CORCHETEIZQ exp_list CORCHETEDER
-    (41) final_expression -> . DECIMAL
-    (42) final_expression -> . ENTERO
-    (43) final_expression -> . CADENA
-    (44) final_expression -> . CARACTER
-    (45) final_expression -> . ID
-    (46) final_expression -> . ID index_list
-    (47) final_expression -> . TRUE
-    (48) final_expression -> . FALSE
-    (49) final_expression -> . call_function
-    (50) final_expression -> . access_struct
-    (51) final_expression -> . nativas
-    (85) call_function -> . ID PARIZQ PARDER
-    (86) call_function -> . ID PARIZQ exp_list PARDER
-    (116) access_struct -> . ID PUNTO ID
-    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
-    (53) nativas -> . LOG10 PARIZQ expression PARDER
-    (54) nativas -> . COS PARIZQ expression PARDER
-    (55) nativas -> . SIN PARIZQ expression PARDER
-    (56) nativas -> . TAN PARIZQ expression PARDER
-    (57) nativas -> . SQRT PARIZQ expression PARDER
-    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
-    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
-    (60) nativas -> . TOSTRING PARIZQ expression PARDER
-    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
-    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
-    (63) nativas -> . TRUNC PARIZQ expression PARDER
-    (64) nativas -> . TYPEOF PARIZQ expression PARDER
-    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
-    (66) nativas -> . LENGTH PARIZQ expression PARDER
-    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
-    (68) nativas -> . POP PARIZQ expression PARDER
-
-    MENOS           shift and go to state 82
-    NOT             shift and go to state 83
-    PARIZQ          shift and go to state 85
-    CORCHETEIZQ     shift and go to state 86
-    DECIMAL         shift and go to state 87
-    ENTERO          shift and go to state 88
-    CADENA          shift and go to state 89
-    CARACTER        shift and go to state 90
-    ID              shift and go to state 91
-    TRUE            shift and go to state 92
-    FALSE           shift and go to state 93
-    LOG             shift and go to state 34
-    LOG10           shift and go to state 35
-    COS             shift and go to state 36
-    SIN             shift and go to state 37
-    TAN             shift and go to state 38
-    SQRT            shift and go to state 39
-    UPPERCASE       shift and go to state 40
-    LOWERCASE       shift and go to state 41
-    TOSTRING        shift and go to state 42
-    TOFLOAT         shift and go to state 43
-    TRUNC           shift and go to state 44
-    TYPEOF          shift and go to state 45
-    PARSE           shift and go to state 46
-    LENGTH          shift and go to state 47
-    PUSH            shift and go to state 48
-    POP             shift and go to state 49
-
-    expression                     shift and go to state 183
-    final_expression               shift and go to state 84
-    call_function                  shift and go to state 94
-    access_struct                  shift and go to state 95
-    nativas                        shift and go to state 96
-
 state 122
 
-    (89) index_list -> index_list CORCHETEIZQ . expression CORCHETEDER
+    (84) asignacion_arreglo_instr -> ID index_list IGUAL . expression
     (22) expression -> . MENOS expression
     (23) expression -> . NOT expression
     (24) expression -> . expression MAS expression
@@ -5317,12 +5220,100 @@ state 122
 
 state 123
 
-    (114) declare_struct -> ID DOSP DOSP . ID
+    (89) index_list -> index_list CORCHETEIZQ . expression CORCHETEDER
+    (22) expression -> . MENOS expression
+    (23) expression -> . NOT expression
+    (24) expression -> . expression MAS expression
+    (25) expression -> . expression MENOS expression
+    (26) expression -> . expression POR expression
+    (27) expression -> . expression DIVIDIDO expression
+    (28) expression -> . expression POTENCIA expression
+    (29) expression -> . expression MODULO expression
+    (30) expression -> . expression MAYQUE expression
+    (31) expression -> . expression MENQUE expression
+    (32) expression -> . expression MENIGUALQUE expression
+    (33) expression -> . expression MAYIGUALQUE expression
+    (34) expression -> . expression IGUALQUE expression
+    (35) expression -> . expression NIGUALQUE expression
+    (36) expression -> . expression OR expression
+    (37) expression -> . expression AND expression
+    (38) expression -> . final_expression
+    (39) final_expression -> . PARIZQ expression PARDER
+    (40) final_expression -> . CORCHETEIZQ exp_list CORCHETEDER
+    (41) final_expression -> . DECIMAL
+    (42) final_expression -> . ENTERO
+    (43) final_expression -> . CADENA
+    (44) final_expression -> . CARACTER
+    (45) final_expression -> . ID
+    (46) final_expression -> . ID index_list
+    (47) final_expression -> . TRUE
+    (48) final_expression -> . FALSE
+    (49) final_expression -> . call_function
+    (50) final_expression -> . access_struct
+    (51) final_expression -> . nativas
+    (85) call_function -> . ID PARIZQ PARDER
+    (86) call_function -> . ID PARIZQ exp_list PARDER
+    (116) access_struct -> . ID PUNTO ID
+    (52) nativas -> . LOG PARIZQ ENTERO COMA expression PARDER
+    (53) nativas -> . LOG10 PARIZQ expression PARDER
+    (54) nativas -> . COS PARIZQ expression PARDER
+    (55) nativas -> . SIN PARIZQ expression PARDER
+    (56) nativas -> . TAN PARIZQ expression PARDER
+    (57) nativas -> . SQRT PARIZQ expression PARDER
+    (58) nativas -> . UPPERCASE PARIZQ expression PARDER
+    (59) nativas -> . LOWERCASE PARIZQ expression PARDER
+    (60) nativas -> . TOSTRING PARIZQ expression PARDER
+    (61) nativas -> . TOFLOAT PARIZQ expression PARDER
+    (62) nativas -> . TRUNC PARIZQ INT COMA expression PARDER
+    (63) nativas -> . TRUNC PARIZQ expression PARDER
+    (64) nativas -> . TYPEOF PARIZQ expression PARDER
+    (65) nativas -> . PARSE PARIZQ tipo COMA expression PARDER
+    (66) nativas -> . LENGTH PARIZQ expression PARDER
+    (67) nativas -> . PUSH PARIZQ expression COMA expression PARDER
+    (68) nativas -> . POP PARIZQ expression PARDER
 
-    ID              shift and go to state 185
+    MENOS           shift and go to state 82
+    NOT             shift and go to state 83
+    PARIZQ          shift and go to state 85
+    CORCHETEIZQ     shift and go to state 86
+    DECIMAL         shift and go to state 87
+    ENTERO          shift and go to state 88
+    CADENA          shift and go to state 89
+    CARACTER        shift and go to state 90
+    ID              shift and go to state 91
+    TRUE            shift and go to state 92
+    FALSE           shift and go to state 93
+    LOG             shift and go to state 34
+    LOG10           shift and go to state 35
+    COS             shift and go to state 36
+    SIN             shift and go to state 37
+    TAN             shift and go to state 38
+    SQRT            shift and go to state 39
+    UPPERCASE       shift and go to state 40
+    LOWERCASE       shift and go to state 41
+    TOSTRING        shift and go to state 42
+    TOFLOAT         shift and go to state 43
+    TRUNC           shift and go to state 44
+    TYPEOF          shift and go to state 45
+    PARSE           shift and go to state 46
+    LENGTH          shift and go to state 47
+    PUSH            shift and go to state 48
+    POP             shift and go to state 49
 
+    expression                     shift and go to state 185
+    final_expression               shift and go to state 84
+    call_function                  shift and go to state 94
+    access_struct                  shift and go to state 95
+    nativas                        shift and go to state 96
 
 state 124
+
+    (114) declare_struct -> ID DOSP DOSP . ID
+
+    ID              shift and go to state 186
+
+
+state 125
 
     (85) call_function -> ID PARIZQ PARDER .
 
@@ -5371,55 +5362,18 @@ state 124
     POP             reduce using rule 85 (call_function -> ID PARIZQ PARDER .)
     STRUCT          reduce using rule 85 (call_function -> ID PARIZQ PARDER .)
     PARDER          reduce using rule 85 (call_function -> ID PARIZQ PARDER .)
-    DOSP            reduce using rule 85 (call_function -> ID PARIZQ PARDER .)
     COMA            reduce using rule 85 (call_function -> ID PARIZQ PARDER .)
+    DOSP            reduce using rule 85 (call_function -> ID PARIZQ PARDER .)
     CORCHETEDER     reduce using rule 85 (call_function -> ID PARIZQ PARDER .)
-
-
-state 125
-
-    (86) call_function -> ID PARIZQ exp_list . PARDER
-    (87) exp_list -> exp_list . COMA expression
-
-    PARDER          shift and go to state 186
-    COMA            shift and go to state 187
 
 
 state 126
 
-    (88) exp_list -> expression .
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
+    (86) call_function -> ID PARIZQ exp_list . PARDER
+    (87) exp_list -> exp_list . COMA expression
 
-    PARDER          reduce using rule 88 (exp_list -> expression .)
-    COMA            reduce using rule 88 (exp_list -> expression .)
-    CORCHETEDER     reduce using rule 88 (exp_list -> expression .)
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
+    PARDER          shift and go to state 187
+    COMA            shift and go to state 180
 
 
 state 127
@@ -6862,8 +6816,8 @@ state 145
     POP             reduce using rule 22 (expression -> MENOS expression .)
     STRUCT          reduce using rule 22 (expression -> MENOS expression .)
     PARDER          reduce using rule 22 (expression -> MENOS expression .)
-    DOSP            reduce using rule 22 (expression -> MENOS expression .)
     COMA            reduce using rule 22 (expression -> MENOS expression .)
+    DOSP            reduce using rule 22 (expression -> MENOS expression .)
     CORCHETEDER     reduce using rule 22 (expression -> MENOS expression .)
 
   ! MAS             [ shift and go to state 131 ]
@@ -6945,8 +6899,8 @@ state 146
     POP             reduce using rule 23 (expression -> NOT expression .)
     STRUCT          reduce using rule 23 (expression -> NOT expression .)
     PARDER          reduce using rule 23 (expression -> NOT expression .)
-    DOSP            reduce using rule 23 (expression -> NOT expression .)
     COMA            reduce using rule 23 (expression -> NOT expression .)
+    DOSP            reduce using rule 23 (expression -> NOT expression .)
     CORCHETEDER     reduce using rule 23 (expression -> NOT expression .)
 
   ! MAS             [ shift and go to state 131 ]
@@ -7006,7 +6960,7 @@ state 148
     (87) exp_list -> exp_list . COMA expression
 
     CORCHETEDER     shift and go to state 209
-    COMA            shift and go to state 187
+    COMA            shift and go to state 180
 
 
 state 149
@@ -7059,10 +7013,10 @@ state 149
     POP             reduce using rule 46 (final_expression -> ID index_list .)
     STRUCT          reduce using rule 46 (final_expression -> ID index_list .)
     PARDER          reduce using rule 46 (final_expression -> ID index_list .)
-    DOSP            reduce using rule 46 (final_expression -> ID index_list .)
     COMA            reduce using rule 46 (final_expression -> ID index_list .)
+    DOSP            reduce using rule 46 (final_expression -> ID index_list .)
     CORCHETEDER     reduce using rule 46 (final_expression -> ID index_list .)
-    CORCHETEIZQ     shift and go to state 122
+    CORCHETEIZQ     shift and go to state 123
 
 
 state 150
@@ -7109,8 +7063,8 @@ state 152
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -8025,194 +7979,12 @@ state 178
 
 state 179
 
-    (69) print_instr -> PRINT PARIZQ expression PARDER .
+    (69) print_instr -> PRINT PARIZQ exp_list PARDER .
 
-    PTCOMA          reduce using rule 69 (print_instr -> PRINT PARIZQ expression PARDER .)
+    PTCOMA          reduce using rule 69 (print_instr -> PRINT PARIZQ exp_list PARDER .)
 
 
 state 180
-
-    (70) println_instr -> PRINTLN PARIZQ expression PARDER .
-
-    PTCOMA          reduce using rule 70 (println_instr -> PRINTLN PARIZQ expression PARDER .)
-
-
-state 181
-
-    (79) asignacion_instr -> LOCAL ID IGUAL expression .
-    (82) definicion_asignacion_instr -> LOCAL ID IGUAL expression . DOSP DOSP tipo
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
-
-    PTCOMA          reduce using rule 79 (asignacion_instr -> LOCAL ID IGUAL expression .)
-    DOSP            shift and go to state 237
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
-
-
-state 182
-
-    (81) definicion_asignacion_instr -> ID IGUAL expression DOSP . DOSP tipo
-
-    DOSP            shift and go to state 238
-
-
-state 183
-
-    (84) asignacion_arreglo_instr -> ID index_list IGUAL expression .
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
-
-    PTCOMA          reduce using rule 84 (asignacion_arreglo_instr -> ID index_list IGUAL expression .)
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
-
-
-state 184
-
-    (89) index_list -> index_list CORCHETEIZQ expression . CORCHETEDER
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
-
-    CORCHETEDER     shift and go to state 239
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
-
-
-state 185
-
-    (114) declare_struct -> ID DOSP DOSP ID .
-
-    PTCOMA          reduce using rule 114 (declare_struct -> ID DOSP DOSP ID .)
-
-
-state 186
-
-    (86) call_function -> ID PARIZQ exp_list PARDER .
-
-    PTCOMA          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    MAS             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    MENOS           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    POR             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    DIVIDIDO        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    POTENCIA        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    MODULO          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    MAYQUE          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    MENQUE          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    MENIGUALQUE     reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    MAYIGUALQUE     reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    IGUALQUE        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    NIGUALQUE       reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    OR              reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    AND             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    PRINT           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    PRINTLN         reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    LOCAL           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    GLOBAL          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    ID              reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    FUNCTION        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    RETURN          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    BREAK           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    CONTINUE        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    IF              reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    WHILE           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    FOR             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    LOG             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    LOG10           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    COS             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    SIN             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    TAN             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    SQRT            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    UPPERCASE       reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    LOWERCASE       reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    TOSTRING        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    TOFLOAT         reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    TRUNC           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    TYPEOF          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    PARSE           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    LENGTH          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    PUSH            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    POP             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    STRUCT          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    PARDER          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    DOSP            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    COMA            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-    CORCHETEDER     reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
-
-
-state 187
 
     (87) exp_list -> exp_list COMA . expression
     (22) expression -> . MENOS expression
@@ -8294,11 +8066,193 @@ state 187
     PUSH            shift and go to state 48
     POP             shift and go to state 49
 
-    expression                     shift and go to state 240
+    expression                     shift and go to state 237
     final_expression               shift and go to state 84
     call_function                  shift and go to state 94
     access_struct                  shift and go to state 95
     nativas                        shift and go to state 96
+
+state 181
+
+    (70) println_instr -> PRINTLN PARIZQ exp_list PARDER .
+
+    PTCOMA          reduce using rule 70 (println_instr -> PRINTLN PARIZQ exp_list PARDER .)
+
+
+state 182
+
+    (79) asignacion_instr -> LOCAL ID IGUAL expression .
+    (82) definicion_asignacion_instr -> LOCAL ID IGUAL expression . DOSP DOSP tipo
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    PTCOMA          reduce using rule 79 (asignacion_instr -> LOCAL ID IGUAL expression .)
+    DOSP            shift and go to state 238
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 183
+
+    (81) definicion_asignacion_instr -> ID IGUAL expression DOSP . DOSP tipo
+
+    DOSP            shift and go to state 239
+
+
+state 184
+
+    (84) asignacion_arreglo_instr -> ID index_list IGUAL expression .
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    PTCOMA          reduce using rule 84 (asignacion_arreglo_instr -> ID index_list IGUAL expression .)
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 185
+
+    (89) index_list -> index_list CORCHETEIZQ expression . CORCHETEDER
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    CORCHETEDER     shift and go to state 240
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 186
+
+    (114) declare_struct -> ID DOSP DOSP ID .
+
+    PTCOMA          reduce using rule 114 (declare_struct -> ID DOSP DOSP ID .)
+
+
+state 187
+
+    (86) call_function -> ID PARIZQ exp_list PARDER .
+
+    PTCOMA          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    MAS             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    MENOS           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    POR             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    DIVIDIDO        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    POTENCIA        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    MODULO          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    MAYQUE          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    MENQUE          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    MENIGUALQUE     reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    MAYIGUALQUE     reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    IGUALQUE        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    NIGUALQUE       reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    OR              reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    AND             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    PRINT           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    PRINTLN         reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    LOCAL           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    GLOBAL          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    ID              reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    FUNCTION        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    RETURN          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    BREAK           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    CONTINUE        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    IF              reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    WHILE           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    FOR             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    LOG             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    LOG10           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    COS             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    SIN             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    TAN             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    SQRT            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    UPPERCASE       reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    LOWERCASE       reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    TOSTRING        reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    TOFLOAT         reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    TRUNC           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    TYPEOF          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    PARSE           reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    LENGTH          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    PUSH            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    POP             reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    STRUCT          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    PARDER          reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    COMA            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    DOSP            reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+    CORCHETEDER     reduce using rule 86 (call_function -> ID PARIZQ exp_list PARDER .)
+
 
 state 188
 
@@ -8439,8 +8393,8 @@ state 189
     POP             reduce using rule 90 (index_list -> CORCHETEIZQ expression CORCHETEDER .)
     STRUCT          reduce using rule 90 (index_list -> CORCHETEIZQ expression CORCHETEDER .)
     PARDER          reduce using rule 90 (index_list -> CORCHETEIZQ expression CORCHETEDER .)
-    DOSP            reduce using rule 90 (index_list -> CORCHETEIZQ expression CORCHETEDER .)
     COMA            reduce using rule 90 (index_list -> CORCHETEIZQ expression CORCHETEDER .)
+    DOSP            reduce using rule 90 (index_list -> CORCHETEIZQ expression CORCHETEDER .)
     CORCHETEDER     reduce using rule 90 (index_list -> CORCHETEIZQ expression CORCHETEDER .)
 
 
@@ -8513,8 +8467,8 @@ state 192
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -8683,8 +8637,8 @@ state 194
     POP             reduce using rule 24 (expression -> expression MAS expression .)
     STRUCT          reduce using rule 24 (expression -> expression MAS expression .)
     PARDER          reduce using rule 24 (expression -> expression MAS expression .)
-    DOSP            reduce using rule 24 (expression -> expression MAS expression .)
     COMA            reduce using rule 24 (expression -> expression MAS expression .)
+    DOSP            reduce using rule 24 (expression -> expression MAS expression .)
     CORCHETEDER     reduce using rule 24 (expression -> expression MAS expression .)
     POR             shift and go to state 133
     DIVIDIDO        shift and go to state 134
@@ -8766,8 +8720,8 @@ state 195
     POP             reduce using rule 25 (expression -> expression MENOS expression .)
     STRUCT          reduce using rule 25 (expression -> expression MENOS expression .)
     PARDER          reduce using rule 25 (expression -> expression MENOS expression .)
-    DOSP            reduce using rule 25 (expression -> expression MENOS expression .)
     COMA            reduce using rule 25 (expression -> expression MENOS expression .)
+    DOSP            reduce using rule 25 (expression -> expression MENOS expression .)
     CORCHETEDER     reduce using rule 25 (expression -> expression MENOS expression .)
     POR             shift and go to state 133
     DIVIDIDO        shift and go to state 134
@@ -8852,8 +8806,8 @@ state 196
     POP             reduce using rule 26 (expression -> expression POR expression .)
     STRUCT          reduce using rule 26 (expression -> expression POR expression .)
     PARDER          reduce using rule 26 (expression -> expression POR expression .)
-    DOSP            reduce using rule 26 (expression -> expression POR expression .)
     COMA            reduce using rule 26 (expression -> expression POR expression .)
+    DOSP            reduce using rule 26 (expression -> expression POR expression .)
     CORCHETEDER     reduce using rule 26 (expression -> expression POR expression .)
     POTENCIA        shift and go to state 135
 
@@ -8935,8 +8889,8 @@ state 197
     POP             reduce using rule 27 (expression -> expression DIVIDIDO expression .)
     STRUCT          reduce using rule 27 (expression -> expression DIVIDIDO expression .)
     PARDER          reduce using rule 27 (expression -> expression DIVIDIDO expression .)
-    DOSP            reduce using rule 27 (expression -> expression DIVIDIDO expression .)
     COMA            reduce using rule 27 (expression -> expression DIVIDIDO expression .)
+    DOSP            reduce using rule 27 (expression -> expression DIVIDIDO expression .)
     CORCHETEDER     reduce using rule 27 (expression -> expression DIVIDIDO expression .)
     POTENCIA        shift and go to state 135
 
@@ -9019,8 +8973,8 @@ state 198
     POP             reduce using rule 28 (expression -> expression POTENCIA expression .)
     STRUCT          reduce using rule 28 (expression -> expression POTENCIA expression .)
     PARDER          reduce using rule 28 (expression -> expression POTENCIA expression .)
-    DOSP            reduce using rule 28 (expression -> expression POTENCIA expression .)
     COMA            reduce using rule 28 (expression -> expression POTENCIA expression .)
+    DOSP            reduce using rule 28 (expression -> expression POTENCIA expression .)
     CORCHETEDER     reduce using rule 28 (expression -> expression POTENCIA expression .)
 
   ! MAS             [ shift and go to state 131 ]
@@ -9101,8 +9055,8 @@ state 199
     POP             reduce using rule 29 (expression -> expression MODULO expression .)
     STRUCT          reduce using rule 29 (expression -> expression MODULO expression .)
     PARDER          reduce using rule 29 (expression -> expression MODULO expression .)
-    DOSP            reduce using rule 29 (expression -> expression MODULO expression .)
     COMA            reduce using rule 29 (expression -> expression MODULO expression .)
+    DOSP            reduce using rule 29 (expression -> expression MODULO expression .)
     CORCHETEDER     reduce using rule 29 (expression -> expression MODULO expression .)
     POTENCIA        shift and go to state 135
 
@@ -9179,8 +9133,8 @@ state 200
     POP             reduce using rule 30 (expression -> expression MAYQUE expression .)
     STRUCT          reduce using rule 30 (expression -> expression MAYQUE expression .)
     PARDER          reduce using rule 30 (expression -> expression MAYQUE expression .)
-    DOSP            reduce using rule 30 (expression -> expression MAYQUE expression .)
     COMA            reduce using rule 30 (expression -> expression MAYQUE expression .)
+    DOSP            reduce using rule 30 (expression -> expression MAYQUE expression .)
     CORCHETEDER     reduce using rule 30 (expression -> expression MAYQUE expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9262,8 +9216,8 @@ state 201
     POP             reduce using rule 31 (expression -> expression MENQUE expression .)
     STRUCT          reduce using rule 31 (expression -> expression MENQUE expression .)
     PARDER          reduce using rule 31 (expression -> expression MENQUE expression .)
-    DOSP            reduce using rule 31 (expression -> expression MENQUE expression .)
     COMA            reduce using rule 31 (expression -> expression MENQUE expression .)
+    DOSP            reduce using rule 31 (expression -> expression MENQUE expression .)
     CORCHETEDER     reduce using rule 31 (expression -> expression MENQUE expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9345,8 +9299,8 @@ state 202
     POP             reduce using rule 32 (expression -> expression MENIGUALQUE expression .)
     STRUCT          reduce using rule 32 (expression -> expression MENIGUALQUE expression .)
     PARDER          reduce using rule 32 (expression -> expression MENIGUALQUE expression .)
-    DOSP            reduce using rule 32 (expression -> expression MENIGUALQUE expression .)
     COMA            reduce using rule 32 (expression -> expression MENIGUALQUE expression .)
+    DOSP            reduce using rule 32 (expression -> expression MENIGUALQUE expression .)
     CORCHETEDER     reduce using rule 32 (expression -> expression MENIGUALQUE expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9428,8 +9382,8 @@ state 203
     POP             reduce using rule 33 (expression -> expression MAYIGUALQUE expression .)
     STRUCT          reduce using rule 33 (expression -> expression MAYIGUALQUE expression .)
     PARDER          reduce using rule 33 (expression -> expression MAYIGUALQUE expression .)
-    DOSP            reduce using rule 33 (expression -> expression MAYIGUALQUE expression .)
     COMA            reduce using rule 33 (expression -> expression MAYIGUALQUE expression .)
+    DOSP            reduce using rule 33 (expression -> expression MAYIGUALQUE expression .)
     CORCHETEDER     reduce using rule 33 (expression -> expression MAYIGUALQUE expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9507,8 +9461,8 @@ state 204
     POP             reduce using rule 34 (expression -> expression IGUALQUE expression .)
     STRUCT          reduce using rule 34 (expression -> expression IGUALQUE expression .)
     PARDER          reduce using rule 34 (expression -> expression IGUALQUE expression .)
-    DOSP            reduce using rule 34 (expression -> expression IGUALQUE expression .)
     COMA            reduce using rule 34 (expression -> expression IGUALQUE expression .)
+    DOSP            reduce using rule 34 (expression -> expression IGUALQUE expression .)
     CORCHETEDER     reduce using rule 34 (expression -> expression IGUALQUE expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9590,8 +9544,8 @@ state 205
     POP             reduce using rule 35 (expression -> expression NIGUALQUE expression .)
     STRUCT          reduce using rule 35 (expression -> expression NIGUALQUE expression .)
     PARDER          reduce using rule 35 (expression -> expression NIGUALQUE expression .)
-    DOSP            reduce using rule 35 (expression -> expression NIGUALQUE expression .)
     COMA            reduce using rule 35 (expression -> expression NIGUALQUE expression .)
+    DOSP            reduce using rule 35 (expression -> expression NIGUALQUE expression .)
     CORCHETEDER     reduce using rule 35 (expression -> expression NIGUALQUE expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9670,8 +9624,8 @@ state 206
     POP             reduce using rule 36 (expression -> expression OR expression .)
     STRUCT          reduce using rule 36 (expression -> expression OR expression .)
     PARDER          reduce using rule 36 (expression -> expression OR expression .)
-    DOSP            reduce using rule 36 (expression -> expression OR expression .)
     COMA            reduce using rule 36 (expression -> expression OR expression .)
+    DOSP            reduce using rule 36 (expression -> expression OR expression .)
     CORCHETEDER     reduce using rule 36 (expression -> expression OR expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9754,8 +9708,8 @@ state 207
     POP             reduce using rule 37 (expression -> expression AND expression .)
     STRUCT          reduce using rule 37 (expression -> expression AND expression .)
     PARDER          reduce using rule 37 (expression -> expression AND expression .)
-    DOSP            reduce using rule 37 (expression -> expression AND expression .)
     COMA            reduce using rule 37 (expression -> expression AND expression .)
+    DOSP            reduce using rule 37 (expression -> expression AND expression .)
     CORCHETEDER     reduce using rule 37 (expression -> expression AND expression .)
     MAS             shift and go to state 131
     MENOS           shift and go to state 132
@@ -9835,8 +9789,8 @@ state 208
     POP             reduce using rule 39 (final_expression -> PARIZQ expression PARDER .)
     STRUCT          reduce using rule 39 (final_expression -> PARIZQ expression PARDER .)
     PARDER          reduce using rule 39 (final_expression -> PARIZQ expression PARDER .)
-    DOSP            reduce using rule 39 (final_expression -> PARIZQ expression PARDER .)
     COMA            reduce using rule 39 (final_expression -> PARIZQ expression PARDER .)
+    DOSP            reduce using rule 39 (final_expression -> PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 39 (final_expression -> PARIZQ expression PARDER .)
 
 
@@ -9889,8 +9843,8 @@ state 209
     POP             reduce using rule 40 (final_expression -> CORCHETEIZQ exp_list CORCHETEDER .)
     STRUCT          reduce using rule 40 (final_expression -> CORCHETEIZQ exp_list CORCHETEDER .)
     PARDER          reduce using rule 40 (final_expression -> CORCHETEIZQ exp_list CORCHETEDER .)
-    DOSP            reduce using rule 40 (final_expression -> CORCHETEIZQ exp_list CORCHETEDER .)
     COMA            reduce using rule 40 (final_expression -> CORCHETEIZQ exp_list CORCHETEDER .)
+    DOSP            reduce using rule 40 (final_expression -> CORCHETEIZQ exp_list CORCHETEDER .)
     CORCHETEDER     reduce using rule 40 (final_expression -> CORCHETEIZQ exp_list CORCHETEDER .)
 
 
@@ -9943,8 +9897,8 @@ state 210
     POP             reduce using rule 116 (access_struct -> ID PUNTO ID .)
     STRUCT          reduce using rule 116 (access_struct -> ID PUNTO ID .)
     PARDER          reduce using rule 116 (access_struct -> ID PUNTO ID .)
-    DOSP            reduce using rule 116 (access_struct -> ID PUNTO ID .)
     COMA            reduce using rule 116 (access_struct -> ID PUNTO ID .)
+    DOSP            reduce using rule 116 (access_struct -> ID PUNTO ID .)
     CORCHETEDER     reduce using rule 116 (access_struct -> ID PUNTO ID .)
 
 
@@ -9979,8 +9933,8 @@ state 212
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -10222,8 +10176,8 @@ state 216
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -10474,8 +10428,8 @@ state 218
     POP             reduce using rule 53 (nativas -> LOG10 PARIZQ expression PARDER .)
     STRUCT          reduce using rule 53 (nativas -> LOG10 PARIZQ expression PARDER .)
     PARDER          reduce using rule 53 (nativas -> LOG10 PARIZQ expression PARDER .)
-    DOSP            reduce using rule 53 (nativas -> LOG10 PARIZQ expression PARDER .)
     COMA            reduce using rule 53 (nativas -> LOG10 PARIZQ expression PARDER .)
+    DOSP            reduce using rule 53 (nativas -> LOG10 PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 53 (nativas -> LOG10 PARIZQ expression PARDER .)
 
 
@@ -10528,8 +10482,8 @@ state 219
     POP             reduce using rule 54 (nativas -> COS PARIZQ expression PARDER .)
     STRUCT          reduce using rule 54 (nativas -> COS PARIZQ expression PARDER .)
     PARDER          reduce using rule 54 (nativas -> COS PARIZQ expression PARDER .)
-    DOSP            reduce using rule 54 (nativas -> COS PARIZQ expression PARDER .)
     COMA            reduce using rule 54 (nativas -> COS PARIZQ expression PARDER .)
+    DOSP            reduce using rule 54 (nativas -> COS PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 54 (nativas -> COS PARIZQ expression PARDER .)
 
 
@@ -10582,8 +10536,8 @@ state 220
     POP             reduce using rule 55 (nativas -> SIN PARIZQ expression PARDER .)
     STRUCT          reduce using rule 55 (nativas -> SIN PARIZQ expression PARDER .)
     PARDER          reduce using rule 55 (nativas -> SIN PARIZQ expression PARDER .)
-    DOSP            reduce using rule 55 (nativas -> SIN PARIZQ expression PARDER .)
     COMA            reduce using rule 55 (nativas -> SIN PARIZQ expression PARDER .)
+    DOSP            reduce using rule 55 (nativas -> SIN PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 55 (nativas -> SIN PARIZQ expression PARDER .)
 
 
@@ -10636,8 +10590,8 @@ state 221
     POP             reduce using rule 56 (nativas -> TAN PARIZQ expression PARDER .)
     STRUCT          reduce using rule 56 (nativas -> TAN PARIZQ expression PARDER .)
     PARDER          reduce using rule 56 (nativas -> TAN PARIZQ expression PARDER .)
-    DOSP            reduce using rule 56 (nativas -> TAN PARIZQ expression PARDER .)
     COMA            reduce using rule 56 (nativas -> TAN PARIZQ expression PARDER .)
+    DOSP            reduce using rule 56 (nativas -> TAN PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 56 (nativas -> TAN PARIZQ expression PARDER .)
 
 
@@ -10690,8 +10644,8 @@ state 222
     POP             reduce using rule 57 (nativas -> SQRT PARIZQ expression PARDER .)
     STRUCT          reduce using rule 57 (nativas -> SQRT PARIZQ expression PARDER .)
     PARDER          reduce using rule 57 (nativas -> SQRT PARIZQ expression PARDER .)
-    DOSP            reduce using rule 57 (nativas -> SQRT PARIZQ expression PARDER .)
     COMA            reduce using rule 57 (nativas -> SQRT PARIZQ expression PARDER .)
+    DOSP            reduce using rule 57 (nativas -> SQRT PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 57 (nativas -> SQRT PARIZQ expression PARDER .)
 
 
@@ -10744,8 +10698,8 @@ state 223
     POP             reduce using rule 58 (nativas -> UPPERCASE PARIZQ expression PARDER .)
     STRUCT          reduce using rule 58 (nativas -> UPPERCASE PARIZQ expression PARDER .)
     PARDER          reduce using rule 58 (nativas -> UPPERCASE PARIZQ expression PARDER .)
-    DOSP            reduce using rule 58 (nativas -> UPPERCASE PARIZQ expression PARDER .)
     COMA            reduce using rule 58 (nativas -> UPPERCASE PARIZQ expression PARDER .)
+    DOSP            reduce using rule 58 (nativas -> UPPERCASE PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 58 (nativas -> UPPERCASE PARIZQ expression PARDER .)
 
 
@@ -10798,8 +10752,8 @@ state 224
     POP             reduce using rule 59 (nativas -> LOWERCASE PARIZQ expression PARDER .)
     STRUCT          reduce using rule 59 (nativas -> LOWERCASE PARIZQ expression PARDER .)
     PARDER          reduce using rule 59 (nativas -> LOWERCASE PARIZQ expression PARDER .)
-    DOSP            reduce using rule 59 (nativas -> LOWERCASE PARIZQ expression PARDER .)
     COMA            reduce using rule 59 (nativas -> LOWERCASE PARIZQ expression PARDER .)
+    DOSP            reduce using rule 59 (nativas -> LOWERCASE PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 59 (nativas -> LOWERCASE PARIZQ expression PARDER .)
 
 
@@ -10852,8 +10806,8 @@ state 225
     POP             reduce using rule 60 (nativas -> TOSTRING PARIZQ expression PARDER .)
     STRUCT          reduce using rule 60 (nativas -> TOSTRING PARIZQ expression PARDER .)
     PARDER          reduce using rule 60 (nativas -> TOSTRING PARIZQ expression PARDER .)
-    DOSP            reduce using rule 60 (nativas -> TOSTRING PARIZQ expression PARDER .)
     COMA            reduce using rule 60 (nativas -> TOSTRING PARIZQ expression PARDER .)
+    DOSP            reduce using rule 60 (nativas -> TOSTRING PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 60 (nativas -> TOSTRING PARIZQ expression PARDER .)
 
 
@@ -10906,8 +10860,8 @@ state 226
     POP             reduce using rule 61 (nativas -> TOFLOAT PARIZQ expression PARDER .)
     STRUCT          reduce using rule 61 (nativas -> TOFLOAT PARIZQ expression PARDER .)
     PARDER          reduce using rule 61 (nativas -> TOFLOAT PARIZQ expression PARDER .)
-    DOSP            reduce using rule 61 (nativas -> TOFLOAT PARIZQ expression PARDER .)
     COMA            reduce using rule 61 (nativas -> TOFLOAT PARIZQ expression PARDER .)
+    DOSP            reduce using rule 61 (nativas -> TOFLOAT PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 61 (nativas -> TOFLOAT PARIZQ expression PARDER .)
 
 
@@ -11048,8 +11002,8 @@ state 228
     POP             reduce using rule 63 (nativas -> TRUNC PARIZQ expression PARDER .)
     STRUCT          reduce using rule 63 (nativas -> TRUNC PARIZQ expression PARDER .)
     PARDER          reduce using rule 63 (nativas -> TRUNC PARIZQ expression PARDER .)
-    DOSP            reduce using rule 63 (nativas -> TRUNC PARIZQ expression PARDER .)
     COMA            reduce using rule 63 (nativas -> TRUNC PARIZQ expression PARDER .)
+    DOSP            reduce using rule 63 (nativas -> TRUNC PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 63 (nativas -> TRUNC PARIZQ expression PARDER .)
 
 
@@ -11102,8 +11056,8 @@ state 229
     POP             reduce using rule 64 (nativas -> TYPEOF PARIZQ expression PARDER .)
     STRUCT          reduce using rule 64 (nativas -> TYPEOF PARIZQ expression PARDER .)
     PARDER          reduce using rule 64 (nativas -> TYPEOF PARIZQ expression PARDER .)
-    DOSP            reduce using rule 64 (nativas -> TYPEOF PARIZQ expression PARDER .)
     COMA            reduce using rule 64 (nativas -> TYPEOF PARIZQ expression PARDER .)
+    DOSP            reduce using rule 64 (nativas -> TYPEOF PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 64 (nativas -> TYPEOF PARIZQ expression PARDER .)
 
 
@@ -11244,8 +11198,8 @@ state 231
     POP             reduce using rule 66 (nativas -> LENGTH PARIZQ expression PARDER .)
     STRUCT          reduce using rule 66 (nativas -> LENGTH PARIZQ expression PARDER .)
     PARDER          reduce using rule 66 (nativas -> LENGTH PARIZQ expression PARDER .)
-    DOSP            reduce using rule 66 (nativas -> LENGTH PARIZQ expression PARDER .)
     COMA            reduce using rule 66 (nativas -> LENGTH PARIZQ expression PARDER .)
+    DOSP            reduce using rule 66 (nativas -> LENGTH PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 66 (nativas -> LENGTH PARIZQ expression PARDER .)
 
 
@@ -11386,8 +11340,8 @@ state 233
     POP             reduce using rule 68 (nativas -> POP PARIZQ expression PARDER .)
     STRUCT          reduce using rule 68 (nativas -> POP PARIZQ expression PARDER .)
     PARDER          reduce using rule 68 (nativas -> POP PARIZQ expression PARDER .)
-    DOSP            reduce using rule 68 (nativas -> POP PARIZQ expression PARDER .)
     COMA            reduce using rule 68 (nativas -> POP PARIZQ expression PARDER .)
+    DOSP            reduce using rule 68 (nativas -> POP PARIZQ expression PARDER .)
     CORCHETEDER     reduce using rule 68 (nativas -> POP PARIZQ expression PARDER .)
 
 
@@ -11414,12 +11368,49 @@ state 236
 
 state 237
 
+    (87) exp_list -> exp_list COMA expression .
+    (24) expression -> expression . MAS expression
+    (25) expression -> expression . MENOS expression
+    (26) expression -> expression . POR expression
+    (27) expression -> expression . DIVIDIDO expression
+    (28) expression -> expression . POTENCIA expression
+    (29) expression -> expression . MODULO expression
+    (30) expression -> expression . MAYQUE expression
+    (31) expression -> expression . MENQUE expression
+    (32) expression -> expression . MENIGUALQUE expression
+    (33) expression -> expression . MAYIGUALQUE expression
+    (34) expression -> expression . IGUALQUE expression
+    (35) expression -> expression . NIGUALQUE expression
+    (36) expression -> expression . OR expression
+    (37) expression -> expression . AND expression
+
+    PARDER          reduce using rule 87 (exp_list -> exp_list COMA expression .)
+    COMA            reduce using rule 87 (exp_list -> exp_list COMA expression .)
+    CORCHETEDER     reduce using rule 87 (exp_list -> exp_list COMA expression .)
+    MAS             shift and go to state 131
+    MENOS           shift and go to state 132
+    POR             shift and go to state 133
+    DIVIDIDO        shift and go to state 134
+    POTENCIA        shift and go to state 135
+    MODULO          shift and go to state 136
+    MAYQUE          shift and go to state 137
+    MENQUE          shift and go to state 138
+    MENIGUALQUE     shift and go to state 139
+    MAYIGUALQUE     shift and go to state 140
+    IGUALQUE        shift and go to state 141
+    NIGUALQUE       shift and go to state 142
+    OR              shift and go to state 143
+    AND             shift and go to state 144
+
+
+state 238
+
     (82) definicion_asignacion_instr -> LOCAL ID IGUAL expression DOSP . DOSP tipo
 
     DOSP            shift and go to state 259
 
 
-state 238
+state 239
 
     (81) definicion_asignacion_instr -> ID IGUAL expression DOSP DOSP . tipo
     (71) tipo -> . INT
@@ -11436,7 +11427,7 @@ state 238
 
     tipo                           shift and go to state 260
 
-state 239
+state 240
 
     (89) index_list -> index_list CORCHETEIZQ expression CORCHETEDER .
 
@@ -11487,46 +11478,9 @@ state 239
     POP             reduce using rule 89 (index_list -> index_list CORCHETEIZQ expression CORCHETEDER .)
     STRUCT          reduce using rule 89 (index_list -> index_list CORCHETEIZQ expression CORCHETEDER .)
     PARDER          reduce using rule 89 (index_list -> index_list CORCHETEIZQ expression CORCHETEDER .)
-    DOSP            reduce using rule 89 (index_list -> index_list CORCHETEIZQ expression CORCHETEDER .)
     COMA            reduce using rule 89 (index_list -> index_list CORCHETEIZQ expression CORCHETEDER .)
+    DOSP            reduce using rule 89 (index_list -> index_list CORCHETEIZQ expression CORCHETEDER .)
     CORCHETEDER     reduce using rule 89 (index_list -> index_list CORCHETEIZQ expression CORCHETEDER .)
-
-
-state 240
-
-    (87) exp_list -> exp_list COMA expression .
-    (24) expression -> expression . MAS expression
-    (25) expression -> expression . MENOS expression
-    (26) expression -> expression . POR expression
-    (27) expression -> expression . DIVIDIDO expression
-    (28) expression -> expression . POTENCIA expression
-    (29) expression -> expression . MODULO expression
-    (30) expression -> expression . MAYQUE expression
-    (31) expression -> expression . MENQUE expression
-    (32) expression -> expression . MENIGUALQUE expression
-    (33) expression -> expression . MAYIGUALQUE expression
-    (34) expression -> expression . IGUALQUE expression
-    (35) expression -> expression . NIGUALQUE expression
-    (36) expression -> expression . OR expression
-    (37) expression -> expression . AND expression
-
-    PARDER          reduce using rule 87 (exp_list -> exp_list COMA expression .)
-    COMA            reduce using rule 87 (exp_list -> exp_list COMA expression .)
-    CORCHETEDER     reduce using rule 87 (exp_list -> exp_list COMA expression .)
-    MAS             shift and go to state 131
-    MENOS           shift and go to state 132
-    POR             shift and go to state 133
-    DIVIDIDO        shift and go to state 134
-    POTENCIA        shift and go to state 135
-    MODULO          shift and go to state 136
-    MAYQUE          shift and go to state 137
-    MENQUE          shift and go to state 138
-    MENIGUALQUE     shift and go to state 139
-    MAYIGUALQUE     shift and go to state 140
-    IGUALQUE        shift and go to state 141
-    NIGUALQUE       shift and go to state 142
-    OR              shift and go to state 143
-    AND             shift and go to state 144
 
 
 state 241
@@ -11617,8 +11571,8 @@ state 246
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -11779,8 +11733,8 @@ state 250
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -12315,8 +12269,8 @@ state 270
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -12485,8 +12439,8 @@ state 272
     POP             reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
     STRUCT          reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
     PARDER          reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
-    DOSP            reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
     COMA            reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
+    DOSP            reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
     CORCHETEDER     reduce using rule 52 (nativas -> LOG PARIZQ ENTERO COMA expression PARDER .)
 
 
@@ -12539,8 +12493,8 @@ state 273
     POP             reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
     STRUCT          reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
     PARDER          reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
-    DOSP            reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
     COMA            reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
+    DOSP            reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
     CORCHETEDER     reduce using rule 62 (nativas -> TRUNC PARIZQ INT COMA expression PARDER .)
 
 
@@ -12593,8 +12547,8 @@ state 274
     POP             reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
     STRUCT          reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
     PARDER          reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
-    DOSP            reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
     COMA            reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
+    DOSP            reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
     CORCHETEDER     reduce using rule 65 (nativas -> PARSE PARIZQ tipo COMA expression PARDER .)
 
 
@@ -12647,8 +12601,8 @@ state 275
     POP             reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
     STRUCT          reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
     PARDER          reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
-    DOSP            reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
     COMA            reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
+    DOSP            reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
     CORCHETEDER     reduce using rule 67 (nativas -> PUSH PARIZQ expression COMA expression PARDER .)
 
 
@@ -12722,8 +12676,8 @@ state 281
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -12877,8 +12831,8 @@ state 285
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression
@@ -13037,8 +12991,8 @@ state 291
     (19) instruccion -> . create_struct PTCOMA
     (20) instruccion -> . declare_struct PTCOMA
     (21) instruccion -> . assign_access PTCOMA
-    (69) print_instr -> . PRINT PARIZQ expression PARDER
-    (70) println_instr -> . PRINTLN PARIZQ expression PARDER
+    (69) print_instr -> . PRINT PARIZQ exp_list PARDER
+    (70) println_instr -> . PRINTLN PARIZQ exp_list PARDER
     (76) definicion_instr -> . LOCAL ID
     (77) definicion_instr -> . GLOBAL ID
     (78) asignacion_instr -> . ID IGUAL expression

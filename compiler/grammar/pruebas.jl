@@ -1,7 +1,8 @@
-function prueba(entrada::Int64)::Int64
-    if (entrada == 3)
-        return 100;
+function factorial(numero::Int64)::Int64
+    if numero != 0
+        numero2 = factorial(numero-1);
+        return numero*numero2;
     end;
-    return 50;
+    return 1;
 end;
-print(prueba(3));
+println(factorial(5));
