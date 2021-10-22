@@ -32,6 +32,8 @@ class Literal(Expression):
         elif self.type == Type.STRING:
             ret_temp = generator.add_temp()
             generator.add_expression(ret_temp, 'H', '', '')
+            generator.set_heap('H', 0)
+            generator.next_heap()
             for char in str(self.value):
                 generator.set_heap('H', ord(char))
                 generator.next_heap()
