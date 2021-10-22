@@ -40,7 +40,7 @@ class Arithmetic(Expression):
         elif self.type == ArithmethicOption.MODULE:
             op = '%'
 
-        if (self.type == ArithmethicOption.RAISED):
+        if (self.type == ArithmethicOption.RAISED and left_value.type != Type.STRING):
             generator.f_potencia()
             param_temp = generator.add_temp()
             generator.add_expression(param_temp, 'P', env.size, '+')
@@ -59,38 +59,90 @@ class Arithmetic(Expression):
                 generator.add_expression(
                     temp, left_value.value, right_value.value, op)
                 return Return(temp, Type.FLOAT, True)
-            elif (left_value.type == Type.STRING and right_value.type == Type.STRING):
+            elif (left_value.type == Type.STRING):
                 # TODO tengo que jalar los 2 valores.value y esos son los punteros de mis string
                 left_temp = generator.add_temp()
                 right_temp = generator.add_temp()
                 ret_temp = generator.add_temp()
                 generator.add_expression(ret_temp, 'H', '', '')
+                if ArithmethicOption.TIMES and right_value.type == Type.STRING:
+                    generator.add_expression(
+                        left_temp, left_value.value, '', '')
+                    generator.add_expression(
+                        right_temp, right_value.value, '', '')
 
-                generator.add_expression(left_temp, left_value.value, '', '')
-                generator.add_expression(right_temp, right_value.value, '', '')
+                    left_label = generator.new_label()
+                    right_label = generator.new_label()
+                    left_swaper = generator.add_temp()
+                    right_swaper = generator.add_temp()
+                    generator.get_heap(left_swaper, left_temp)
+                    generator.get_heap(right_swaper, right_temp)
 
-                left_label = generator.new_label()
-                right_label = generator.new_label()
-                left_swaper = generator.add_temp()
-                right_swaper = generator.add_temp()
-                generator.get_heap(left_swaper, left_temp)
-                generator.get_heap(right_swaper, right_temp)
+                    generator.put_label(left_label)
+                    generator.set_heap('H', left_swaper)
+                    generator.next_heap()
+                    generator.add_expression(left_temp, left_temp, '1', '+')
+                    generator.get_heap(left_swaper, left_temp)
+                    generator.add_if(left_swaper, '-1', '!=', left_label)
 
-                generator.put_label(left_label)
-                generator.set_heap('H', left_swaper)
-                generator.next_heap()
-                generator.add_expression(left_temp, left_temp, '1', '+')
-                generator.get_heap(left_swaper, left_temp)
-                generator.add_if(left_swaper, '-1', '!=', left_label)
+                    generator.put_label(right_label)
+                    generator.set_heap('H', right_swaper)
+                    generator.next_heap()
+                    generator.add_expression(right_temp, right_temp, '1', '+')
+                    generator.get_heap(right_swaper, right_temp)
+                    generator.add_if(right_swaper, '-1', '!=', right_label)
+                    generator.set_heap('H', '-1')
+                    generator.next_heap()
+                elif self.type == ArithmethicOption.RAISED and right_value.type == Type.INT:
+                    begin_lbl = generator.new_label()
+                    generator.put_label(begin_lbl)
+                    contador = generator.add_temp()
+                    generator.add_expression(contador, contador, '1', '+')
+                    left_label = generator.new_label()
+                    left_swaper = generator.add_temp()
+                    generator.get_heap(left_swaper, left_temp)
+                    generator.put_label(left_label)
+                    generator.set_heap('H', left_swaper)
+                    generator.next_heap()
+                    generator.add_expression(
+                        left_temp, left_temp, '1', '+')
+                    generator.get_heap(left_swaper, left_temp)
+                    generator.add_if(left_swaper, '-1', '!=', left_label)
+                    generator.add_expression(
+                        left_temp, left_temp, '1', '-')
+                    generator.add_if(right_value.value,
+                                     contador, '>', begin_lbl)
+                    generator.set_heap('H', '-1')
+                    generator.next_heap()
+                else:
+                    print("no se puede operar")
 
-                generator.put_label(right_label)
-                generator.set_heap('H', right_swaper)
-                generator.next_heap()
-                generator.add_expression(right_temp, right_temp, '1', '+')
-                generator.get_heap(right_swaper, right_temp)
-                generator.add_if(right_swaper, '-1', '!=', right_label)
-                generator.set_heap('H', '-1')
-                generator.next_heap()
+                # generator.add_expression(left_temp, left_value.value, '', '')
+                # generator.add_expression(right_temp, right_value.value, '', '')
+
+                # left_label = generator.new_label()
+                # right_label = generator.new_label()
+                # left_swaper = generator.add_temp()
+                # right_swaper = generator.add_temp()
+                # generator.get_heap(left_swaper, left_temp)
+                # generator.get_heap(right_swaper, right_temp)
+
+                # generator.put_label(left_label)
+                # generator.set_heap('H', left_swaper)
+                # generator.next_heap()
+                # generator.add_expression(left_temp, left_temp, '1', '+')
+                # generator.get_heap(left_swaper, left_temp)
+                # generator.add_if(left_swaper, '-1', '!=', left_label)
+
+                # generator.put_label(right_label)
+                # generator.set_heap('H', right_swaper)
+                # generator.next_heap()
+                # generator.add_expression(right_temp, right_temp, '1', '+')
+                # generator.get_heap(right_swaper, right_temp)
+                # generator.add_if(right_swaper, '-1', '!=', right_label)
+
+                # generator.set_heap('H', '-1')
+                # generator.next_heap()
 
                 return Return(ret_temp, Type.STRING, True)
             else:
