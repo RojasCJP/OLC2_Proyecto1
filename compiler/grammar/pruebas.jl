@@ -1,2 +1,5 @@
-buenas = 3;
-println("a"^ buenas);
+for i in 1:5
+    println("hola buenas"^aux);
+end;
+
+

@@ -64,12 +64,15 @@ class Arithmetic(Expression):
                 left_temp = generator.add_temp()
                 right_temp = generator.add_temp()
                 ret_temp = generator.add_temp()
+                auxiliar_temp = generator.add_temp()
                 generator.add_expression(ret_temp, 'H', '', '')
+                generator.add_expression(
+                    left_temp, left_value.value, '', '')
+                generator.add_expression(
+                    right_temp, right_value.value, '', '')
+                generator.add_expression(
+                    auxiliar_temp, left_value.value, '', '')
                 if ArithmethicOption.TIMES and right_value.type == Type.STRING:
-                    generator.add_expression(
-                        left_temp, left_value.value, '', '')
-                    generator.add_expression(
-                        right_temp, right_value.value, '', '')
 
                     left_label = generator.new_label()
                     right_label = generator.new_label()
@@ -96,6 +99,8 @@ class Arithmetic(Expression):
                 elif self.type == ArithmethicOption.RAISED and right_value.type == Type.INT:
                     begin_lbl = generator.new_label()
                     generator.put_label(begin_lbl)
+                    # aqui tengo que formatear el coso ese
+                    generator.add_expression(left_temp, auxiliar_temp, '', '')
                     contador = generator.add_temp()
                     generator.add_expression(contador, contador, '1', '+')
                     left_label = generator.new_label()
