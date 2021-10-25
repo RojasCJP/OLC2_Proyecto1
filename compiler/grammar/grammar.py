@@ -677,7 +677,7 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    f = open("D:\\usac\\Compi2\\OLC2_Proyecto1\\compiler\\grammar\\pruebas.jl", "r")
+    f = open("/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
     input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     parser.parse(input)

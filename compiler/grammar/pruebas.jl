@@ -1,5 +1,1 @@
-for i in 1:5
-    println("hola buenas"^aux);
-end;
-
-
+println("hola buenas tardes "^4);

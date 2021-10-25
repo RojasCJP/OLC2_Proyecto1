@@ -60,7 +60,6 @@ class Arithmetic(Expression):
                     temp, left_value.value, right_value.value, op)
                 return Return(temp, Type.FLOAT, True)
             elif (left_value.type == Type.STRING):
-                # TODO tengo que jalar los 2 valores.value y esos son los punteros de mis string
                 left_temp = generator.add_temp()
                 right_temp = generator.add_temp()
                 ret_temp = generator.add_temp()
