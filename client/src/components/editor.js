@@ -30,9 +30,9 @@ export class Editor extends Component {
                     <h1>Editor</h1>
                 </div>
                 <div>
-                    <button class='btn btn-dark m-2' onClick={() => this.entrada_datos()}>Compilar
+                    <button class='btn btn-dark m-2' onClick={() => this.entrada_datos()}>Interpretar
                     </button>
-                    <button class='btn btn-dark m-2'>Interpretar</button>
+                    <button class='btn btn-dark m-2' onClick={() => this.compilador()}>Compilar</button>
                 </div>
                 <br />
                 <br />
@@ -104,4 +104,18 @@ export class Editor extends Component {
             });
     }
 
+    compilador() {
+        var codigoEnviar = { "code": this.state.code };
+        console.log(codigoEnviar);
+        console.log(this.state.console);
+        fetch('https://jolc-compilador.herokuapp.com/salida', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(codigoEnviar)
+        })
+            .then(async response => {
+                const json = await response.json();
+                this.setState({ direcciones: json.text });
+            });
+    }
 }

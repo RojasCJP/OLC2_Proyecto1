@@ -17,12 +17,12 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 CORS(app)
 
 
-def compile():
+def compile(entrada):
     gen_aux = Generator()
     gen_aux.clean_all()
     generator = gen_aux.get_instance()
     new_env = Environment(None)
-    ast = grammar.parse("nada gg")
+    ast = grammar.parse(entrada)
     try:
         for inst in ast:
             inst.compile(new_env)
@@ -30,8 +30,10 @@ def compile():
         f = open("salida.go", 'w')
         f.write(C3D)
         f.close()
+        return C3D
     except Exception as e:
         print("no se puede compilar", e)
+    return "error"
 
 
 @app.route("/")
@@ -39,14 +41,14 @@ def hello_world():
     return {"text": "hola que tal como estas"}
 
 
-@app.route("/salida")
+@app.route("/salida", methods=['POST'])
 def compilacion():
-    compile()
-    return {"text": "revisa la consola para ver el resultado"}
+    data = request.get_json(force=True)
+    codigo = compile(data["code"])
+    return {"text": codigo}
 
 
-compile()
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', port=3000)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=3000)
 #puede que trabaje aqui alguna vez pero el deploy tiene que ser desde windows creo yo
 
