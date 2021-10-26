@@ -41,6 +41,18 @@ class Literal(Expression):
             generator.set_heap('H', '-1')
             generator.next_heap()
             return Return(ret_temp, Type.STRING, True)
+        elif self.type == Type.ARRAY:
+            elementos = []
+            for element in self.value:
+                elementos.append(element.compile(env).value)
+            ret_temp = generator.add_temp()
+            generator.add_expression(ret_temp, 'H', '', '')
+            generator.set_heap('H', len(self.value))
+            generator.next_heap()
+            for elemento in elementos:
+                generator.set_heap('H', elemento)
+                generator.next_heap()
+            return Return(ret_temp, Type.ARRAY, True)
         else:
             print("falta hacer")
             # TODO estas son las de arreglos y structs supongo

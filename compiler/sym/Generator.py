@@ -14,6 +14,7 @@ class Generator:
         self.in_natives = False
         self.temps = []
         self.print_string = False
+        self.print_array = False
         self.potencia = False
         self.to_upper = False
         self.to_lower = False
@@ -28,6 +29,7 @@ class Generator:
         self.in_natives = False
         self.temps = []
         self.print_string = False
+        self.print_array = False
         Generator.generator = Generator()
 
     def get_header(self):
@@ -177,7 +179,7 @@ class Generator:
 
         self.get_stack(tempH, tempP)
 
-        # Temporal para comparark
+        # Temporal para comparar
         tempC = self.add_temp()
 
         self.put_label(compareLbl)
@@ -192,6 +194,41 @@ class Generator:
 
         self.add_goto(compareLbl)
 
+        self.put_label(returnLbl)
+        self.add_end_func()
+        self.in_natives = False
+
+    def fprint_array(self):
+        if(self.print_array):
+            return
+        self.print_array = True
+        self.in_natives = True
+        self.add_begin_func('print_array')
+        # Label para salir de la funcion
+        returnLbl = self.new_label()
+        # Label para hacer la comparacion para saber cuando termina el arreglo
+        compareLbl = self.new_label()
+        # Puntero a stack
+        tempP = self.add_temp()
+        # Puntero a heap
+        tempH = self.add_temp()
+        self.add_expression(tempP, 'P', '1', '+')
+        self.get_stack(tempH, tempP)
+        # contador
+        contador = self.add_temp()
+        # tamano
+        tamano = self.add_temp()
+        self.get_heap(tamano, tempH)
+        self.add_expression(tempH, tempH, '1', '+')
+        tempC = self.add_temp()
+        self.put_label(compareLbl)
+        self.get_heap(tempC, tempH)
+        self.add_if(contador, tamano, '>=', returnLbl)
+        self.add_print('d', tempC)
+        self.add_print('c', 44)
+        self.add_expression(tempH, tempH, '1', '+')
+        self.add_expression(contador, contador, '1', '+')
+        self.add_goto(compareLbl)
         self.put_label(returnLbl)
         self.add_end_func()
         self.in_natives = False

@@ -385,7 +385,7 @@ def p_final_expression(t):
         if t.slice[1].type == "PARIZQ":
             t[0] = t[2]
         else:
-            pass
+            t[0] = Literal(t[2], Type.ARRAY, t.lineno(1), t.lexpos(0))
         # TODO tengo que ver lo de los corchetes
 
 
@@ -677,7 +677,8 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    # f = open("/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
+    # f = open(
+    #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
     # input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     parser.parse(input)
