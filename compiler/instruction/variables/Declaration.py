@@ -18,7 +18,7 @@ class Declaration(Instruction):
         val = self.value.compile(env)
         generator.add_comment("fin de compilacion de variable")
         new_var = env.save_var(
-            self.id, val.type, (val.type == Type.STRING or val.type == Type.STRUCT))
+            self.id, val.type, (val.type == Type.STRING or val.type == Type.STRUCT or val.type == Type.ARRAY))
         temp_pos = new_var.pos
         if(not new_var.is_global):
             temp_pos = generator.add_temp()

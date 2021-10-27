@@ -1,5 +1,6 @@
 from abstract.Expression import *
 from abstract.Return import *
+from sym.Environment import Environment
 from sym.Generator import Generator
 import uuid
 
@@ -44,7 +45,18 @@ class Literal(Expression):
         elif self.type == Type.ARRAY:
             elementos = []
             for element in self.value:
-                elementos.append(element.compile(env).value)
+                valor = element.compile(env)
+                elementos.append(valor.value)
+                if(valor.type == Type.STRING):
+                    temp_auxiliar = generator.add_temp()
+                    generator.add_expression(
+                        temp_auxiliar, valor.value, '', '')
+                    Environment.heapsS.append(temp_auxiliar)
+                elif valor.type == Type.ARRAY:
+                    temp_auxiliar = generator.add_temp()
+                    generator.add_expression(
+                        temp_auxiliar, valor.value, '', '')
+                    Environment.heapsA.append(temp_auxiliar)
             ret_temp = generator.add_temp()
             generator.add_expression(ret_temp, 'H', '', '')
             generator.set_heap('H', len(self.value))
@@ -52,6 +64,7 @@ class Literal(Expression):
             for elemento in elementos:
                 generator.set_heap('H', elemento)
                 generator.next_heap()
+            generator.add_expression(ret_temp, ret_temp, '0.12837', '+')
             return Return(ret_temp, Type.ARRAY, True)
         else:
             print("falta hacer")

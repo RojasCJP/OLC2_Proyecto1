@@ -199,6 +199,9 @@ class Generator:
         self.in_natives = False
 
     def fprint_array(self):
+        trigger1 = False
+        trigger2 = False
+
         if(self.print_array):
             return
         self.print_array = True
@@ -208,6 +211,10 @@ class Generator:
         returnLbl = self.new_label()
         # Label para hacer la comparacion para saber cuando termina el arreglo
         compareLbl = self.new_label()
+        # label para strings
+        printS = self.new_label()
+        # label para arreglos
+        printA = self.new_label()
         # Puntero a stack
         tempP = self.add_temp()
         # Puntero a heap
@@ -219,17 +226,85 @@ class Generator:
         # tamano
         tamano = self.add_temp()
         self.get_heap(tamano, tempH)
+        # puntero tamano
+        punteroinicial = self.add_temp()
         self.add_expression(tempH, tempH, '1', '+')
         tempC = self.add_temp()
+        self.add_print('c', 91)
         self.put_label(compareLbl)
         self.get_heap(tempC, tempH)
+        self.add_expression(punteroinicial, tempC, '', '')
         self.add_if(contador, tamano, '>=', returnLbl)
+
+        for element in Environment.heapsA:
+            self.add_if(element, punteroinicial, '==', printA)
+            trigger1 = True
+        for element in Environment.heapsS:
+            self.add_if(element, tempC, '==', printS)
+            trigger2 = True
         self.add_print('d', tempC)
         self.add_print('c', 44)
         self.add_expression(tempH, tempH, '1', '+')
         self.add_expression(contador, contador, '1', '+')
         self.add_goto(compareLbl)
+        # son 5 temporales
+        if(trigger1):
+            self.put_label(printA)
+
+            tempauxP = self.add_temp()
+            tempauxcont = self.add_temp()
+            tempauxtam = self.add_temp()
+            tempauxC = self.add_temp()
+            tempauxPP = self.add_temp()
+            tempauxH = self.add_temp()
+            self.add_expression(tempauxP, 'P', '', '')
+            self.add_expression(tempauxcont, contador, '', '')
+            self.add_expression(tempauxtam, tamano, '', '')
+            self.add_expression(tempauxC, tempC, '', '')
+            self.add_expression(tempauxPP, tempP, '', '')
+            self.add_expression(tempauxH, tempH, '', '')
+            self.add_expression(contador, '0', '', '')
+            self.set_stack(tempP, tempC)
+            self.call_fun("print_array")
+
+            self.add_expression(contador, tempauxcont, '1', '+')
+            self.add_expression(tamano, tempauxtam, '', '')
+            self.add_expression(tempC, tempauxC, '', '')
+            self.add_expression(tempP, tempauxPP, '', '')
+            self.add_expression(tempH, tempauxH, '1', '+')
+
+            self.add_goto(compareLbl)
+        if(trigger2):
+            self.put_label(printS)
+
+            tempauxP = self.add_temp()
+            tempauxcont = self.add_temp()
+            tempauxtam = self.add_temp()
+            tempauxC = self.add_temp()
+            tempauxPP = self.add_temp()
+            tempauxH = self.add_temp()
+
+            self.add_expression(tempauxP, 'P', '', '')
+            self.add_expression(tempauxcont, contador, '', '')
+            self.add_expression(tempauxtam, tamano, '', '')
+            self.add_expression(tempauxC, tempC, '', '')
+            self.add_expression(tempauxPP, tempP, '', '')
+            self.add_expression(tempauxH, tempH, '', '')
+            self.set_stack(tempP, tempC)
+            self.add_expression('P', tempC, '', '')
+            self.call_fun("print_string")
+
+            self.add_expression('P', tempauxP, '', '')
+            self.add_expression(contador, tempauxcont, '', '')
+            self.add_expression(tamano, tempauxtam, '', '')
+            self.add_expression(tempC, tempauxC, '', '')
+            self.add_expression(tempP, tempauxPP, '', '')
+            self.add_expression(tempH, tempauxH, '', '')
+
+            self.add_goto(compareLbl)
+
         self.put_label(returnLbl)
+        self.add_print('c', 93)
         self.add_end_func()
         self.in_natives = False
 

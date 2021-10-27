@@ -8,6 +8,8 @@ class Environment:
     structs = {}
     errores = []
     entrada = ""
+    heapsS = []
+    heapsA = []
 
     def __init__(self, prev_env):
         self.variables = {}
