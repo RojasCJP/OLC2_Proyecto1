@@ -28,6 +28,7 @@ from instruction.variables.Declaration import *
 
 from instruction.Statement import *
 
+from expressions.Access_array import AccessArray
 from expressions.Access_struct import *
 from expressions.Access import *
 from expressions.Arithmetic import *
@@ -380,7 +381,7 @@ def p_final_expression(t):
         elif t.slice[1].type == "nativas":
             t[0] = t[1]
     elif len(t) == 3:
-        pass
+        t[0] = AccessArray(t[1], t[2], t.lineno(1), t.lexpos(0))
     else:
         if t.slice[1].type == "PARIZQ":
             t[0] = t[2]

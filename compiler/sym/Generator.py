@@ -3,6 +3,9 @@ from .Environment import *
 
 class Generator:
     generator = None
+    heap = []
+    stack = []
+    dict_temp = {"H": 0, "P": 0, '': 0}
 
     def __init__(self):
         self.count_temp = 0
@@ -72,6 +75,7 @@ class Generator:
 
     # Manejo de Temporales
     def add_temp(self):
+        Generator.dict_temp[f't{self.count_temp}'] = 0
         temp = f't{self.count_temp}'
         self.count_temp += 1
         self.temps.append(temp)
@@ -96,6 +100,18 @@ class Generator:
 
     # EXPRESIONES
     def add_expression(self, result, left, right, op):
+        if left in Generator.dict_temp.keys() and right in Generator.dict_temp.keys():
+            Generator.dict_temp[result] = self.operaciones(
+                Generator.dict_temp[left], Generator.dict_temp[right], op)
+        elif left in Generator.dict_temp.keys():
+            Generator.dict_temp[result] = self.operaciones(
+                Generator.dict_temp[left], float(right), op)
+        elif right in Generator.dict_temp.keys():
+            Generator.dict_temp[result] = self.operaciones(
+                float(left), Generator.dict_temp[right], op)
+        else:
+            Generator.dict_temp[result] = self.operaciones(
+                float(left), float(right), op)
         self.code_in(f'{result}={left}{op}{right};\n')
 
     # FUNCS
@@ -111,9 +127,18 @@ class Generator:
 
     # STACK
     def set_stack(self, pos, value):
+        if(value in Generator.dict_temp.keys()):
+            Generator.stack.append(Generator.dict_temp[value])
+        else:
+            Generator.stack.append(float(value))
         self.code_in(f'stack[int({pos})]={value};\n')
 
     def get_stack(self, place, pos):
+        if pos in Generator.dict_temp.keys():
+            Generator.dict_temp[place] = Generator.stack[int(
+                Generator.dict_temp[pos])]
+        else:
+            Generator.dict_temp[place] = Generator.stack[int(pos)]
         self.code_in(f'{place}=stack[int({pos})];\n')
 
     # ENVS
@@ -128,12 +153,22 @@ class Generator:
 
     # HEAP
     def set_heap(self, pos, value):
+        if(value in Generator.dict_temp.keys()):
+            Generator.heap.append(Generator.dict_temp[value])
+        else:
+            Generator.heap.append(float(value))
         self.code_in(f'heap[int({pos})]={value};\n')
 
     def get_heap(self, place, pos):
+        if pos in Generator.dict_temp.keys():
+            Generator.dict_temp[place] = Generator.heap[int(
+                Generator.dict_temp[pos])]
+        else:
+            Generator.dict_temp[place] = Generator.heap[int(pos)]
         self.code_in(f'{place}=heap[int({pos})];\n')
 
     def next_heap(self):
+        Generator.dict_temp["H"] = Generator.dict_temp["H"]+1
         self.code_in('H=H+1;\n')
 
     # INSTRUCCIONES
@@ -201,6 +236,7 @@ class Generator:
     def fprint_array(self):
         trigger1 = False
         trigger2 = False
+        self.fprint_string()
 
         if(self.print_array):
             return
@@ -291,20 +327,21 @@ class Generator:
             self.add_expression(tempauxPP, tempP, '', '')
             self.add_expression(tempauxH, tempH, '', '')
             self.set_stack(tempP, tempC)
-            self.add_expression('P', tempC, '', '')
             self.call_fun("print_string")
 
             self.add_expression('P', tempauxP, '', '')
-            self.add_expression(contador, tempauxcont, '', '')
+            self.add_expression(contador, tempauxcont, '1', '+')
             self.add_expression(tamano, tempauxtam, '', '')
             self.add_expression(tempC, tempauxC, '', '')
             self.add_expression(tempP, tempauxPP, '', '')
-            self.add_expression(tempH, tempauxH, '', '')
+            self.add_expression(tempH, tempauxH, '1', '+')
+            self.add_print('c', 44)
 
             self.add_goto(compareLbl)
 
         self.put_label(returnLbl)
         self.add_print('c', 93)
+        self.add_expression(contador, '0', '', '')
         self.add_end_func()
         self.in_natives = False
 
@@ -420,3 +457,20 @@ class Generator:
         self.set_stack('P', t1)
         self.add_end_func()
         self.in_natives = False
+
+    def operaciones(self, left, right, op):
+        try:
+            if(op == '+'):
+                return left + right
+            elif(op == '-'):
+                return left - right
+            elif(op == '*'):
+                return left * right
+            elif(op == '/'):
+                return left / right
+            elif(op == '%'):
+                return left % right
+            else:
+                return left
+        except:
+            return left

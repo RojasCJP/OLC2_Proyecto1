@@ -41,6 +41,7 @@ class Literal(Expression):
 
             generator.set_heap('H', '-1')
             generator.next_heap()
+            generator.add_expression(ret_temp, ret_temp, '0.12837', '+')
             return Return(ret_temp, Type.STRING, True)
         elif self.type == Type.ARRAY:
             elementos = []
