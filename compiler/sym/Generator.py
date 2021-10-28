@@ -4,7 +4,7 @@ from .Environment import *
 class Generator:
     generator = None
     heap = []
-    stack = []
+    stack = [0 for i in range(30101999)]
     dict_temp = {"H": 0, "P": 0, '': 0}
 
     def __init__(self):
@@ -127,10 +127,15 @@ class Generator:
 
     # STACK
     def set_stack(self, pos, value):
-        if(value in Generator.dict_temp.keys()):
-            Generator.stack.append(Generator.dict_temp[value])
+        if pos in Generator.dict_temp.keys() and value in Generator.dict_temp.keys():
+            Generator.stack[int(Generator.dict_temp[pos])
+                            ] = Generator.dict_temp[value]
+        elif pos in Generator.dict_temp.keys():
+            Generator.stack[int(Generator.dict_temp[pos])] = float(value)
+        elif(value in Generator.dict_temp.keys()):
+            Generator.stack[pos] = Generator.dict_temp[value]
         else:
-            Generator.stack.append(float(value))
+            Generator.stack[pos] = (float(value))
         self.code_in(f'stack[int({pos})]={value};\n')
 
     def get_stack(self, place, pos):
