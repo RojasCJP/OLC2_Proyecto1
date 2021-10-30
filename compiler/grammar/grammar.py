@@ -28,7 +28,8 @@ from instruction.variables.Declaration import *
 
 from instruction.Statement import *
 
-from expressions.Access_array import AccessArray
+from expressions.Access_array import *
+from expressions.Change_array import *
 from expressions.Access_struct import *
 from expressions.Access import *
 from expressions.Arithmetic import *
@@ -512,7 +513,7 @@ def p_definicion_asignacion_instr(t):
 
 def p_asignacion_arreglo_instr(t):
     '''asignacion_arreglo_instr     : ID index_list IGUAL expression'''
-    pass
+    t[0] = ChangeArray(t[1], t[2], t[4], t.lineno(1), t.lexpos(0))
 
 
 # todo tengo que hacer que se asignar y declarar los arreglos con index
@@ -639,13 +640,12 @@ def p_createStruct(t):
 
 
 def p_attList(t):
-    '''attList :  attList ID DOSP DOSP tipo PTCOMA
-                | ID DOSP DOSP tipo PTCOMA'''
-    if len(t) == 6:
-        prueba = t[4]
+    '''attList :  attList PTCOMA ID DOSP DOSP tipo PTCOMA
+                | ID DOSP DOSP tipo '''
+    if len(t) == 5:
         t[0] = [StructAttribute(t[1], t[4], t.lineno(1), t.lexpos(0))]
     else:
-        t[1].append(StructAttribute(t[2], t[5], t.lineno(1), t.lexpos(0)))
+        t[1].append(StructAttribute(t[3], t[6], t.lineno(1), t.lexpos(0)))
         t[0] = t[1]
 
 
@@ -678,9 +678,9 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    f = open(
-        "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
-    input = f.read()
+    # f = open(
+    #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
+    # input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     parser.parse(input)
     return parser.parse(input)

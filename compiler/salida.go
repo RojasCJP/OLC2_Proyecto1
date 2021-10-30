@@ -5,100 +5,83 @@ import (
 	"fmt"
 )
 
-var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14 float64;
+var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13 float64;
 var P, H float64;
 var stack [30101999]float64;
 var heap [30101999]float64;
 
+/*-----NATIVES-----*/
+func print_string(){
+	t9=P+1;
+	t10=stack[int(t9)];
+	L1:
+	t11=heap[int(t10)];
+	if t11 == -1 {goto L0;}
+	fmt.Printf("%c", int(t11));
+	t10=t10+1;
+	goto L1;
+	L0:
+	return;
+}
 
 
 func main(){
 	/* compilacion de valor de variable */
 	t0=H;
-	heap[int(H)]=6;
+	t1=t0;
+	H=H+2;
+	t2=H;
+	heap[int(H)]=0;
 	H=H+1;
-	heap[int(H)]=1;
+	heap[int(H)]=104;
 	H=H+1;
-	heap[int(H)]=2;
+	heap[int(H)]=111;
 	H=H+1;
-	heap[int(H)]=3;
+	heap[int(H)]=108;
 	H=H+1;
-	heap[int(H)]=4;
+	heap[int(H)]=97;
 	H=H+1;
-	heap[int(H)]=5;
+	heap[int(H)]=32;
 	H=H+1;
-	heap[int(H)]=6;
+	heap[int(H)]=98;
 	H=H+1;
-	t0=t0+0.12837;
+	heap[int(H)]=117;
+	H=H+1;
+	heap[int(H)]=101;
+	H=H+1;
+	heap[int(H)]=110;
+	H=H+1;
+	heap[int(H)]=97;
+	H=H+1;
+	heap[int(H)]=115;
+	H=H+1;
+	heap[int(H)]=-1;
+	H=H+1;
+	t2=t2+0.12837;
+	heap[int(t1)]=t2;
+	t1=t1+1;
+	heap[int(t1)]=412;
+	t1=t1+1;
 	/* fin de compilacion de variable */
 	stack[int(0)]=t0;
 	
-	/* compilacion de valor de variable */
-	t1=H;
-	heap[int(H)]=6;
-	H=H+1;
-	heap[int(H)]=0;
-	H=H+1;
-	heap[int(H)]=0;
-	H=H+1;
-	heap[int(H)]=0;
-	H=H+1;
-	heap[int(H)]=0;
-	H=H+1;
-	heap[int(H)]=0;
-	H=H+1;
-	heap[int(H)]=0;
-	H=H+1;
-	t1=t1+0.12837;
-	/* fin de compilacion de variable */
-	stack[int(1)]=t1;
-	
-	/* compilacion de acceso arreglos */
-	t2=stack[int(1)];
-	t3=2+t2;
-	t2=heap[int(t3)];
-	fmt.Printf("%f", t2);
+	t3=stack[int(0)];
+	t4=t3+1;
+	t5=heap[int(t4)];
+	fmt.Printf("%d", int(t5));
 	fmt.Printf("%c", int(32));
 	fmt.Printf("%c", int(10));
-	t4=1;
-	L0:
-	if t4 >= 7 {goto L1;}
-	/* compilacion de valor de variable */
-	/* fin de compilacion de variable */
-	t5=P+2;
-	stack[int(t5)]=t4;
-	
-	/* compilacion de acceso arreglos */
-	t6=stack[int(1)];
-	/* compilacion de accesso */
-	t8=P+2;
-	t7=stack[int(t8)];
-	/* fin de la compilacion de acceso */
-	
-	t9=t7+t6;
-	t6=heap[int(t9)];
-	fmt.Printf("%f", t6);
+	t6=stack[int(0)];
+	t7=t6+0;
+	t8=heap[int(t7)];
+	t12=P+1;
+	t12=t12+1;
+	stack[int(t12)]=t8;
+	P=P+1;
+	print_string();
+	t13=stack[int(P)];
+	P=P-1;
 	fmt.Printf("%c", int(32));
 	fmt.Printf("%c", int(10));
-	/* compilacion de acceso arreglos */
-	t10=stack[int(0)];
-	/* compilacion de accesso */
-	t12=P+2;
-	t11=stack[int(t12)];
-	/* fin de la compilacion de acceso */
-	
-	t13=t11+t10;
-	t10=heap[int(t13)];
-	fmt.Printf("%f", t10);
-	fmt.Printf("%c", int(32));
-	fmt.Printf("%c", int(10));
-	t4=t4+1;
-	/* compilacion de valor de variable */
-	/* fin de compilacion de variable */
-	t14=P+2;
-	stack[int(t14)]=t4;
-	
-	goto L0;
-	L1:
 
 }

@@ -22,6 +22,6 @@ class Return:
         self.value = value
         self.type = ret_type
         self.is_temp = is_temp
-        self.auxType = aux_type
+        self.struct_type = aux_type
         self.true_lbl = ''
         self.false_lbl = ''

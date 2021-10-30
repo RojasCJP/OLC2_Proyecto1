@@ -3,7 +3,7 @@ from .Environment import *
 
 class Generator:
     generator = None
-    heap = []
+    heap = [0 for i in range(30101999)]
     stack = [0 for i in range(30101999)]
     dict_temp = {"H": 0, "P": 0, '': 0}
 
@@ -158,10 +158,15 @@ class Generator:
 
     # HEAP
     def set_heap(self, pos, value):
-        if(value in Generator.dict_temp.keys()):
-            Generator.heap.append(Generator.dict_temp[value])
+        if pos in Generator.dict_temp.keys() and value in Generator.dict_temp.keys():
+            Generator.heap[int(Generator.dict_temp[pos])
+                           ] = Generator.dict_temp[value]
+        elif pos in Generator.dict_temp.keys():
+            Generator.heap[int(Generator.dict_temp[pos])] = float(value)
+        elif(value in Generator.dict_temp.keys()):
+            Generator.heap[pos] = Generator.dict_temp[value]
         else:
-            Generator.heap.append(float(value))
+            Generator.heap[pos] = (float(value))
         self.code_in(f'heap[int({pos})]={value};\n')
 
     def get_heap(self, place, pos):

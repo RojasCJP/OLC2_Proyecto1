@@ -59,6 +59,6 @@ class CallFunc(Expression):
                             generator.set_heap(aux, '0')
                             generator.put_label(return_lbl)
                         generator.add_expression(aux, aux, '1', '+')
-                    return Return(return_temp, Type.STRUCT, True)
+                    return Return(return_temp, Type.STRUCT, True, self.struct_type)
         except Exception as e:
             print("error en llamada de la funcion", e)

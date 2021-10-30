@@ -53,13 +53,13 @@ class Environment:
             if id_var in env.variables.keys():
                 print("Variable ya existe")
                 env.variables[id_var] = Symbol(id_var, sym_type, env.variables[id_var].pos,
-                                               env.prev == None, in_heap)
+                                               env.prev == None, in_heap, struct_type)
                 return env.variables[id_var]
             env = env.prev
         if(id_var[-1] == '#'):
             id_var = id_var[0:-1]
         newSymbol = Symbol(id_var, sym_type, self.size,
-                           self.prev == None, in_heap)
+                           self.prev == None, in_heap, struct_type)
         self.size += 1
         self.variables[id_var] = newSymbol
         return self.variables[id_var]

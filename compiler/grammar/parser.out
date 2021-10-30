@@ -121,8 +121,8 @@ Rule 108   continue_state -> CONTINUE
 Rule 109   return_state -> RETURN
 Rule 110   return_state -> RETURN expression
 Rule 111   create_struct -> STRUCT ID attList END
-Rule 112   attList -> attList ID DOSP DOSP tipo PTCOMA
-Rule 113   attList -> ID DOSP DOSP tipo PTCOMA
+Rule 112   attList -> attList PTCOMA ID DOSP DOSP tipo PTCOMA
+Rule 113   attList -> ID DOSP DOSP tipo
 Rule 114   declare_struct -> ID DOSP DOSP ID
 Rule 115   assign_access -> ID PUNTO ID IGUAL expression
 Rule 116   access_struct -> ID PUNTO ID
@@ -185,7 +185,7 @@ POR                  : 26
 POTENCIA             : 28
 PRINT                : 69
 PRINTLN              : 70
-PTCOMA               : 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 112 113
+PTCOMA               : 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 112 112
 PUNTO                : 115 116
 PUSH                 : 67
 RETURN               : 109 110
@@ -4942,8 +4942,8 @@ state 115
 state 116
 
     (111) create_struct -> STRUCT ID . attList END
-    (112) attList -> . attList ID DOSP DOSP tipo PTCOMA
-    (113) attList -> . ID DOSP DOSP tipo PTCOMA
+    (112) attList -> . attList PTCOMA ID DOSP DOSP tipo PTCOMA
+    (113) attList -> . ID DOSP DOSP tipo
 
     ID              shift and go to state 177
 
@@ -7672,6 +7672,7 @@ state 169
 
     COMA            reduce using rule 71 (tipo -> INT .)
     PTCOMA          reduce using rule 71 (tipo -> INT .)
+    END             reduce using rule 71 (tipo -> INT .)
     PARDER          reduce using rule 71 (tipo -> INT .)
     PRINT           reduce using rule 71 (tipo -> INT .)
     PRINTLN         reduce using rule 71 (tipo -> INT .)
@@ -7710,6 +7711,7 @@ state 170
 
     COMA            reduce using rule 72 (tipo -> FLOAT .)
     PTCOMA          reduce using rule 72 (tipo -> FLOAT .)
+    END             reduce using rule 72 (tipo -> FLOAT .)
     PARDER          reduce using rule 72 (tipo -> FLOAT .)
     PRINT           reduce using rule 72 (tipo -> FLOAT .)
     PRINTLN         reduce using rule 72 (tipo -> FLOAT .)
@@ -7748,6 +7750,7 @@ state 171
 
     COMA            reduce using rule 73 (tipo -> BOOL .)
     PTCOMA          reduce using rule 73 (tipo -> BOOL .)
+    END             reduce using rule 73 (tipo -> BOOL .)
     PARDER          reduce using rule 73 (tipo -> BOOL .)
     PRINT           reduce using rule 73 (tipo -> BOOL .)
     PRINTLN         reduce using rule 73 (tipo -> BOOL .)
@@ -7786,6 +7789,7 @@ state 172
 
     COMA            reduce using rule 74 (tipo -> CHAR .)
     PTCOMA          reduce using rule 74 (tipo -> CHAR .)
+    END             reduce using rule 74 (tipo -> CHAR .)
     PARDER          reduce using rule 74 (tipo -> CHAR .)
     PRINT           reduce using rule 74 (tipo -> CHAR .)
     PRINTLN         reduce using rule 74 (tipo -> CHAR .)
@@ -7824,6 +7828,7 @@ state 173
 
     COMA            reduce using rule 75 (tipo -> STRING .)
     PTCOMA          reduce using rule 75 (tipo -> STRING .)
+    END             reduce using rule 75 (tipo -> STRING .)
     PARDER          reduce using rule 75 (tipo -> STRING .)
     PRINT           reduce using rule 75 (tipo -> STRING .)
     PRINTLN         reduce using rule 75 (tipo -> STRING .)
@@ -7963,7 +7968,7 @@ state 176
 
 state 177
 
-    (113) attList -> ID . DOSP DOSP tipo PTCOMA
+    (113) attList -> ID . DOSP DOSP tipo
 
     DOSP            shift and go to state 234
 
@@ -7971,10 +7976,10 @@ state 177
 state 178
 
     (111) create_struct -> STRUCT ID attList . END
-    (112) attList -> attList . ID DOSP DOSP tipo PTCOMA
+    (112) attList -> attList . PTCOMA ID DOSP DOSP tipo PTCOMA
 
-    END             shift and go to state 236
-    ID              shift and go to state 235
+    END             shift and go to state 235
+    PTCOMA          shift and go to state 236
 
 
 state 179
@@ -11347,23 +11352,23 @@ state 233
 
 state 234
 
-    (113) attList -> ID DOSP . DOSP tipo PTCOMA
+    (113) attList -> ID DOSP . DOSP tipo
 
     DOSP            shift and go to state 257
 
 
 state 235
 
-    (112) attList -> attList ID . DOSP DOSP tipo PTCOMA
+    (111) create_struct -> STRUCT ID attList END .
 
-    DOSP            shift and go to state 258
+    PTCOMA          reduce using rule 111 (create_struct -> STRUCT ID attList END .)
 
 
 state 236
 
-    (111) create_struct -> STRUCT ID attList END .
+    (112) attList -> attList PTCOMA . ID DOSP DOSP tipo PTCOMA
 
-    PTCOMA          reduce using rule 111 (create_struct -> STRUCT ID attList END .)
+    ID              shift and go to state 258
 
 
 state 237
@@ -12084,7 +12089,7 @@ state 256
 
 state 257
 
-    (113) attList -> ID DOSP DOSP . tipo PTCOMA
+    (113) attList -> ID DOSP DOSP . tipo
     (71) tipo -> . INT
     (72) tipo -> . FLOAT
     (73) tipo -> . BOOL
@@ -12101,7 +12106,7 @@ state 257
 
 state 258
 
-    (112) attList -> attList ID DOSP . DOSP tipo PTCOMA
+    (112) attList -> attList PTCOMA ID . DOSP DOSP tipo PTCOMA
 
     DOSP            shift and go to state 277
 
@@ -12608,27 +12613,18 @@ state 275
 
 state 276
 
-    (113) attList -> ID DOSP DOSP tipo . PTCOMA
+    (113) attList -> ID DOSP DOSP tipo .
 
-    PTCOMA          shift and go to state 288
+    END             reduce using rule 113 (attList -> ID DOSP DOSP tipo .)
+    PTCOMA          reduce using rule 113 (attList -> ID DOSP DOSP tipo .)
 
 
 state 277
 
-    (112) attList -> attList ID DOSP DOSP . tipo PTCOMA
-    (71) tipo -> . INT
-    (72) tipo -> . FLOAT
-    (73) tipo -> . BOOL
-    (74) tipo -> . CHAR
-    (75) tipo -> . STRING
+    (112) attList -> attList PTCOMA ID DOSP . DOSP tipo PTCOMA
 
-    INT             shift and go to state 169
-    FLOAT           shift and go to state 170
-    BOOL            shift and go to state 171
-    CHAR            shift and go to state 172
-    STRING          shift and go to state 173
+    DOSP            shift and go to state 288
 
-    tipo                           shift and go to state 289
 
 state 278
 
@@ -12754,7 +12750,7 @@ state 281
     POP             shift and go to state 49
     STRUCT          shift and go to state 50
 
-    statement                      shift and go to state 290
+    statement                      shift and go to state 289
     instrucciones                  shift and go to state 152
     instruccion                    shift and go to state 3
     print_instr                    shift and go to state 4
@@ -12791,7 +12787,7 @@ state 282
     CHAR            shift and go to state 172
     STRING          shift and go to state 173
 
-    tipo                           shift and go to state 291
+    tipo                           shift and go to state 290
 
 state 283
 
@@ -12804,7 +12800,7 @@ state 284
 
     (96) dec_params -> dec_params COMA ID DOSP . DOSP tipo
 
-    DOSP            shift and go to state 292
+    DOSP            shift and go to state 291
 
 
 state 285
@@ -12909,7 +12905,7 @@ state 285
     POP             shift and go to state 49
     STRUCT          shift and go to state 50
 
-    statement                      shift and go to state 293
+    statement                      shift and go to state 292
     instrucciones                  shift and go to state 152
     instruccion                    shift and go to state 3
     print_instr                    shift and go to state 4
@@ -12942,32 +12938,34 @@ state 287
 
     (105) for_state -> FOR ID IN expression DOSP expression statement . END
 
-    END             shift and go to state 294
+    END             shift and go to state 293
 
 
 state 288
 
-    (113) attList -> ID DOSP DOSP tipo PTCOMA .
+    (112) attList -> attList PTCOMA ID DOSP DOSP . tipo PTCOMA
+    (71) tipo -> . INT
+    (72) tipo -> . FLOAT
+    (73) tipo -> . BOOL
+    (74) tipo -> . CHAR
+    (75) tipo -> . STRING
 
-    END             reduce using rule 113 (attList -> ID DOSP DOSP tipo PTCOMA .)
-    ID              reduce using rule 113 (attList -> ID DOSP DOSP tipo PTCOMA .)
+    INT             shift and go to state 169
+    FLOAT           shift and go to state 170
+    BOOL            shift and go to state 171
+    CHAR            shift and go to state 172
+    STRING          shift and go to state 173
 
+    tipo                           shift and go to state 294
 
 state 289
 
-    (112) attList -> attList ID DOSP DOSP tipo . PTCOMA
+    (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement . END
 
-    PTCOMA          shift and go to state 295
+    END             shift and go to state 295
 
 
 state 290
-
-    (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement . END
-
-    END             shift and go to state 296
-
-
-state 291
 
     (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo . statement END
     (91) statement -> . instrucciones
@@ -13069,7 +13067,7 @@ state 291
     POP             shift and go to state 49
     STRUCT          shift and go to state 50
 
-    statement                      shift and go to state 297
+    statement                      shift and go to state 296
     instrucciones                  shift and go to state 152
     instruccion                    shift and go to state 3
     print_instr                    shift and go to state 4
@@ -13091,7 +13089,7 @@ state 291
     declare_struct                 shift and go to state 20
     assign_access                  shift and go to state 21
 
-state 292
+state 291
 
     (96) dec_params -> dec_params COMA ID DOSP DOSP . tipo
     (71) tipo -> . INT
@@ -13106,50 +13104,57 @@ state 292
     CHAR            shift and go to state 172
     STRING          shift and go to state 173
 
-    tipo                           shift and go to state 298
+    tipo                           shift and go to state 297
 
-state 293
+state 292
 
     (102) else_if_list -> ELSEIF expression statement ELSE statement .
 
     END             reduce using rule 102 (else_if_list -> ELSEIF expression statement ELSE statement .)
 
 
-state 294
+state 293
 
     (105) for_state -> FOR ID IN expression DOSP expression statement END .
 
     PTCOMA          reduce using rule 105 (for_state -> FOR ID IN expression DOSP expression statement END .)
 
 
+state 294
+
+    (112) attList -> attList PTCOMA ID DOSP DOSP tipo . PTCOMA
+
+    PTCOMA          shift and go to state 298
+
+
 state 295
-
-    (112) attList -> attList ID DOSP DOSP tipo PTCOMA .
-
-    END             reduce using rule 112 (attList -> attList ID DOSP DOSP tipo PTCOMA .)
-    ID              reduce using rule 112 (attList -> attList ID DOSP DOSP tipo PTCOMA .)
-
-
-state 296
 
     (92) declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END .
 
     PTCOMA          reduce using rule 92 (declare_function -> FUNCTION ID PARIZQ PARDER DOSP DOSP tipo statement END .)
 
 
-state 297
+state 296
 
     (93) declare_function -> FUNCTION ID PARIZQ dec_params PARDER DOSP DOSP tipo statement . END
 
     END             shift and go to state 299
 
 
-state 298
+state 297
 
     (96) dec_params -> dec_params COMA ID DOSP DOSP tipo .
 
     PARDER          reduce using rule 96 (dec_params -> dec_params COMA ID DOSP DOSP tipo .)
     COMA            reduce using rule 96 (dec_params -> dec_params COMA ID DOSP DOSP tipo .)
+
+
+state 298
+
+    (112) attList -> attList PTCOMA ID DOSP DOSP tipo PTCOMA .
+
+    END             reduce using rule 112 (attList -> attList PTCOMA ID DOSP DOSP tipo PTCOMA .)
+    PTCOMA          reduce using rule 112 (attList -> attList PTCOMA ID DOSP DOSP tipo PTCOMA .)
 
 
 state 299
