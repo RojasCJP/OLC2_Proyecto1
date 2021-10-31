@@ -18,6 +18,7 @@ from instruction.loops.For import *
 from instruction.nativas.Print import *
 from instruction.nativas.ToUpper import *
 from instruction.nativas.ToLower import *
+from instruction.nativas.Length import *
 
 from instruction.structs.AssignAccess import *
 from instruction.structs.CreateStruct import *
@@ -440,7 +441,7 @@ def p_nativas(t):
     elif t.slice[1].type == "PARSE":
         pass
     elif t.slice[1].type == "LENGTH":
-        pass
+        t[0] = Length(t.lineno(1), t.lexpos(0), t[3])
     elif t.slice[1].type == "PUSH":
         pass
     elif t.slice[1].type == "POP":
@@ -678,9 +679,9 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    # f = open(
-    #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
-    # input = f.read()
+    f = open(
+        "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
+    input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     parser.parse(input)
     return parser.parse(input)

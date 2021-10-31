@@ -1,4 +1,5 @@
 from os import truncate
+from typing import NewType
 from sym.Generator import *
 from abstract.Expression import *
 from abstract.Return import *
@@ -15,7 +16,7 @@ class AccessArray(Expression):
         generator = gen_aux.get_instance()
         generator.add_comment('compilacion de acceso arreglos')
         array = env.get_var(self.id)
-        if array == None:
+        if array is None:
             print("error no existe el arreglo")
             return
         temp = generator.add_temp()
@@ -42,3 +43,28 @@ class AccessArray(Expression):
         # print(Generator.stack)
         # print(Generator.dict_temp)
         return Return(temp, tipo, True)
+
+    def agregarError(self, posicion, index):
+        gen_aux = Generator()
+        generator = gen_aux.get_instance()
+        label1 = generator.new_label()
+        label2 = generator.new_label()
+        new_temp = generator.add_temp()
+        generator.get_heap(new_temp, posicion)
+        generator.add_if(new_temp, index, '==', label1)
+
+        # codigo se agrega aqui
+        generator.add_goto(label2)
+        generator.put_label(label1)
+        generator.add_print('c', 109)  # m
+        generator.add_print('c', 97)  # a
+        generator.add_print('c', 116)  # t
+        generator.add_print('c', 104)  # h
+        generator.add_print('c', 32)
+        generator.add_print('c', 101)  # e
+        generator.add_print('c', 114)  # r
+        generator.add_print('c', 114)  # r
+        generator.add_print('c', 111)  # o
+        generator.add_print('c', 114)  # r
+
+        generator.put_label(label2)

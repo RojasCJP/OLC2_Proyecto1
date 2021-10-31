@@ -25,7 +25,7 @@ class For(Instruction):
             continue_lbl = generator.new_label()
             generator.put_label(continue_lbl)
             end_lbl = generator.new_label()
-            generator.add_if(temp1, right_val.value, ">=", end_lbl)
+            generator.add_if(temp1, right_val.value, ">", end_lbl)
             new_env = Environment(env)
             new_env.break_lbl = end_lbl
             new_env.continue_lbl = continue_lbl
