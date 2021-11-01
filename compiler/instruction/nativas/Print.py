@@ -43,7 +43,9 @@ class Print(Instruction):
                 generator.get_stack(temp, 'P')
                 generator.ret_env(env.size)
             elif valuee.type == Type.ARRAY:
+                generator.add_expression('P', 'P', env.size, '+')
                 generator.fprint_array()
+                generator.add_expression('P', 'P', env.size, '-')
                 param_temp = generator.add_temp()
                 generator.add_expression(param_temp, 'P', env.size, '+')
                 generator.add_expression(param_temp, param_temp, '1', '+')

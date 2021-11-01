@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58, t59, t60 float64;
+var t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45, t46, t47, t48, t49, t50, t51, t52, t53, t54, t55, t56, t57, t58 float64;
 var P, H float64;
 var stack [30101999]float64;
 var heap [30101999]float64;
@@ -263,8 +263,6 @@ func main(){
 	t23=stack[int(0)];
 	/* fin de la compilacion de acceso */
 	
-	P=P+3;
-	P=P-3;
 	t45=P+3;
 	t45=t45+1;
 	stack[int(t45)]=t23;
@@ -278,8 +276,6 @@ func main(){
 	t47=stack[int(1)];
 	/* fin de la compilacion de acceso */
 	
-	P=P+3;
-	P=P-3;
 	t48=P+3;
 	t48=t48+1;
 	stack[int(t48)]=t47;
@@ -293,36 +289,28 @@ func main(){
 	t50=stack[int(1)];
 	t51=1+t50;
 	t50=heap[int(t51)];
-	P=P+3;
-	P=P-3;
-	t52=P+3;
-	t52=t52+1;
-	stack[int(t52)]=t50;
-	P=P+3;
-	print_array();
-	t53=stack[int(P)];
-	P=P-3;
+	fmt.Printf("%f", t50);
 	fmt.Printf("%c", int(32));
 	fmt.Printf("%c", int(10));
 	/* compilacion de acceso arreglos */
-	t54=stack[int(0)];
-	t55=3+t54;
+	t52=stack[int(0)];
+	t53=3+t52;
+	t52=heap[int(t53)];
+	fmt.Printf("%f", t52);
+	fmt.Printf("%c", int(32));
+	fmt.Printf("%c", int(10));
+	/* compilacion de acceso arreglos */
+	t54=stack[int(2)];
+	t55=1+t54;
 	t54=heap[int(t55)];
-	fmt.Printf("%f", t54);
-	fmt.Printf("%c", int(32));
-	fmt.Printf("%c", int(10));
-	/* compilacion de acceso arreglos */
-	t56=stack[int(2)];
-	t57=1+t56;
-	t56=heap[int(t57)];
-	t58=1+t56;
-	t56=heap[int(t58)];
-	t59=P+3;
-	t59=t59+1;
-	stack[int(t59)]=t56;
+	t56=1+t54;
+	t54=heap[int(t56)];
+	t57=P+3;
+	t57=t57+1;
+	stack[int(t57)]=t54;
 	P=P+3;
 	print_string();
-	t60=stack[int(P)];
+	t58=stack[int(P)];
 	P=P-3;
 	fmt.Printf("%c", int(32));
 	fmt.Printf("%c", int(10));

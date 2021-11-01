@@ -26,11 +26,14 @@ class AccessArray(Expression):
             generator.add_expression(temp_pos, 'P', array.pos, '+')
         generator.get_stack(temp, temp_pos)
         tipo = Type.FLOAT
+        print(Generator.dict_temp[temp])
         for element in self.indexs:
             elemento = element.compile(env)
             sumado = generator.add_temp()
             generator.add_expression(sumado, elemento.value, temp, '+')
+            print(Generator.dict_temp[temp])
             generator.get_heap(temp, sumado)
+            print(Generator.dict_temp[temp])
             if(Generator.dict_temp[temp] % 1 != 0):
                 if(Generator.heap[int(Generator.dict_temp[temp])] == 0):
                     tipo = Type.STRING
@@ -39,7 +42,8 @@ class AccessArray(Expression):
             else:
                 tipo = Type.FLOAT
         # print(0.123123 % 1)
-        # print(Generator.heap)
+        print(Generator.heap[0:50])
+        # print(Generator.dict_temp[temp])
         # print(Generator.stack)
         # print(Generator.dict_temp)
         return Return(temp, tipo, True)
