@@ -48,7 +48,7 @@ def compilacion():
     return {"text": codigo}
 
 
-compile("equis")
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', port=3000)
+# compile("equis")
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=3000)
 # puede que trabaje aqui alguna vez pero el deploy tiene que ser desde windows creo yo

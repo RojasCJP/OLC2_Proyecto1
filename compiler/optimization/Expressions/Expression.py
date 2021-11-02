@@ -19,7 +19,7 @@ class Expression(Instruction):
             self.deleted = self.right.get_code() == '1'
         return self.deleted
 
-    def getContrary(self):
+    def get_contrary(self):
         if self.type_op == '>':
             self.type_op = '<='
         elif self.type_op == '<':
