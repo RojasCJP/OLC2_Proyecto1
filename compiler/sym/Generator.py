@@ -3,8 +3,8 @@ from .Environment import *
 
 class Generator:
     generator = None
-    heap = [0 for i in range(30101999)]
-    stack = [0 for i in range(30101999)]
+    heap = [0 for i in range(3010199)]
+    stack = [0 for i in range(3010199)]
     dict_temp = {"H": 0, "P": 0, '': 0}
 
     def __init__(self):
