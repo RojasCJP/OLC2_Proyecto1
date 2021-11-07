@@ -7,6 +7,7 @@ class Instruction(ABC):
         self.column = column
         self.have_int = False
         self.deleted = False
+        self.is_leader = False
 
     @abstractmethod
     def get_code(self): pass

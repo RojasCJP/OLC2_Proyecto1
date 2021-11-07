@@ -15,5 +15,8 @@ class Function(Instruction):
             if aux_text == '':
                 continue
             ret = ret + f'\t{aux_text}\n'
+            if instruction.is_leader:
+                ret = ret + '\t\t\t\t\t//Lider'
+            ret = ret + '\n'
         ret = ret + '}'
         return ret
