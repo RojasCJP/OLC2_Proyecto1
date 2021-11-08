@@ -1,24 +1,38 @@
-function fibonacci(numero::Int64)::Int64
-    if (numero > 1)
-        f1 = fibonacci(numero-1);
-        f2 = fibonacci(numero-2);
-        return f1+f2;
-    elseif (numero == 1)
-        return 1;
-    elseif (numero == 0)
-        return 0;
+function swap(i::Int64, j::Int64, arr::Int64) 
+    temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+end;
+
+function bubbleSort(arr::Int64)
+    for i in 0:(length(arr) - 1)
+        for j in 1:(length(arr) - 1)
+            if(arr[j] > arr[j + 1])
+                swap(j, j+1, arr);
+            end;
+        end;
     end;
 end;
 
-function impares(numero :: Int64)::Int64
-    if  (numero == 1)
-        return 1;
-    elseif (numero % 2 == 1)
-        aux = impares(numero -2);
-        return numero *aux;
+function insertionSort(arr::Int64) 
+
+    for i in 2:length(arr)
+        j = i;
+        temp = arr[i];
+        while(j > 1 && arr[j - 1] > temp)
+            arr[j] = arr[j-1];
+            j = j - 1;
+        end;
+        arr[j] = temp;
     end;
-    aux2 = impares(numero-1);
-    return aux2;
+
 end;
 
-println(impares(7));
+arreglo = [32,7*3,7,89,56,909,109,2,9,9874^0,44,3,820*10,11,8*0+8,10];
+bubbleSort(arreglo);
+println("BubbleSort => ",arreglo);
+
+arreglo = [32,7*3,7,89,56,909,109,2,9,9874^1,44,3,820*10,11,8*0+8,10];
+arreglo[1] = arreglo[2]^0;
+insertionSort(arreglo);
+print("InsertionSort => ",arreglo);

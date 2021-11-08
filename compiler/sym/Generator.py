@@ -21,6 +21,7 @@ class Generator:
         self.potencia = False
         self.to_upper = False
         self.to_lower = False
+        self.module = False
 
     def clean_all(self):
         self.count_temp = 0
@@ -33,10 +34,13 @@ class Generator:
         self.temps = []
         self.print_string = False
         self.print_array = False
+        self.module = False
         Generator.generator = Generator()
 
     def get_header(self):
         ret = '/*----HEADER----*/\npackage main;\n\nimport (\n\t"fmt"\n)\n\n'
+        if self.module:
+            ret = '/*----HEADER----*/\npackage main;\n\nimport (\n\t"fmt"\n\t"math"\n)\n\n'
         if len(self.temps) > 0:
             ret += 'var '
             for temp in range(len(self.temps)):
@@ -113,6 +117,10 @@ class Generator:
             Generator.dict_temp[result] = self.operaciones(
                 float(left), float(right), op)
         self.code_in(f'{result}={left}{op}{right};\n')
+
+    def add_module(self, result, left, right):
+        self.module = True
+        self.code_in(f'{result} = math.Mod({left},{right});\n')
 
     # FUNCS
     def add_begin_func(self, id):
@@ -288,7 +296,7 @@ class Generator:
         for element in Environment.heapsS:
             self.add_if(element, tempC, '==', printS)
             trigger2 = True
-        self.add_print('d', tempC)
+        self.print_float('f', tempC)
         self.add_print('c', 44)
         self.add_expression(tempH, tempH, '1', '+')
         self.add_expression(contador, contador, '1', '+')
@@ -387,8 +395,12 @@ class Generator:
         self.add_if(tempC, '-1', '==', returnLbl)
 
         temp = self.add_temp()
+        pass_label = self.new_label()
+        self.add_if(tempC, '97', '<', pass_label)
+        self.add_if(tempC, '122', '>', pass_label)
         self.add_expression(temp, tempC, '32', '-')
         self.set_heap(tempH, temp)
+        self.put_label(pass_label)
         # TODO tengo que cambiar lo que tengo arriba para que cambie el heap no imprima
         self.add_expression(tempH, tempH, '1', '+')
 
@@ -430,8 +442,12 @@ class Generator:
         self.add_if(tempC, '-1', '==', returnLbl)
 
         temp = self.add_temp()
+        pass_label = self.new_label()
+        self.add_if(tempC, '65', '<', pass_label)
+        self.add_if(tempC, '90', '>', pass_label)
         self.add_expression(temp, tempC, '32', '+')
         self.set_heap(tempH, temp)
+        self.put_label(pass_label)
         # TODO tengo que cambiar lo que tengo arriba para que cambie el heap no imprima
         self.add_expression(tempH, tempH, '1', '+')
 

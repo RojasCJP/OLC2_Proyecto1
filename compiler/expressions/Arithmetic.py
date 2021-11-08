@@ -58,24 +58,32 @@ class Arithmetic(Expression):
             if(left_value.type == Type.FLOAT or right_value.type == Type.FLOAT or self.type == ArithmethicOption.DIV):
                 label1 = generator.new_label()
                 label2 = generator.new_label()
-                generator.add_if(right_value.value, '0', '==', label1)
-                generator.add_expression(
-                    temp, left_value.value, right_value.value, op)
-                generator.add_goto(label2)
-                generator.put_label(label1)
-                # ya mero solo falta cuando es 0 literal
-                generator.add_print('c', 109)  # m
-                generator.add_print('c', 97)  # a
-                generator.add_print('c', 116)  # t
-                generator.add_print('c', 104)  # h
-                generator.add_print('c', 32)
-                generator.add_print('c', 101)  # e
-                generator.add_print('c', 114)  # r
-                generator.add_print('c', 114)  # r
-                generator.add_print('c', 111)  # o
-                generator.add_print('c', 114)  # r
+                if ArithmethicOption.DIV == self.type:
+                    generator.add_if(right_value.value, '0', '==', label1)
+                    generator.add_expression(
+                        temp, left_value.value, right_value.value, op)
+                    generator.add_goto(label2)
+                    generator.put_label(label1)
+                    # ya mero solo falta cuando es 0 literal
+                    generator.add_print('c', 109)  # m
+                    generator.add_print('c', 97)  # a
+                    generator.add_print('c', 116)  # t
+                    generator.add_print('c', 104)  # h
+                    generator.add_print('c', 32)
+                    generator.add_print('c', 101)  # e
+                    generator.add_print('c', 114)  # r
+                    generator.add_print('c', 114)  # r
+                    generator.add_print('c', 111)  # o
+                    generator.add_print('c', 114)  # r
+                    generator.code_in("return;")
 
-                generator.put_label(label2)
+                    generator.put_label(label2)
+                elif ArithmethicOption.MODULE == self.type:
+                    generator.add_module(
+                        temp, left_value.value, right_value.value)
+                else:
+                    generator.add_expression(
+                        temp, left_value.value, right_value.value, op)
 
                 return Return(temp, Type.FLOAT, True)
             elif (left_value.type == Type.STRING):
@@ -169,6 +177,10 @@ class Arithmetic(Expression):
 
                 return Return(ret_temp, Type.STRING, True)
             else:
-                generator.add_expression(
-                    temp, left_value.value, right_value.value, op)
+                if op == '%':
+                    generator.add_module(
+                        temp, left_value.value, right_value.value)
+                else:
+                    generator.add_expression(
+                        temp, left_value.value, right_value.value, op)
                 return Return(temp, Type.INT, True)
