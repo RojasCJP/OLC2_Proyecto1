@@ -54,6 +54,7 @@ class Environment:
                 print("Variable ya existe")
                 env.variables[id_var] = Symbol(id_var, sym_type, env.variables[id_var].pos,
                                                env.prev == None, in_heap, struct_type)
+                Environment.variables = env.variables
                 return env.variables[id_var]
             env = env.prev
         if(id_var[-1] == '#'):
@@ -62,6 +63,7 @@ class Environment:
                            self.prev == None, in_heap, struct_type)
         self.size += 1
         self.variables[id_var] = newSymbol
+        Environment.variables = self.variables
         return self.variables[id_var]
 
     def save_func(self, id_func, function):
@@ -69,12 +71,14 @@ class Environment:
             print("Función repetida")
         else:
             self.functions[id_func] = function
+            Environment.functions = self.functions
 
     def save_struct(self, id_struct, attributes):
         if id_struct in self.structs.keys():
             print("Struct repetido")
         else:
             self.structs[id_struct] = attributes
+            Environment.structs = self.structs
 
     def get_var(self, id_var):
         env = self

@@ -48,6 +48,35 @@ def compilacion():
     return {"text": codigo}
 
 
+@app.route('/variables')
+def get_variables():
+    retorno_true = {}
+    retorno = []
+    for key in Environment.variables.keys():
+        nuevo_objeto = {}
+        nuevo_objeto['id'] = key
+        nuevo_objeto['value'] = str(Environment.variables[key].value)
+        nuevo_objeto['type'] = str(Environment.variables[key].type)
+        retorno.append(nuevo_objeto)
+    for key in Environment.functions.key():
+        nuevo_objeto = {}
+        nuevo_objeto['id'] = key
+        nuevo_objeto['value'] = 'instrucciones'
+        nuevo_objeto['type'] = 'function'
+        retorno.append(nuevo_objeto)
+    for key in Environment.structs.key():
+        nuevo_objeto = {}
+        nuevo_objeto['id'] = key
+        nuevo_objeto['value'] = 'atributos'
+        nuevo_objeto['type'] = 'struct'
+        retorno.append(nuevo_objeto)
+    retorno_true['value'] = retorno
+    Environment.variables = {}
+    Environment.functions = {}
+    Environment.structs = {}
+    return retorno_true
+
+
 compile("equis")
 # if __name__ == "__main__":
 #     app.run(host='0.0.0.0', port=3000)
