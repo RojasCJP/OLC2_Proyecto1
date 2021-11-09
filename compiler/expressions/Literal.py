@@ -14,7 +14,7 @@ class Literal(Expression):
     def compile(self, env):
         gen_aux = Generator()
         generator = gen_aux.get_instance()
-        if (self.type == Type.INT or self.type == Type.FLOAT):
+        if (self.type == Type.INT or self.type == Type.FLOAT or self.type == Type.CHAR):
             return Return(str(self.value), self.type, False)
         elif self.type == Type.BOOL:
             self.check_labels()

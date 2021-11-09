@@ -37,3 +37,60 @@ class For(Instruction):
             declaration.compile(new_env)
             generator.add_goto(continue_lbl)
             generator.put_label(end_lbl)
+        else:
+            if left_val.type == Type.STRING:
+                move_temp = generator.add_temp()
+                puntero = generator.add_temp()
+                continue_lbl = generator.new_label()
+                end_lbl = generator.new_label()
+
+                generator.add_expression(puntero, left_val.value, '1', '+')
+                generator.get_heap(move_temp, puntero)
+                generator.put_label(continue_lbl)
+                generator.add_if(move_temp, '-1', '==', end_lbl)
+                new_env = Environment(env)
+                new_env.break_lbl = end_lbl
+                new_env.continue_lbl = continue_lbl
+                generator.get_heap(move_temp, puntero)
+                lit_temp1 = Literal(move_temp, Type.CHAR,
+                                    self.line, self.column)
+                declaration = Declaration(
+                    self.variable, lit_temp1, self.line, self.column)
+                declaration.compile(new_env)
+                self.instructions.compile(new_env)
+                generator.add_expression(puntero, puntero, '1', '+')
+                generator.add_goto(continue_lbl)
+                generator.put_label(end_lbl)
+            elif left_val.type == Type.ARRAY:
+                tipo = Type.FLOAT
+
+                move_temp = generator.add_temp()
+                puntero = generator.add_temp()
+                contador = generator.add_temp()
+                maximo = generator.add_temp()
+                continue_lbl = generator.new_label()
+                end_lbl = generator.new_label()
+
+                generator.get_heap(maximo, left_val.value)
+                generator.add_expression(puntero, left_val.value, '1', '+')
+                generator.add_expression(contador, contador, '1', '+')
+                generator.put_label(continue_lbl)
+                generator.add_if(contador, maximo, '>', end_lbl)
+                new_env = Environment(env)
+                new_env.break_lbl = end_lbl
+                new_env.continue_lbl = continue_lbl
+                generator.get_heap(move_temp, puntero)
+                lit_temp1 = Literal(move_temp, tipo, self.line, self.column)
+                declaration = Declaration(
+                    self.variable, lit_temp1, self.line, self.column)
+                declaration.compile(new_env)
+                self.instructions.compile(new_env)
+                generator.add_expression(puntero, puntero, '1', '+')
+                generator.add_expression(contador, contador, '1', '+')
+                declaration.compile(new_env)
+
+                generator.add_goto(continue_lbl)
+                generator.put_label(end_lbl)
+                print(left_val)
+            else:
+                print("error en la compilacion objeto no interable")

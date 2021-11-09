@@ -28,7 +28,42 @@ class ChangeArray(Expression):
         for element in self.indexs:
             elemento = element.compile(env)
             sumado = generator.add_temp()
+            length = generator.add_temp()
+            generator.get_heap(length, temp)
             generator.add_expression(sumado, elemento.value, temp, '+')
+            self.agregarError(length, elemento.value)
             generator.get_heap(temp, sumado)
             generator.add_expression(sumado_aux, sumado, '', '')
         generator.set_heap(sumado_aux, val.value)
+
+    def agregarError(self, posicion, index):
+        gen_aux = Generator()
+        generator = gen_aux.get_instance()
+        label1 = generator.new_label()
+        label2 = generator.new_label()
+        generator.add_if(posicion, index, '<', label1)
+
+        # codigo se agrega aqui
+        generator.add_goto(label2)
+        generator.put_label(label1)
+        generator.add_print('c', 105)  # i
+        generator.add_print('c', 110)  # n
+        generator.add_print('c', 100)  # d
+        generator.add_print('c', 101)  # e
+        generator.add_print('c', 120)  # x
+        generator.add_print('c', 32)
+        generator.add_print('c', 111)  # o
+        generator.add_print('c', 117)  # u
+        generator.add_print('c', 116)  # t
+        generator.add_print('c', 32)
+        generator.add_print('c', 111)  # o
+        generator.add_print('c', 102)  # f
+        generator.add_print('c', 32)
+        generator.add_print('c', 114)  # r
+        generator.add_print('c', 97)   # a
+        generator.add_print('c', 110)  # n
+        generator.add_print('c', 103)  # g
+        generator.add_print('c', 101)  # e
+        generator.code_in("return;")
+
+        generator.put_label(label2)

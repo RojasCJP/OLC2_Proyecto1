@@ -613,7 +613,7 @@ def p_for_state(t):
     if len(t) == 9:
         t[0] = For(t[2], t[4], t[7], t.lineno(1), t.lexpos(0), t[6])
     else:
-        pass
+        t[0] = For(t[2], t[4], t[5], t.lineno(1), t.lexpos(0))
 
 
 def p_break(t):

@@ -23,6 +23,8 @@ class Print(Instruction):
                 generator.add_print("d", valuee.value)
             elif valuee.type == Type.FLOAT:
                 generator.print_float("f", valuee.value)
+            elif valuee.type == Type.CHAR:
+                generator.add_print('c', valuee.value)
             elif valuee.type == Type.BOOL:
                 temp_lbl = generator.new_label()
                 generator.put_label(valuee.true_lbl)
