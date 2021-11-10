@@ -1,4 +1,5 @@
 from grammar import grammar
+from grammar.optimizator import optimizator
 from sym.Environment import *
 from sym.Generator import *
 
@@ -34,6 +35,24 @@ def compile(entrada):
     except Exception as e:
         print("no se puede compilar", e)
     return "error"
+
+
+def bloques(input):
+    instructions = optimizator.parse(input)
+    instructions.Bloques()
+    out = instructions.get_code()
+    f = open("bloques.go", 'w')
+    f.write(out)
+    f.close()
+
+
+def mirilla(input):
+    instructions = optimizator.parse(input)
+    instructions.Bloques()
+    out = instructions.get_code()
+    f = open("mirilla.go", 'w')
+    f.write(out)
+    f.close()
 
 
 @app.route("/")
@@ -78,6 +97,11 @@ def get_variables():
 
 
 compile("equis")
+f = open(
+    "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/salida.go", "r")
+input = f.read()
+bloques(input)
+mirilla(input)
 # if __name__ == "__main__":
 #     app.run(host='0.0.0.0', port=3000)
 # puede que trabaje aqui alguna vez pero el deploy tiene que ser desde windows creo yo

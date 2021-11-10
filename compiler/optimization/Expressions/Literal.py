@@ -8,5 +8,5 @@ class Literal(Instruction):
         self.value = value
         self.constant = constant
 
-    def getCode(self):
+    def get_code(self):
         return str(self.value)

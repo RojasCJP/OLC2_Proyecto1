@@ -9,4 +9,4 @@ class Print(Instruction):
         self.exp = exp
 
     def get_code(self):
-        return f'fmt.Printf({self.str_to}, int({self.exp.get_code()}));'
+        return f'fmt.Printf("{self.str_to}", int({self.exp.get_code()}));'

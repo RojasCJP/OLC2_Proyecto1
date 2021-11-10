@@ -34,10 +34,10 @@ class Optimizador():
 
     def Mirilla(self):
         for func in self.code:
-            tamano = 10
+            tamano = 20
             while tamano <= len(func.instr):
                 flag_opt = False
-                for i in range(5):
+                for i in range(10):
                     aux = 0
                     while (tamano+aux) <= len(func.instr):
                         flag_opt = flag_opt or self.Regla3(
@@ -116,7 +116,7 @@ class Optimizador():
         ret = False
         for i in range(len(arreglo)):
             actual = arreglo[i]
-            if type(actual) is Assigment and not actual.deleted:
+            if type(actual) is Assignment and not actual.deleted:
                 if(actual.self_assigment()):
                     actual_opt = actual.exp.neutral_ops()
                     if actual_opt:

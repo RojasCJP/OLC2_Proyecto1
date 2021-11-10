@@ -2,7 +2,7 @@ from optimization.Instruction import *
 from optimization.Expressions.Literal import *
 
 
-class Assigment(Instruction):
+class Assignment(Instruction):
 
     def __init__(self, place, exp, line, column):
         Instruction.__init__(self, line, column)
