@@ -44,6 +44,7 @@ def bloques(input):
     f = open("bloques.go", 'w')
     f.write(out)
     f.close()
+    return out
 
 
 def mirilla(input):
@@ -53,6 +54,7 @@ def mirilla(input):
     f = open("mirilla.go", 'w')
     f.write(out)
     f.close()
+    return out
 
 
 @app.route("/")
@@ -67,6 +69,20 @@ def compilacion():
     return {"text": codigo}
 
 
+@app.route("/mirilla", methods=['POST'])
+def mirillaa():
+    data = request.get_json(force=True)
+    codigo = mirilla(data['code'])
+    return {"text": codigo}
+
+
+@app.route("/bloques", methods=["POST"])
+def bloquess():
+    data = request.get_json(force=True)
+    codigo = bloques(data['code'])
+    return {"text": codigo}
+
+
 @app.route('/variables')
 def get_variables():
     retorno_true = {}
@@ -77,13 +93,13 @@ def get_variables():
         nuevo_objeto['value'] = str(Environment.variables[key].value)
         nuevo_objeto['type'] = str(Environment.variables[key].type)
         retorno.append(nuevo_objeto)
-    for key in Environment.functions.key():
+    for key in Environment.functions.keys():
         nuevo_objeto = {}
         nuevo_objeto['id'] = key
         nuevo_objeto['value'] = 'instrucciones'
         nuevo_objeto['type'] = 'function'
         retorno.append(nuevo_objeto)
-    for key in Environment.structs.key():
+    for key in Environment.structs.keys():
         nuevo_objeto = {}
         nuevo_objeto['id'] = key
         nuevo_objeto['value'] = 'atributos'
@@ -96,12 +112,11 @@ def get_variables():
     return retorno_true
 
 
-compile("equis")
-f = open(
-    "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/salida.go", "r")
-input = f.read()
-bloques(input)
-mirilla(input)
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', port=3000)
-# puede que trabaje aqui alguna vez pero el deploy tiene que ser desde windows creo yo
+# compile("equis")
+# f = open(
+#     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/salida.go", "r")
+# input = f.read()
+# bloques(input)
+# mirilla(input)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=4200)

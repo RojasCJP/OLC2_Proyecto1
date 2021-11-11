@@ -33,6 +33,8 @@ export class Editor extends Component {
                     <button class='btn btn-dark m-2' onClick={() => this.entrada_datos()}>Interpretar
                     </button>
                     <button class='btn btn-dark m-2' onClick={() => this.compilador()}>Compilar</button>
+                    <button class='btn btn-dark m-2' onClick={() => this.mirilla()}>Mirilla</button>
+                    <button class='btn btn-dark m-2' onClick={() => this.bloques()}>Bloques</button>
                 </div>
                 <br />
                 <br />
@@ -109,6 +111,33 @@ export class Editor extends Component {
         console.log(codigoEnviar);
         console.log(this.state.console);
         fetch('https://jolc-compilador.herokuapp.com/salida', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(codigoEnviar)
+        })
+            .then(async response => {
+                const json = await response.json();
+                this.setState({ direcciones: json.text });
+            });
+    }
+
+    mirilla() {
+        var codigoEnviar = { "code": this.state.direcciones };
+        console.log(JSON.stringify(codigoEnviar));
+        fetch('https://jolc-compilador.herokuapp.com/mirilla', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(codigoEnviar)
+        })
+            .then(async response => {
+                const json = await response.json();
+                this.setState({ direcciones: json.text });
+            });
+    }
+    bloques() {
+        var codigoEnviar = { "code": this.state.direcciones };
+        console.log(JSON.stringify(codigoEnviar));
+        fetch('https://jolc-compilador.herokuapp.com/bloques', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(codigoEnviar)

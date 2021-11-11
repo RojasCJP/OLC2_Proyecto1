@@ -38,6 +38,23 @@ class Relational(Expression):
                                  self.get_operation(), self.true_lbl)
                 generator.add_goto(self.false_lbl)
             elif left.type == Type.STRING and right.type == Type.STRING:
+                inicio_lbl = generator.new_label()
+                puntero1 = generator.add_temp()
+                puntero2 = generator.add_temp()
+                valor1 = generator.add_temp()
+                valor2 = generator.add_temp()
+                self.check_labels()
+                generator.add_expression(puntero1, left.value, '', '')
+                generator.add_expression(puntero2, right.value, '', '')
+                generator.put_label(inicio_lbl)
+                generator.add_if(valor1, '-1', '==', self.true_lbl)
+                generator.get_heap(valor1, puntero1)
+                generator.get_heap(valor2, puntero2)
+                generator.add_expression(puntero1, puntero1, '1', '+')
+                generator.add_expression(puntero2, puntero2, '1', '+')
+                generator.add_if(valor1, valor2, '==', inicio_lbl)
+                generator.add_if(valor1, valor2, '!=', self.false_lbl)
+                generator.add_goto(self.false_lbl)
                 print('comparacion de cadenas')
                 # TODO tengo que hacer la comparacion de cadenas
         else:

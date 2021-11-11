@@ -301,8 +301,8 @@ def p_expression(t):
             t[0] = Arithmetic(Literal(0, Type.INT, t.lineno(1), t.lexpos(
                 0)), t[2], ArithmethicOption.MINUS, t.lineno(1), t.lexpos(0))
         else:
-            # TODO este es el negado
-            pass
+            t[0] = Logical(t[2], Literal(True, Type.BOOL, t.lineno(
+                1), t.lexpos(0)), LogicOption.NOT, t.lineno(1), t.lexpos(0))
     else:
         if t[2] == "+":
             t[0] = Arithmetic(t[1], t[3], ArithmethicOption.PLUS,
@@ -679,8 +679,8 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    f = open(
-        "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
-    input = f.read()
+    # f = open(
+    #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
+    # input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     return parser.parse(input, lexer=lexer)

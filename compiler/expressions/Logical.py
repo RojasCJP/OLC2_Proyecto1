@@ -33,13 +33,15 @@ class Logical(Expression):
             lbl_and_or = self.left.false_lbl = generator.new_label()
             self.right.false_lbl = self.false_lbl
         else:
-            print("negacion")
+            self.left.true_lbl = self.right.true_lbl = self.false_lbl
+            self.left.false_lbl = self.right.false_lbl = self.true_lbl
             # TODO tengo que hacer la negacion
         left = self.left.compile(env)
         if left.type != Type.BOOL:
             print("error, no se puede utilizar la expression")
             return
-        generator.put_label(lbl_and_or)
+        if(lbl_and_or != ''):
+            generator.put_label(lbl_and_or)
         right = self.right.compile(env)
         if right.type != Type.BOOL:
             print("erro, no se puede utilizar la expression")

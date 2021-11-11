@@ -1,28 +1,28 @@
-import React from 'react'
-import { UnControlled as CodeMirror } from 'react-codemirror2'
-import 'codemirror/mode/javascript/javascript'
-import 'codemirror/theme/monokai.css'
-import 'codemirror/lib/codemirror.css'
+import React from 'react';
+import { UnControlled as CodeMirror } from 'react-codemirror2';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/theme/monokai.css';
+import 'codemirror/lib/codemirror.css';
 
 export class Reportes extends React.Component {
     state = {
         errores: [],
         symbolos: [],
         console: "reporte ast"
-    }
+    };
 
     componentDidMount = () => {
-        this.actualizarErrores()
-        this.actualizarVariables()
-        this.getAST()
-    }
+        this.actualizarErrores();
+        this.actualizarVariables();
+        this.getAST();
+    };
 
     onChange = (editor, data, value) => {
         this.setState({
             code: '',
             console: '',
             stado: false,
-        })
+        });
     };
 
     render() {
@@ -81,61 +81,61 @@ export class Reportes extends React.Component {
                             lineNumbers: false,
                         }}
                         onChange={(editor, data, value) => {
-                            this.setState({ console: value })
+                            this.setState({ console: value });
                         }}
                     ></CodeMirror>
                 </div>
             </div>
-        )
+        );
     }
     actualizarErrores() {
-        var ruta = 'https://jolc-server.herokuapp.com/errores'
+        var ruta = 'https://jolc-server.herokuapp.com/errores';
         fetch(ruta, {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         }).then(async response => {
-            var i = 1
-            const jsonInicial = await response.json()
-            const json = jsonInicial.value
+            var i = 1;
+            const jsonInicial = await response.json();
+            const json = jsonInicial.value;
             if (json != null) {
                 json.forEach(element => {
-                    element["num"] = i
-                    i++
-                })
-                this.setState({ errores: json })
+                    element["num"] = i;
+                    i++;
+                });
+                this.setState({ errores: json });
             }
-        })
+        });
     }
 
     actualizarVariables() {
-        var ruta = 'https://jolc-server.herokuapp.com/variables'
+        var ruta = 'https://jolc-compilador.herokuapp.com/variables';
         fetch(ruta, {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         }).then(async response => {
-            var i = 1
-            const jsonInicial = await response.json()
-            const json = jsonInicial.value
+            var i = 1;
+            const jsonInicial = await response.json();
+            const json = jsonInicial.value;
             if (json != null) {
                 json.forEach(element => {
-                    element["num"] = i
-                    i++
-                })
-                this.setState({ symbolos: json })
+                    element["num"] = i;
+                    i++;
+                });
+                this.setState({ symbolos: json });
             }
-        })
+        });
     }
     getAST() {
-        var ruta = 'https://jolc-server.herokuapp.com/ast'
+        var ruta = 'https://jolc-server.herokuapp.com/ast';
         fetch(ruta, {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         }).then(async response => {
-            var i = 1
-            const jsonInicial = await response.json()
-            const json = jsonInicial.text
-            this.setState({ console: json })
+            var i = 1;
+            const jsonInicial = await response.json();
+            const json = jsonInicial.text;
+            this.setState({ console: json });
 
-        })
+        });
     }
 }
