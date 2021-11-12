@@ -146,6 +146,10 @@ class Arithmetic(Expression):
                     generator.set_heap('H', '-1')
                     generator.next_heap()
                 else:
+                    error = {}
+                    error['type'] = "aritmetico"
+                    error['text'] = "no se puede operar"
+                    Environment.errores.append(error)
                     print("no se puede operar")
 
                 # generator.add_expression(left_temp, left_value.value, '', '')

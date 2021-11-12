@@ -38,12 +38,20 @@ class Logical(Expression):
             # TODO tengo que hacer la negacion
         left = self.left.compile(env)
         if left.type != Type.BOOL:
+            error = {}
+            error['type'] = "logica"
+            error['text'] = "no se puede utilizar esta expresion"
+            Environment.errores.append(error)
             print("error, no se puede utilizar la expression")
             return
         if(lbl_and_or != ''):
             generator.put_label(lbl_and_or)
         right = self.right.compile(env)
         if right.type != Type.BOOL:
+            error = {}
+            error['type'] = "logica"
+            error['text'] = "no se puede utilizar esta expresion"
+            Environment.errores.append(error)
             print("erro, no se puede utilizar la expression")
             return
         generator.add_comment("finalizo la expression logica")

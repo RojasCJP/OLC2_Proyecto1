@@ -16,6 +16,8 @@ from optimization.Blocks import *
 
 
 class Optimizador():
+    reglas = []
+
     def __init__(self, packages, temps, code):
         self.packages = packages
         self.temps = temps
@@ -57,6 +59,7 @@ class Optimizador():
         print("esperemos que jale")
 
     def GenerarLideres(self):
+        Optimizador.reglas.append("Lideres")
         for func in self.code:
             func.instr[0].is_leader = True
             flag = False
@@ -68,6 +71,7 @@ class Optimizador():
                     flag = True
 
     def CrearBloques(self):
+        Optimizador.reglas.append("Creacion Bloques")
         for func in self.code:
             blocks = []
             block = None
@@ -81,6 +85,7 @@ class Optimizador():
             self.blocks.append(blocks)
 
     def ConnectBloques(self):
+        Optimizador.reglas.append("Conexion de Bloques")
         for func in self.blocks:
             prev_block = None
             for block in func:
@@ -99,6 +104,7 @@ class Optimizador():
                             break
 
     def Regla3(self, arreglo):
+        Optimizador.reglas.append("Regla 3")
         ret = False
         for i in range(len(arreglo)):
             actual = arreglo[i]
@@ -113,6 +119,7 @@ class Optimizador():
         return ret
 
     def Regla6(self, arreglo):
+        Optimizador.reglas.append("Regla 6")
         ret = False
         for i in range(len(arreglo)):
             actual = arreglo[i]

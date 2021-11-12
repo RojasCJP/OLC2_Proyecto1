@@ -19,3 +19,10 @@ manuel = Persona("Manuel", 22, 4);
 ImprimirDatosPersona(manuel);
 AgregarFamiliar(manuel);
 ImprimirDatosPersona(manuel);
+
+struct Cartelera
+    peliculas::Array;
+end;
+
+cinepolis = Cartelera(["El Padrino", "El Padrino 2", "El Padrino 3"]);
+println(cinepolis.peliculas);

@@ -16,6 +16,10 @@ class Access(Expression):
         var = env.get_var(self.id)
         if var == None:
             print("error, no existe la variable")
+            error = {}
+            error['type'] = "acceso"
+            error['text'] = "no existe la variable"
+            Environment.errores.append(error)
             return
         temp = generator.add_temp()
         temp_pos = var.pos

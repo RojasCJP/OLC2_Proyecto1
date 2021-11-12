@@ -68,6 +68,10 @@ class Relational(Expression):
             generator.put_label(goto_right)
             right = self.right.compile(env)
             if right.type != Type.BOOL:
+                error = {}
+                error['type'] = "relacional"
+                error['text'] = "no se puede utilizar esta expresion"
+                Environment.errores.append(error)
                 print("error, no se pueden comparar")
                 return
             goto_end = generator.new_label()

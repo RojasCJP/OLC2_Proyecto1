@@ -8,12 +8,14 @@ export class Reportes extends React.Component {
     state = {
         errores: [],
         symbolos: [],
+        optimizacion: [],
         console: "reporte ast"
     };
 
     componentDidMount = () => {
         this.actualizarErrores();
         this.actualizarVariables();
+        this.reporteOptimizacion();
         this.getAST();
     };
 
@@ -70,6 +72,24 @@ export class Reportes extends React.Component {
                         )}
                     </tbody>
                 </table>
+                <h1>Optimizacion</h1>
+                <table className="table table-striped table-hover table-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">NO.</th>
+                            <th scope="col">Operacion</th>
+                        </tr>
+                    </thead>
+                    <tbody style={{ textAlign: 'center' }}>
+                        {this.state.optimizacion.map(
+                            element =>
+                                <tr key={element.num}>
+                                    <td >{element.num}</td>
+                                    <td >{element.value}</td>
+                                </tr>
+                        )}
+                    </tbody>
+                </table>
                 <h1>Codigo Graphviz</h1>
                 <div class="col" className="editor">
                     <CodeMirror
@@ -89,7 +109,7 @@ export class Reportes extends React.Component {
         );
     }
     actualizarErrores() {
-        var ruta = 'https://jolc-server.herokuapp.com/errores';
+        var ruta = 'https://jolc-compilador.herokuapp.com/errores';
         fetch(ruta, {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
@@ -122,6 +142,31 @@ export class Reportes extends React.Component {
                     i++;
                 });
                 this.setState({ symbolos: json });
+            }
+        });
+    }
+    reporteOptimizacion() {
+        var ruta = 'https://jolc-compilador.herokuapp.com/optimizacion';
+        fetch(ruta, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" }
+        }).then(async response => {
+            var i = 1;
+            const jsonInicial = await response.json();
+            const json = jsonInicial.value;
+            console.log(json);
+            if (json != null) {
+                var auxiliar = [];
+                json.forEach(element => {
+                    var miniAux = {
+                        num: i,
+                        value: element
+                    };
+                    auxiliar.push(miniAux);
+                    i++;
+                });
+                this.setState({ optimizacion: auxiliar });
+                console.log(this.state.optimizacion);
             }
         });
     }

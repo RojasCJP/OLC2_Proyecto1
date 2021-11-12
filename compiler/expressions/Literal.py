@@ -68,6 +68,10 @@ class Literal(Expression):
             generator.add_expression(ret_temp, ret_temp, '0.12837', '+')
             return Return(ret_temp, Type.ARRAY, True)
         else:
+            error = {}
+            error['type'] = "semantico"
+            error['text'] = "error no contemplado"
+            Environment.errores.append(error)
             print("falta hacer")
             # TODO estas son las de arreglos y structs supongo
 

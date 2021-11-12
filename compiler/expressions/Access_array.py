@@ -18,6 +18,10 @@ class AccessArray(Expression):
         array = env.get_var(self.id)
         if array is None:
             print("error no existe el arreglo")
+            error = {}
+            error['type'] = "acceso arreglo"
+            error['text'] = "no existe el arreglo"
+            Environment.errores.append(error)
             return
         temp = generator.add_temp()
         temp_pos = array.pos

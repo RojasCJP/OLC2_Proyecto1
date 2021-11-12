@@ -17,6 +17,10 @@ class ChangeArray(Expression):
         generator.add_comment('cambiando el valor de arreglo')
         array = env.get_var(self.id)
         if array == None:
+            error = {}
+            error['type'] = "modificacion arreglo"
+            error['text'] = "no existe el arreglo"
+            Environment.errores.append(error)
             print("error no existe el arreglo")
         temp = generator.add_temp()
         temp_pos = array.pos

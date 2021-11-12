@@ -52,6 +52,7 @@ reservadas = {
     "nothing": "NOTHING",
     "Int64": "INT",
     "Float64": "FLOAT",
+    "Array": "ARRAY",
     "Bool": "BOOL",
     "Char": "CHAR",
     "String": "STRING",
@@ -465,6 +466,7 @@ def p_tipo(t):
                 | BOOL
                 | CHAR
                 | STRING
+                | ARRAY
                 | NOTHING
     '''
     if t.slice[1].type == "INT":
@@ -479,6 +481,8 @@ def p_tipo(t):
         t[0] = Type.STRING
     elif t.slice[1].type == "NOTHING":
         t[0] = Type.NULL
+    elif t.slice[1].type == "ARRAY":
+        t[0] = Type.ARRAY
 
 
 def p_definicion_instr(t):
@@ -700,8 +704,8 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    f = open(
-        "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
-    input = f.read()
+    # f = open(
+    #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
+    # input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     return parser.parse(input, lexer=lexer)

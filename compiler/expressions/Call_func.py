@@ -61,4 +61,8 @@ class CallFunc(Expression):
                         generator.add_expression(aux, aux, '1', '+')
                     return Return(return_temp, Type.STRUCT, True, self.struct_type)
         except Exception as e:
+            error = {}
+            error['type'] = "funcion"
+            error['text'] = "error en llamada de funcion"
+            Environment.errores.append(error)
             print("error en llamada de la funcion", e)

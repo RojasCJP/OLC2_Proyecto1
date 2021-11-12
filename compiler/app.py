@@ -1,3 +1,4 @@
+from optimization.Optimizador import Optimizador
 from grammar import grammar
 from grammar.optimizator import optimizator
 from sym.Environment import *
@@ -34,6 +35,10 @@ def compile(entrada):
         return C3D
     except Exception as e:
         print("no se puede compilar", e)
+        error = {}
+        error['type'] = "no contemplado"
+        error['text'] = "no se puede compilar"
+        Environment.errores.append(error)
     return "error"
 
 
@@ -112,11 +117,28 @@ def get_variables():
     return retorno_true
 
 
-compile("equis")
+@app.route('/errores')
+def get_errores():
+    retorno = {}
+    retorno["value"] = Environment.errores
+    Environment.errores = []
+    return retorno
+
+
+@app.route('/optimizacion')
+def get_optimizacion():
+    retorno_true = {}
+    retorno = Optimizador.reglas
+    retorno_true['value'] = retorno
+    Optimizador.reglas = []
+    return retorno_true
+
+
+# compile("equis")
 # f = open(
 #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/salida.go", "r")
 # input = f.read()
 # bloques(input)
 # mirilla(input)
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', port=4200)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=4200)
