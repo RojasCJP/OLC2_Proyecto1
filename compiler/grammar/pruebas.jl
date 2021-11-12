@@ -1,39 +1,21 @@
-
-function swap(i::Int64, j::Int64, arr::Int64) 
-    temp = arr[i]::Int64;
-    arr[i] = arr[j];
-    arr[j] = temp;
+struct Persona
+    nombre::String;
+    edad::Int64;
+    numeroFamiliares::Int64;
 end;
 
-function bubbleSort(arr::Int64)
-    for i in 0:(length(arr) - 1)
-        for j in 1:(length(arr) - 1)
-            if(arr[j] > arr[j + 1])
-                swap(j, j+1, arr);
-            end;
-        end;
-    end;
+   
+function AgregarFamiliar(persona::Persona)
+    persona.numeroFamiliares = persona.numeroFamiliares + 1;
 end;
 
-function insertionSort(arr::Int64) 
-
-    for i in 2:length(arr)
-        j = i;
-        temp = arr[i];
-        while(j > 1 && arr[j - 1] > temp)
-            arr[j] = arr[j-1];
-            j = j - 1;
-        end;
-        arr[j] = temp;
-    end;
-
+function ImprimirDatosPersona(persona::Persona)
+    println("Nombre: ", persona.nombre);
+    println("Edad: ", persona.edad);
+    println("Numero de familiares: ", persona.numeroFamiliares);
 end;
 
-arreglo = [32,7*3,7,89,56,909,109,2,9,9874^0,44,3,820*10,11,8*0+8,10];
-bubbleSort(arreglo);
-println("BubbleSort => ",arreglo);
-
-arreglo = [32,7*3,7,89,56,909,109,2,9,9874^1,44,3,820*10,11,8*0+8,10];
-arreglo[1] = arreglo[2]^0;
-insertionSort(arreglo);
-print("InsertionSort => ",arreglo);
+manuel = Persona("Manuel", 22, 4);
+ImprimirDatosPersona(manuel);
+AgregarFamiliar(manuel);
+ImprimirDatosPersona(manuel);

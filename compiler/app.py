@@ -112,11 +112,11 @@ def get_variables():
     return retorno_true
 
 
-# compile("equis")
+compile("equis")
 # f = open(
 #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/salida.go", "r")
 # input = f.read()
 # bloques(input)
 # mirilla(input)
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=4200)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', port=4200)

@@ -19,6 +19,7 @@ from instruction.nativas.Print import *
 from instruction.nativas.ToUpper import *
 from instruction.nativas.ToLower import *
 from instruction.nativas.Length import *
+from instruction.nativas.Trunc import *
 
 from instruction.structs.AssignAccess import *
 from instruction.structs.CreateStruct import *
@@ -433,9 +434,9 @@ def p_nativas(t):
         pass
     elif t.slice[1].type == "TRUNC":
         if len(t) == 5:
-            pass
+            t[0] = Trunc(t.lineno(1), t.lexpos(0), t[3])
         else:
-            pass
+            t[0] = Trunc(t.lineno(1), t.lexpos(0), t[5])
     elif t.slice[1].type == "TYPEOF":
         pass
     elif t.slice[1].type == "PARSE":
@@ -464,6 +465,7 @@ def p_tipo(t):
                 | BOOL
                 | CHAR
                 | STRING
+                | NOTHING
     '''
     if t.slice[1].type == "INT":
         t[0] = Type.INT
@@ -475,6 +477,8 @@ def p_tipo(t):
         t[0] = Type.CHAR
     elif t.slice[1].type == "STRING":
         t[0] = Type.STRING
+    elif t.slice[1].type == "NOTHING":
+        t[0] = Type.NULL
 
 
 def p_definicion_instr(t):
@@ -570,12 +574,29 @@ def p_declare_function(t):
 
 def p_dec_params(t):
     '''dec_params :    dec_params COMA ID DOSP DOSP tipo
-                    | ID DOSP DOSP tipo'''
+                    | dec_params COMA ID DOSP DOSP ID
+                    | dec_params COMA ID
+                    | ID DOSP DOSP tipo
+                    | ID DOSP DOSP ID
+                    | ID'''
     if len(t) == 5:
-        t[0] = [Param(t[1], t[4], t.lineno(1), t.lexpos(0))]
-    else:
-        t[1].append(Param(t[3], t[6], t.lineno(1), t.lexpos(0)))
+        if t.slice[4].type == 'ID':
+            t[0] = [Param(t[1], Type.STRUCT, t.lineno(1), t.lexpos(0), t[4])]
+        else:
+            t[0] = [Param(t[1], t[4], t.lineno(1), t.lexpos(0))]
+    elif len(t) == 2:
+        t[0] = [Param(t[1], Type.ARRAY, t.lineno(1), t.lexpos(0))]
+    elif len(t) == 4:
+        t[1].append(Param(t[3], Type.ARRAY, t.lineno(1), t.lexpos(0)))
         t[0] = t[1]
+    else:
+        if t.slice[6].type == "ID":
+            t[1].append(Param(t[3], Type.STRUCT,
+                        t.lineno(1), t.lexpos(0), t[6]))
+            t[0] = t[1]
+        else:
+            t[1].append(Param(t[3], t[6], t.lineno(1), t.lexpos(0)))
+            t[0] = t[1]
 
 
 def p_if_state(t):
@@ -641,12 +662,12 @@ def p_createStruct(t):
 
 
 def p_attList(t):
-    '''attList :  attList PTCOMA ID DOSP DOSP tipo PTCOMA
-                | ID DOSP DOSP tipo '''
-    if len(t) == 5:
+    '''attList :  attList ID DOSP DOSP tipo PTCOMA
+                | ID DOSP DOSP tipo PTCOMA'''
+    if len(t) == 6:
         t[0] = [StructAttribute(t[1], t[4], t.lineno(1), t.lexpos(0))]
     else:
-        t[1].append(StructAttribute(t[3], t[6], t.lineno(1), t.lexpos(0)))
+        t[1].append(StructAttribute(t[2], t[5], t.lineno(1), t.lexpos(0)))
         t[0] = t[1]
 
 
@@ -679,8 +700,8 @@ parser = yacc.yacc()
 
 
 def parse(input):
-    # f = open(
-    #     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
-    # input = f.read()
+    f = open(
+        "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/grammar/pruebas.jl", "r")
+    input = f.read()
     # todo esto lo tengo que cambiar para jalarlo en el endpoint
     return parser.parse(input, lexer=lexer)

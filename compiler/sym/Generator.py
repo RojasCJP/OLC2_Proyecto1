@@ -122,7 +122,11 @@ class Generator:
         self.module = True
         self.code_in(f'{result} = math.Mod({left},{right});\n')
 
+    def add_trunc(self, result, data):
+        self.module = True
+        self.code_in(f'{result} = math.Floor({data});\n')
     # FUNCS
+
     def add_begin_func(self, id):
         if(not self.in_natives):
             self.in_func = True

@@ -101,7 +101,7 @@ class Environment:
         while env != None:
             if id_struct in env.structs.keys():
                 return env.structs[id_struct]
-            end = end.prev
+            env = env.prev
         return None
 
     def get_global(self):
