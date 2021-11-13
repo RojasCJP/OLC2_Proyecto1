@@ -48,7 +48,7 @@ class AccessArray(Expression):
                     else:
                         tipo = Type.ARRAY
                 else:
-                    tipo = Type.FLOAT
+                    tipo = Type.STRING
             else:
                 tipo = Type.INT
         # print(0.123123 % 1)

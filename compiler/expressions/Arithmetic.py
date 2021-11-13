@@ -64,8 +64,10 @@ class Arithmetic(Expression):
                 label2 = generator.new_label()
                 if ArithmethicOption.DIV == self.type:
                     generator.add_if(right_value.value, '0', '==', label1)
+                    aux = generator.add_temp()
+                    generator.add_expression(aux, right_value.value, '', '')
                     generator.add_expression(
-                        temp, left_value.value, right_value.value, op)
+                        temp, left_value.value, aux, op)
                     generator.add_goto(label2)
                     generator.put_label(label1)
                     # ya mero solo falta cuando es 0 literal
@@ -79,7 +81,6 @@ class Arithmetic(Expression):
                     generator.add_print('c', 114)  # r
                     generator.add_print('c', 111)  # o
                     generator.add_print('c', 114)  # r
-                    generator.code_in("return;")
 
                     generator.put_label(label2)
                 elif ArithmethicOption.MODULE == self.type:

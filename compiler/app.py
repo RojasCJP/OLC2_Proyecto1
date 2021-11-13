@@ -135,10 +135,10 @@ def get_optimizacion():
 
 
 # compile("equis")
-f = open(
-    "/home/juanpa/Documents/Compi/OLC2_Proyecto1/salida.txt", "r")
-input = f.read()
-mirilla(input)
+# f = open(
+#     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/salida.txt", "r")
+# input = f.read()
+# mirilla(input)
 # bloques(input)
-# if __name__ == "__main__":
-#     app.run(host='0.0.0.0', port=4200)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=4200)

@@ -37,7 +37,7 @@ class Relational(Expression):
                 generator.add_if(left.value, right.value,
                                  self.get_operation(), self.true_lbl)
                 generator.add_goto(self.false_lbl)
-            elif left.type == Type.STRING and right.type == Type.STRING:
+            elif (left.type == Type.STRING and right.type == Type.STRING) or (left.type == Type.FLOAT and right.type == Type.STRING) or (left.type == Type.STRING and right.type == Type.FLOAT):
                 inicio_lbl = generator.new_label()
                 puntero1 = generator.add_temp()
                 puntero2 = generator.add_temp()
