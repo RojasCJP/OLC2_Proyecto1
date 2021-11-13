@@ -32,6 +32,7 @@ def compile(entrada):
         f = open("salida.go", 'w')
         f.write(C3D)
         f.close()
+        generator.clean_all()
         return C3D
     except Exception as e:
         print("no se puede compilar", e)
