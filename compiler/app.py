@@ -54,7 +54,7 @@ def bloques(input):
 
 def mirilla(input):
     instructions = optimizator.parse(input)
-    instructions.Bloques()
+    instructions.Mirilla()
     out = instructions.get_code()
     f = open("mirilla.go", 'w')
     f.write(out)
@@ -135,10 +135,10 @@ def get_optimizacion():
 
 
 # compile("equis")
-# f = open(
-#     "/home/juanpa/Documents/Compi/OLC2_Proyecto1/compiler/salida.go", "r")
-# input = f.read()
+f = open(
+    "/home/juanpa/Documents/Compi/OLC2_Proyecto1/salida.txt", "r")
+input = f.read()
+mirilla(input)
 # bloques(input)
-# mirilla(input)
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=4200)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', port=4200)

@@ -53,6 +53,10 @@ class Arithmetic(Expression):
             temp = generator.add_temp()
             generator.get_stack(temp, 'P')
             generator.ret_env(env.size)
+            fin = generator.new_label()
+            generator.add_if(right_value.value, "0", '!=', fin)
+            generator.add_expression(temp, '1', '', '')
+            generator.put_label(fin)
             return Return(temp, Type.INT, True)
         else:
             if(left_value.type == Type.FLOAT or right_value.type == Type.FLOAT or self.type == ArithmethicOption.DIV):

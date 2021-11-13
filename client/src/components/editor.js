@@ -52,23 +52,6 @@ export class Editor extends Component {
                             }}
                         ></CodeMirror>
                     </div>
-                    <div>
-                        <h1>Console</h1>
-                    </div>
-                    <div class="col" className="editor">
-                        <CodeMirror
-                            value={this.state.console}
-                            options={{
-                                theme: 'monokai',
-                                mode: 'javascript',
-                                readOnly: true,
-                                lineNumbers: false,
-                            }}
-                            onChange={(editor, data, value) => {
-                                this.setState({ console: value });
-                            }}
-                        ></CodeMirror>
-                    </div>
                 </div>
                 <div>
                     <h1>3 Direcciones</h1>
@@ -79,11 +62,28 @@ export class Editor extends Component {
                         options={{
                             theme: 'monokai',
                             mode: 'javascript',
-                            readOnly: true,
+                            readOnly: false,
                             lineNumbers: false,
                         }}
                         onChange={(editor, data, value) => {
                             this.setState({ direcciones: value });
+                        }}
+                    ></CodeMirror>
+                </div>
+                <div>
+                    <h1>Console</h1>
+                </div>
+                <div class="col" className="editor">
+                    <CodeMirror
+                        value={this.state.console}
+                        options={{
+                            theme: 'monokai',
+                            mode: 'javascript',
+                            readOnly: true,
+                            lineNumbers: false,
+                        }}
+                        onChange={(editor, data, value) => {
+                            this.setState({ console: value });
                         }}
                     ></CodeMirror>
                 </div>

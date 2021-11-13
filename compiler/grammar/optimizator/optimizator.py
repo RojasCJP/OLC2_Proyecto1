@@ -29,6 +29,8 @@ rw = {
     "IF": "IF",
     "GOTO": "GOTO",
     "FMT": "FMT",
+    "MATH": "MATH",
+    "MOD": "MOD",
     "PRINTF": "PRINTF",
     "PACKAGE": "PACKAGE",
     "IMPORT": "IMPORT",
@@ -140,6 +142,11 @@ def t_MLCOMMENT(t):
     t.lexer.lineno += t.value.count("\n")
 
 
+def t_COMENTARIO_SIMPLE(t):
+    r'\/\/.*\n'
+    t.lexer.lineno += 1
+
+
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
@@ -156,8 +163,18 @@ lexer1 = lex.lex()
 
 
 def p_start(t):
-    '''start :  PACKAGE ID SEMICOLON IMPORT LEPAR STRINGLITERAL RIPAR  declarations codeList'''
+    '''start :  PACKAGE ID SEMICOLON IMPORT LEPAR imports RIPAR  declarations codeList'''
     t[0] = Optimizador(t[6], t[8], t[9])
+
+
+def p_imports(t):
+    '''imports : imports STRINGLITERAL
+                | STRINGLITERAL'''
+    if len(t) == 2:
+        t[0] = t[1]
+    else:
+        t[1] = t[1] + '"\n\t"'+t[2]
+        t[0] = t[1]
 
 
 def p_declarations(t):
@@ -301,9 +318,12 @@ def p_expression(t):
                     | finalExp LESSEQUAL finalExp
                     | finalExp EQUALSEQUALS finalExp
                     | finalExp DISTINT finalExp
+                    | MATH POINT MOD LEPAR finalExp COMMA finalExp RIPAR
                     | finalExp'''
     if len(t) == 2:
         t[0] = t[1]
+    elif len(t) == 9:
+        t[0] = Expression(t[5], t[7], '%', t.lineno(2), t.lexpos(2))
     else:
         t[0] = Expression(t[1], t[3], t[2], t.lineno(2), t.lexpos(2))
 

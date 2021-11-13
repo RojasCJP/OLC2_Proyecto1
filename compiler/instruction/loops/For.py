@@ -32,8 +32,8 @@ class For(Instruction):
             declaration = Declaration(
                 self.variable, lit_temp1, self.line, self.column)
             declaration.compile(new_env)
-            self.instructions.compile(new_env)
             generator.add_expression(temp1, temp1, '1', '+')
+            self.instructions.compile(new_env)
             declaration.compile(new_env)
             generator.add_goto(continue_lbl)
             generator.put_label(end_lbl)
@@ -57,8 +57,8 @@ class For(Instruction):
                 declaration = Declaration(
                     self.variable, lit_temp1, self.line, self.column)
                 declaration.compile(new_env)
-                self.instructions.compile(new_env)
                 generator.add_expression(puntero, puntero, '1', '+')
+                self.instructions.compile(new_env)
                 generator.add_goto(continue_lbl)
                 generator.put_label(end_lbl)
             elif left_val.type == Type.ARRAY:
@@ -84,9 +84,9 @@ class For(Instruction):
                 declaration = Declaration(
                     self.variable, lit_temp1, self.line, self.column)
                 declaration.compile(new_env)
-                self.instructions.compile(new_env)
                 generator.add_expression(puntero, puntero, '1', '+')
                 generator.add_expression(contador, contador, '1', '+')
+                self.instructions.compile(new_env)
                 declaration.compile(new_env)
 
                 generator.add_goto(continue_lbl)

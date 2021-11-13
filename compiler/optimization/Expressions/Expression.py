@@ -36,4 +36,7 @@ class Expression(Instruction):
             print('no se que se esta generando')
 
     def get_code(self):
-        return f'{self.left.get_code()}{self.type_op}{self.right.get_code()}'
+        if self.type_op != '%':
+            return f'{self.left.get_code()}{self.type_op}{self.right.get_code()}'
+        else:
+            return f'math.Mod({self.left.get_code()},{self.right.get_code()})'

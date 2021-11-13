@@ -1,3 +1,4 @@
+from optimization.Expressions.Access import Access
 from optimization.Instruction import *
 from optimization.Expressions.Literal import *
 
@@ -10,7 +11,7 @@ class Assignment(Instruction):
         self.exp = exp
 
     def self_assigment(self):
-        if type(self.exp) is Literal:
+        if type(self.exp) is Literal or type(self.exp) is Access:
             aux = self.place.get_code() == self.exp.get_code()
         else:
             aux = self.place.get_code() == self.exp.right.get_code(

@@ -103,23 +103,48 @@ class Optimizador():
                             block.nexts.append(check)
                             break
 
+    def Regla1(self, arreglo):
+        Optimizador.reglas.append("Regla 1")
+        ret = False
+        for i in range(len(arreglo)):
+            actual = arreglo[i]
+
+        return ret
+
+    def Regla2(self, arreglo):
+        Optimizador.reglas.append("Regla 2")
+        ret = False
+        return ret
+
     def Regla3(self, arreglo):
-        Optimizador.reglas.append("Regla 3")
         ret = False
         for i in range(len(arreglo)):
             actual = arreglo[i]
             if type(actual) is If and not actual.deleted:
-                next_inst = arreglo[i+1]
-                if type(next_inst) is Goto and not next_inst.deleted:
+                if i+1 < len(arreglo):
+                    next_inst = arreglo[i+1]
+                else:
+                    return ret
+                if type(next_inst) is Goto and not next_inst.deleted and i+2 < len(arreglo):
                     actual.condition.get_contrary()
                     actual.label = next_inst.label
                     next_inst.deleted = True
                     arreglo[i+2].deleted = True
                     ret = True
+                    Optimizador.reglas.append("Regla 3")
+        return ret
+
+    def Regla4(self, arreglo):
+        Optimizador.reglas.append("Regla 4")
+        ret = False
+        return ret
+
+    def Regla5(self, arreglo):
+        Optimizador.reglas.append("Regla 5")
+        ret = False
         return ret
 
     def Regla6(self, arreglo):
-        Optimizador.reglas.append("Regla 6")
         ret = False
         for i in range(len(arreglo)):
             actual = arreglo[i]
@@ -129,4 +154,15 @@ class Optimizador():
                     if actual_opt:
                         ret = True
                         actual.deleted = True
+                        Optimizador.reglas.append("Regla 6")
+        return ret
+
+    def Regla7(self, arreglo):
+        Optimizador.reglas.append("Regla 7")
+        ret = False
+        return ret
+
+    def Regla8(self, arreglo):
+        Optimizador.reglas.append("Regla 8")
+        ret = False
         return ret
